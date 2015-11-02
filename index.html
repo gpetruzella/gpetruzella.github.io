@@ -1,52 +1,88 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<!-- This document illustrates a few of the basic JavaScript ideas. The comments throughout talk you through some of the applications - hopefully they make sense! -->
+<!-- skip to line 20 to get started. -->
+<!DOCTYPE html>
 <html>
 <head>
-	<base href="images/" />
-	<title>Gerol&apos;s Demo Page</title>
-	<link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/en/b/bf/Glados.png" />
-	<meta name="keywords" content="style, html, css, selectors, csci, mcla" />
-	<meta name="author" content="Gerol Petruzella" />
-	<meta charset="UTF-8" />
+    <title>Intro to JavaScript</title>
+    <meta charset="UTF-8" />
+    <meta type="keywords" content="intro js javascript" />
+    <meta type="author" content="petruzella, w3schools" />
 	<style>
-		h1, h2, h3 {
-			text-align: center;
-		}
-		html {
-			background-color: #DEDEE9;
-		}
-		.article {
-			padding: 10px;
-			width: 45%;
-			}
-		#featured {
-			background-color: #FFFF5C;
-		}
+		body { text-align: center; }
 	</style>
 </head>
+
 <body>
-	<h1>The Coolest A.I. in Video Game History</h1>
-	<div class="article" style="float: left;">
-		<h2 title="I'm not even angry...">GLaDOS Intro</h2>
-		<img src="https://upload.wikimedia.org/wikipedia/en/b/bf/Glados.png" alt="GLaDOS in Portal 2" style="float: right; width: 15%;" />
-		<p><span style="float: left; font-size: 400%; font-family: algerian, courier; line-height: 80%;">G</span>LaDOS (Genetic Lifeform and Disk Operating System) is a fictional artificially intelligent computer system and the main antagonist in the video game Portal, as well as in the first half of its sequel, Portal 2, after which she partners with player character Chell. Created by Erik Wolpaw and Kim Swift and voiced by Ellen McLain, she is responsible for testing and maintenance in the Aperture Science research facility in both titles. While GLaDOS initially appears to simply be a voice that guides the player, her words and actions become increasingly malicious as she makes her intentions clear. The game reveals that she is corrupted and used a neurotoxin to kill the scientists in the laboratory before the events of Portal. She is ostensibly destroyed at the end of the first title by Chell, but is revealed to have survived in the game's closing credits song, "Still Alive".</p>
-	</div>
 
-	<div class="article" style="float: right;">
-		<h2 title="I'm being so sincere right now.">Inspiration for GLaDOS</h2>
-		<img src="http://vignette2.wikia.nocookie.net/lakeportlegends/images/1/1b/E9cc_portal_bookends.jpg" alt="Portal icon" style="float: right; width: 20%;" />
-		<p><span style="float: left; font-size: 400%; font-family: algerian, courier; line-height: 80%;">T</span>he inspiration for the character's creation extends from Wolpaw's use of a text-to-speech program while writing lines for the video game Psychonauts. Other game developers working on Psychonauts found the lines funnier as a result of the synthesized voice. GLaDOS was originally intended to be present solely in the first area of Portal; she was well received by other designers and her role was expanded as a result. Play testers were motivated to complete tests in the game due to her guidance. While the game was initially designed with other characters, they were later removed, leaving GLaDOS as the only character players encounter. The physical appearance of GLaDOS went through several designs, one of which featured a large disk below her. McLain imitated dialog read aloud by a speech synthesizer with her own voice, which was then processed to sound more robotic, and performed songs in character during the closing credits of both entries in the series. "Still Alive" became hugely successful, notably appearing in the Rock Band game series, and has been a popular song for YouTube users to cover.</p>
-	</div>
+<h1>What Can JavaScript Do?</h1>
+<h3>Pilfered from w3schools.com, with addenda.</h3>
 
-	<div class="article" style="float: left;">
-		<h2>Critical Reception of GLaDOS</h2>
-		<img src="http://img3.wikia.nocookie.net/__cb20150124153158/plantsvszombies/images/a/a5/Portal_Cake_icon.png" alt="The Cake is a Lie." style="width: 15%; float: right;" />
-		<p><span style="float: left; width: 0.7em; font-size: 400%; font-family: algerian, courier; line-height: 80%;">G</span>LaDOS has been well received by critics and gamers, some of whom called her narcissistic, passive-aggressive, sinister, and witty. She is considered one of the greatest video game characters, particularly among those created between 2000 and 2009. Universally praised for her contributions to the caliber of Portal‍&apos;s narrative, GLaDOS received multiple awards for being the best new game character in 2007 from GameSpy, GamePro, and X-Play. A number of publications listed her as one of the all-time greatest video game villains, including IGN and Game Informer, both of which ranked her first. She has been the subject of significant critical analysis from both journalists and game developers, who have compared her to other villainous computer systems in fiction, including HAL 9000 from 2001: A Space Odyssey and SHODAN from System Shock.</p>
-	</div>
-	
-	<div style="font-style: italic; text-align: center; clear: both;">
-		<h3>Source:</h3>
-		<p>GLaDOS. (2015, September 28). In Wikipedia, The Free Encyclopedia. Retrieved 20:15, October 5, 2015, from <a href="https://en.wikipedia.org/w/index.php?title=GLaDOS&amp;oldid=683223614">https://en.wikipedia.org/w/index.php?title=GLaDOS&amp;oldid=683223614</a></p>
-	</div>
-<script src="scripts/jquery.js"></script>
+<h2 id="demo1">JavaScript can change HTML content.</h2>
+<!-- Notice that the <h2> has an id property. This is very common, since one way to 'target' an HTML element with JS is by id. -->
+<button type="button"
+onclick="document.getElementById('demo1').innerHTML = 'Hello JavaScript!'">
+Click Me!</button>
+<!-- Notice the new <button> element, with its property onclick. The value of onclick is a short JS statement. Note how the statement uses the method "getElementById", and points it at the id "demo1" - from line 19 above. We'll walk through the rest of this syntax together next class. -->
+
+<h2>JavaScript Can Change Images</h2>
+
+<img id="myImage" onclick="changeImage()" src="http://www.w3schools.com/js/pic_bulboff.gif" width="100" height="180">
+<!-- Again, using id; also, notice that the onclick value here doesn't include *ALL* the JS, just the function "changeImage()". changeImage() is defined later, in the <script> between lines 33 and 42. -->
+
+<p>Click the light bulb to turn on/off the light.</p>
+
+<script>
+function changeImage() {
+    var image = document.getElementById('myImage');
+    if (image.src.match("bulbon")) {
+        image.src = "http://www.w3schools.com/js/pic_bulboff.gif";
+    } else {
+        image.src = "http://www.w3schools.com/js/pic_bulbon.gif";
+    }
+}
+</script>
+<!-- See how much of the 'pseudocoding' logic you can work out, looking at the script above. We'll talk it through together next class. -->
+
+<h2 id="demo3">JavaScript can change the style of an HTML element.</2>
+
+<script>
+function myFunction() {
+    var x = document.getElementById("demo3");
+    x.style.fontSize = "25px";           
+    x.style.color = "red"; 
+}
+</script>
+<!-- The script in lines 47-53 defines a function which (i) targets a given HTML element, then (ii) defines methods of changing its properties. This function, while defined here, isn't 'invoked' until the onclick event, below in line 56. -->
+
+<button type="button" onclick="myFunction()">Click Me!</button>
+
+<h2>JavaScript Can Validate Input</h2>
+
+<p>Please input a number between 1 and 10:</p>
+
+<input id="numb" type="number">
+<!-- Ooh, another new HTML element - <input>. Notice how we're using it together with <button>. -->
+<button type="button" onclick="myFunction2()">Submit</button>
+
+<p id="demo4"></p>
+<!-- Notice line 66: a <p> element with no 'content', just an id property. Its only purpose is to hold the output generated by myFunction2(), as detailed below. When writing a script, it's a very good idea to build something visible to confirm that your function has run successfully: it doesn't happen automatically! -->
+<script>
+function myFunction2() {
+    var x, text;
+
+    // Get the value of the input field with id="numb"
+    x = document.getElementById("numb").value;
+
+    // If x is Not a Number or less than one or greater than 10
+    if (isNaN(x) || x < 1 || x > 10) {
+        text = "Input not valid";
+    } else {
+        text = "Input OK";
+    }
+    document.getElementById("demo4").innerHTML = text;
+}
+</script>
+<!-- Notice that the comments in the JS above (lines 72, 75) serve the purpose of pseudocoding - that is, laying out the plain-language logical structure of the code. It's helpful for interpreting the real code...which might otherwise start to look overwhelming. -->
+<h2>Be sure to read the source code of this page for some helpful comments I've included!</h2>
 </body>
 </html>
