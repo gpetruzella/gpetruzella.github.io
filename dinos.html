@@ -1,0 +1,88 @@
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<title>JS: Attributes, Dinos</title>
+	<link rel="icon" type="image/jpg" href="https://johnpariah.files.wordpress.com/2011/06/mzm-bukugsed-175x175-75.jpg" />
+	<meta name="keywords" content="JS, csci, mcla, arrays" />
+	<meta name="author" content="Gerol Petruzella" />
+	<style> body { text-align:center; }</style>
+	<script type="text/css" src="style/mycss.css"></script>
+	<script src="script/myscript.js"></script>
+</head>
+
+<body>
+<p id="demo">Hello JavaScript! The dino at index 0 will appear here.</p>
+
+<p id="demo2">Arrays are variables with more than one value. This element will display the result of using the length method on the array.</p>
+
+<p id="demo3">The whole array of dinos will appear here.</p>
+
+<p id="demo4">Your random dino will appear here.</p>
+
+<button type="button" onclick="dinoInfo()">Click me for dino info!</button><br /><p></p>
+
+<button type="button" onclick="randomDinos()">Click me for a random dino!</button><br /><p></p>
+
+<input id="userdino" type="text" value="type a dino"/>
+<button type="button" onclick="addDino()">Click to add your dino to the array!</button>
+
+<script>
+
+// object.method(parameter1, parameter2).attribute
+
+// Objects
+//  document
+//  image
+//  variable
+//  window
+//  ...
+//  + user-defined!
+
+// Methods
+//  getElementById("id")
+//  substring(x,y)
+//  replace("a", "b")
+//  toUpperCase("a")
+//  match("a")
+//  alert("a")
+//  prompt("a")
+//  confirm("a")
+//  push(d), pop(d)
+//  ...
+//  + user-defined!
+
+// Properties/Attributes
+//  innerHTML
+//  fontSize
+//  color
+//  value
+//  href
+//  width
+//  ...
+//  + user-defined!
+
+
+
+
+var dinos = ["T-Rex", "Stegosaurus", "Velociraptor", "Triceratops", "Diplodocus", "Iguanodon", "Pterodactyl", 41, true, -0.01];
+
+function dinoInfo() {
+
+document.getElementById("demo").innerHTML = dinos[0];
+document.getElementById("demo2").innerHTML = dinos.length;
+document.getElementById("demo3").innerHTML = dinos;
+}
+
+function randomDinos() {
+ var randomIndex = Math.floor(Math.random()*10);
+ document.getElementById("demo4").innerHTML = dinos[randomIndex];
+}
+
+function addDino() {
+	var userDino = document.getElementById("userdino").value;
+	dinos.push(userDino);	
+}
+</script>
+
+</body>
+</html>
