@@ -1,19 +1,17 @@
 <html>
 <head>
 	<meta charset="UTF-8"/>
-	<title>JS: Attributes, Dinos</title>
+	<title>JS: Arrays, Dinos</title>
 	<link rel="icon" type="image/jpg" href="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/c6/c6a070407c1d288982a020a351d91c3463a7baf7_full.jpg" />
 	<meta name="keywords" content="JS, csci, mcla, arrays" />
 	<meta name="author" content="Gerol Petruzella" />
 	<style> body { text-align:center; }</style>
-	<script type="text/css" src="style/mycss.css"></script>
-	<script src="script/myscript.js"></script>
 </head>
 
 <body>
-<p id="demo">Hello JavaScript! The dino at index 0 will appear here.</p>
+<p id="demo">Hello JavaScript Dinos! The dino at index 0 will appear here when you click for dino info.</p>
 
-<p id="demo2">Arrays are variables with more than one value. This element will display the result of using the length method on the array.</p>
+<p id="demo2">Arrays are variables with more than one value. This <p> element will display the result of using the length method on the array.</p>
 
 <p id="demo3">The whole array of dinos will appear here.</p>
 
@@ -27,61 +25,33 @@
 <button type="button" onclick="addDino()">Click to add your dino to the array!</button>
 
 <script>
-
-// object.method(parameter1, parameter2).attribute
-
-// Objects
-//  document
-//  image
-//  variable
-//  window
-//  ...
-//  + user-defined!
-
-// Methods
-//  getElementById("id")
-//  substring(x,y)
-//  replace("a", "b")
-//  toUpperCase("a")
-//  match("a")
-//  alert("a")
-//  prompt("a")
-//  confirm("a")
-//  push(d), pop(d)
-//  ...
-//  + user-defined!
-
-// Properties/Attributes
-//  innerHTML
-//  fontSize
-//  color
-//  value
-//  href
-//  width
-//  ...
-//  + user-defined!
-
-
-
-
+// Create the array dinos, and set its values a, b, c, etc. using syntax: " var array = [a, b, c]; "
 var dinos = ["T-Rex", "Stegosaurus", "Velociraptor", "Triceratops", "Diplodocus", "Iguanodon", "Pterodactyl", 41, true, -0.01];
-
+// Define the function dinoInfo
 function dinoInfo() {
-
+// 1st thing dinoInfo() does: assigns the value of dinos[0] (i.e., "T-Rex") to the inner HTML of the HTML element with id="demo"
 document.getElementById("demo").innerHTML = dinos[0];
+// 2nd thing dinoInfo() does: assigns the value of dinos.length (i.e., 10) to display in "demo2"
 document.getElementById("demo2").innerHTML = dinos.length;
+// 3rd thing dinoInfo does: displays the array dinos as the inner HTML of "demo3"
 document.getElementById("demo3").innerHTML = dinos;
-}
+} // END FUNCTION dinoInfo()
 
+// Define the function randomDinos(), which is called by onclick in line 24 above
 function randomDinos() {
+// Create variable randomIndex, AND set its value to the expression described. randomIndex will be a random integer.
  var randomIndex = Math.floor(Math.random()*10);
+// Display in "demo4" the value in the array dinos at a random index point
  document.getElementById("demo4").innerHTML = dinos[randomIndex];
-}
+} // END FUNCTION randomDinos()
 
+// Define the function addDino(), which is called in line 27 above.
 function addDino() {
+	// Create variable userDino, and set its value at whatever value the user has typed in the "userdino" <input> element above
 	var userDino = document.getElementById("userdino").value;
+	// Use the push() method to add the value of userDino to the array dinos
 	dinos.push(userDino);	
-}
+} // END FUNCTION addDino()
 </script>
 
 </body>
