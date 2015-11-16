@@ -1,0 +1,40 @@
+<html>
+<head>
+	<title>Random Insults!</title>
+	<meta charset="UTF-8"/>
+	<meta author = "Gerol Petruzella"/>
+	<meta type="keywords" content="random javascript mcla csci Nick Morgan"/>
+</head>
+
+<body>
+
+<p id="">Click the button for a randomly-generated insult!</p>
+<button type="button" onclick="insultGenerator()">Click for Insult</button>
+<p id="output1"></p>
+<p></p>
+<p>Be sure to inspect the source code of this page to take a look at my approach - pseudoocode included...</p>
+
+<script>
+// Here begins the pseudocode...
+// Define function insultGenerator()
+// Initialize 3 arrays randomBodyParts, randomAdjectives, randomNouns
+// Assign random indexes of each array to variables randomBodyPart, randomAdjective, and randomNoun
+// Display "Your " + randomBodyPart + " is like a " + randomAdjective + " " + randomNoun + " !!!"
+
+
+// Define function insultGenerator()
+function insultGenerator() {
+// Initialize 3 arrays randomBodyParts, randomAdjectives, randomNouns
+	var randomBodyParts = ["nose", "fingernail", "pancreas", "earlobe", "shoulder", "shin", "artery", "hairline", "neck"];
+	var randomAdjectives = ["creepy", "squished", "terrible", "lugubrious", "far-fetched", "hostile", "vapid"];
+	var randomNouns = ["mug", "lamp", "waterfall", "hammer", "extension cord", "passport", "rock"];
+// Assign random indexes of each array to variables randomBodyPart, randomAdjective, and randomNoun
+	var randomBodyPart = randomBodyParts[Math.floor(Math.random()*randomBodyParts.length)];
+	var randomAdjective = randomAdjectives[Math.floor(Math.random()*randomAdjectives.length)];
+	var randomNoun = randomNouns[Math.floor(Math.random()*randomNouns.length)];
+// Display "Your " + randomBodyPart + " is like a " + randomAdjective + " " + randomNoun + " !!!"
+	document.getElementById("output1").innerHTML = "Your " + randomBodyPart + " is like a " + randomAdjective + " " + randomNoun + "!!!";
+}
+</script>
+</body>
+</html>
