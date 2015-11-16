@@ -1,0 +1,46 @@
+<html>
+<head>
+	<title>Input Validator</title>
+    <meta charset="UTF-8" />
+    <meta type="keywords" content="intro js javascript assignment_03" />
+    <meta type="author" content="Petruzella, w3schools" />
+	<style>
+		body { text-align: center; }
+	</style>
+</head>
+<body>
+	<h2>all ur info are belong to us</h2>
+	<p></p>
+	<p>First Name: <input id="firstname" type="text"/></p>
+	<p></p>
+	<p>Last Name: <input id="lastname" type="text"/></p>
+	<p></p>
+	<p>Age: <input id="age" type="number" /></p>
+	<p></p>
+	<button type="button" onclick="userEntry()">Submit</button>
+	<p></p>
+	<p id="return"></p>
+	<p></p>
+	<p>As usual, pseudocode available by inspecting the source code.</p>
+<script>
+function userEntry() {
+// Assign input values to 3 variables
+var firstName = document.getElementById("firstname").value;
+var lastName = document.getElementById("lastname").value;
+var ageEntry = document.getElementById("age").value;
+if ((isNaN(firstName) == false) || (firstName == null)) {
+		document.getElementById("firstname").style.backgroundColor = "red";
+	}
+else if ((isNaN(lastName) == false) || (lastName == null)) {
+		document.getElementById("lastname").style.backgroundColor = "red";
+	}
+else if (ageEntry == null) {
+		document.getElementById("age").style.backgroundColor = "red";
+	}
+else {
+		document.getElementById("return").innerHTML = "Wow, "+firstName+" "+lastName+"! You've been alive for "+ageEntry+" years!"};
+}
+</script>
+
+</body>
+</html>
