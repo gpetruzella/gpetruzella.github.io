@@ -37,7 +37,7 @@ else {
 	document.getElementById("firstname").style.backgroundColor = "white";
 }
 // Change lastname field to red if value is number or blank
-if (isNaN(lastName) !== true || lastName == null) {
+if (isNaN(lastName) !== true || lastName == "") {
 	document.getElementById("lastname").style.backgroundColor = "red";
 }
 else {
@@ -51,7 +51,7 @@ else {
 		document.getElementById("age").style.backgroundColor = "white";
 }
 // If all 3 fields are OK, display "Wow" message
-if (isNaN(firstName) == true && isNaN(lastName) == true &&	isNaN(ageEntry) !== true && isNaN(ageEntry) !== "") {
+if (isNaN(firstName) == true && isNaN(lastName) == true && isNaN(ageEntry) !== true && isNaN(ageEntry) !== "") {
 	document.getElementById("return").innerHTML = "Wow, "+firstName+" "+lastName+"! You've been alive for "+ageEntry+" years!";
 }
 // If any field is wrong, display "error" message
