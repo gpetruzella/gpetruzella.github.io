@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 
+Sherman Millions Inc., a home decorating retailer, has contracted you to develop an interactive calculator widget for their website that will help a shopper determine the cost of painting a room. When the user enters # of square feet needing paint, # of square feet a can will cover, the cost of a can, and the desired color, the widget will calculate how many cans are needed (rounding up) and the total cost of the paint job. The results of these two calculations are displayed within the widget. (Note: none of these values are currently provided on the website, except for the 5 available paint colors.)
+
+You will submit your work on this project by editing the provided HTML document, writing the necessary JavaScript within the <script> tag, and editing any other element(s) in the document necessary for completion of your task.
+
+Your project performance will be evaluated via the scale below:
+
+Level 0 (35 points) - near-functional, concept-mapped:
+All the necessary script steps are mapped in pseudocode, ready for line-by-line translation into JavaScript. Any necessary edits to the HTML are completed. Some JavaScript is written.
+
+Level 1 (40 points) - functional, proof-of-concept:
+All of the above, plus:
+The widget executes successfully when the user enters appropriate information as described above.
+
+Level 2 (45 points) - functional, production-ready:
+All of the above, plus:
+The widget validates the user’s input to ensure that valid inputs are entered, returning an alert message whenever an invalid input is entered.
+
+Level 3 (50 points) - functional, elegant:
+All of the above, plus:
+The widget displays the user-selected paint color in a small square in the widget, near the output fields.
+-->
+<title>Sherman Millions Paint Etc.</title>
+<link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Stock-brush-red.svg/480px-Stock-brush-red.svg.png">
+<meta name="keywords" content="csci javascript exam"/>
+<meta name="author" content="Mark Cohen (primary), Gerol Petruzella (editor)"/>
+<style>
+	html {
+		background-color: #ccffe6;
+	}
+	img {
+		border-radius: 15px;
+	}
+	#widget {
+		background-color: #1aff8f;
+		float: right;
+		border: 2px black solid;
+		padding: 10px;
+		margin-right: 25px;
+		text-align: right;
+	}
+	#widget h4 {
+		text-align: left;
+	}
+	button {
+	}
+</style>
+</head>
+
+<body>
+	<h1 style="text-align: center;">Sherman Millions Paint and Home Decoration</h1>
+	<h2 style="text-align: center;">We sell all your home decorating needs!</h2>
+	<h3 style="text-align: center;">Trusted since 2005</h3>
+
+<!-- WIDGET HTML STARTS HERE -->
+<div id="widget">
+<h3 style="text-align: center;">Painter Helper!</h3>
+<p>Square Feet: <input /></p>
+<p>Square Feet per Can: <input /></p>
+<p>Cost per Can: <input /></p>
+<p>Color: <input /></p>
+<button>Calculate!</button>
+<h4>Number of Cans Required: </h4>
+<h4>Total Cost: </h4>
+</div>
+<!-- WIDGET HTML ENDS HERE -->
+
+<h3>Paint</h3>
+<div class="category">
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d2/Solid_white.png" alt="white" style="width: 100px; padding: 2px; margin: 5px;" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Red.svg/2000px-Red.svg.png" alt="red" style="width: 100px; padding: 2px; margin: 5px; /">
+<img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/000080_Navy_Blue_Square.svg" alt="blue" style="width: 100px; padding: 2px; margin: 5px;" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Green_square.svg/480px-Green_square.svg.png" alt="green" style="width: 100px; padding: 2px; margin: 5px;" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Solid_yellow_(FFF685).svg/512px-Solid_yellow_(FFF685).svg.png" alt="tan" style="width: 100px; padding: 2px; margin: 5px;" />
+<a href="">More...</a>
+</div>
+<h3>Wallpaper</h3>
+<div class="category">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/PinkArgyle.svg/2000px-PinkArgyle.svg.png" alt="argyle" style="width: 100px; padding: 2px; margin: 5px;" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Widmanst%C3%A4tten_pattern_kevinzim.jpg" alt="grey slashes" style="width: 100px; padding: 2px; margin: 5px;" />
+<img src="http://img14.deviantart.net/4950/i/2009/112/4/0/chaitic_pattern_red_green_by_patterns_stock.jpg" alt="painting" style="width: 100px; padding: 2px; margin: 5px;" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/66/D_3472.jpg" alt="blue plaid" style="width: 100px; padding: 2px; margin: 5px;" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/60s_wallpaper.jpg" alt="60s floral" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<a href="">More...</a>
+</div>
+<h3>Wood Paneling</h3>
+<div class="category">
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/20/LightningVolt_Corrugated_Steel_Siding.jpg" alt="siding" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="http://www.woodysagoo.com/wp-content/uploads/2015/11/Wood-Paneling-Ideas.jpg" alt="brownish stuff" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="http://s3.amazonaws.com/spoonflower/public/design_thumbnails/0175/4660/rbarn_boards_continuous_repeat_5_rustic_wood_paneling_highres.png" alt="barn boards" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="http://www.sevacall.com/blog/wp-content/uploads/2013/07/how-cna-i-stain-fake-wood-paneling.jpg" alt="fake stuff" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="http://aubenefit.com/wp-content/uploads/2015/09/wood-paneling-for-walls-small-ideas-19-on-wall-design-ideas.jpg" alt="oak planks" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<a href="">More...</a>
+</div>
+<h3>Draperies</h3>
+<div class="category">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Window_with_transluscent_curtains.jpg" alt="sheer" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/85/RSLB_Schlafzimmer_Koenigin_Charlotte_Mathilde.jpg" alt="pink" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Gordijnen_aan_venster.JPG" alt="contemporary" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Honeycomb_or_cellular_window_shades.jpg" alt="blinds" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Lin_An_Tai_Historical_House_05.jpg" alt="bamboo" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<a href="">More...</a>
+</div>
+<h3>Shrubberies</h3>
+<div class="category">
+<img src="http://s0.geograph.org.uk/geophotos/01/82/98/1829844_1aabf226.jpg" alt="from the UK" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="https://upload.wikimedia.org/wikipedia/en/3/34/Tennyson_Down_Shrubbery.JPG" alt="Tennyson Down" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="http://www.artificialplantsandtrees.com/mm5/graphics/00000002/NEA1147-ZM-1.jpg" alt="spiral" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="http://s.hswstatic.com/gif/topiary-1.jpg" alt="clown" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<img src="https://media4.giphy.com/media/ALBfFB6gP1evu/200_s.gif" alt="Knight who says Ni" style="width: 100px; height: 100px; padding: 2px; margin: 5px;" />
+<a href="">More...</a>
+</div>
+
+<script>
+var availablePaintColors = ["willowy white", "rustic red", "bistro blue", "gentry green", "tripoli tan"];
+
+// Your code here.
+
+</script>
+
+</body>
+</html>
