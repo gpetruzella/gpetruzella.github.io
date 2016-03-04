@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+    function toggle_visibility(id) { //adds resources (preview links and code) when selected
+		var preview = id + "Preview";
+		var code = id + "Code";
+		var more = id + "More";
+
+		var e = document.getElementById(preview);
+		if (e.style.display == 'block') {
+		   e.style.display = 'none';
+		} else {
+		   e.style.display = 'block';
+		   e.style.clear = 'left';
+		}
+		   
+		var f = document.getElementById(code);
+		if (f.style.display == 'block') {
+		   f.style.display = 'none';
+		} else {
+		   f.style.display = 'block';
+		   f.style.clear = 'left';
+		}
+		   
+		if (document.getElementById(more)) {
+			var g = document.getElementById(more);
+			if (g.style.display == 'block') {
+				g.style.display = 'none';
+			} else {
+				g.style.display = 'block';
+				g.style.clear = 'left';
+			}
+			}
+	}
+		
+	function escapeHTML(s) { //escape special characters in URLs
+		return s.replace(/&/g, '&amp;')
+			.replace(/"/g, '&quot;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;');
+	}
+
+	function subjectGuide() { //add subject guides
+		var guideSubject = document.getElementById("guideSubject");
+		var selectedValue = guideSubject.options[guideSubject.selectedIndex].value;
+		var codeLink = document.getElementById("guideCode");
+		var splitSubject = selectedValue.split("|"); 
+		var subjectLink = '<a href="' + splitSubject[0] + '" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/subject_guides.png" alt="subject guides logo"> ' + splitSubject[1] + '</a>';
+		var previewLink = document.getElementById("guidePreview");
+		previewLink.innerHTML = subjectLink;
+		var escapedsubjectLink = escapeHTML(subjectLink);
+		codeLink.innerHTML = escapedsubjectLink;
+		}
+		
+	function courseGuide() { // add course guides
+		var courseCourse = document.getElementById("courseCourse");
+		var selectedValue = courseCourse.options[courseCourse.selectedIndex].value;
+		var codeLink = document.getElementById("courseCode");
+		var splitCourse = selectedValue.split("|"); 
+		var courseLink = '<a href="' + splitCourse[0] + '" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/course_guides.png" alt="course guides logo"> ' + splitCourse[1] + '</a>';
+		var previewLink = document.getElementById("coursePreview");
+		previewLink.innerHTML = courseLink;
+		var escapedcourseLink = escapeHTML(courseLink);
+		codeLink.innerHTML = escapedcourseLink;
+		}
+</script>
+
+<style type="text/css">
+	#widgetselect {
+		width:40%;
+		float:left;
+		}
+
+	.framed {
+		width: 70%;
+		margin: auto;
+	}
+
+	.clearleft {
+		clear: left;
+		}
+
+	.floatleft {
+		float: left;
+	}
+
+	.more {
+		margin-left: 3em;
+		font-style: italic;
+		}
+
+	.hide {
+		display: none;
+	}
+
+	#previewcontainer {
+		background-image: url("images/widgets/widgetframe-top.png"), url("images/widgets/widgetframe-bottom.png"), url("images/widgets/widgetframe-middle.png");
+		background-position: center top, center bottom, center top;
+		background-repeat: no-repeat, no-repeat, repeat;
+		float: left;
+		padding-bottom: 24px;
+		width: 304px;
+		}
+
+	#widgetpreview {
+		width: 210px;
+		margin-left: 58px;
+		}
+
+	#widgetpreviewcontent {
+		border: 1px solid #4e8eab;
+		min-height: 3em;
+		padding: 5px 10px;
+		}
+
+	#widgetcode > h2 {
+		padding-top: 2em;
+		}
+
+	#widgetpreview a:link, #widgetpreview a:visited {
+		color: #4e8eab;
+		text-decoration: none;
+		font-weight: normal;
+		}
+
+	#widgetcode {
+		clear:left;
+		margin-bottom: 3em;
+		}
+
+	#widgetcodecontent {
+		min-height: 3em;
+		background-color: gray;
+		color: white;
+		padding: 1em;
+		}
+
+	#widgetHeader {
+		background: none repeat scroll 0 0 #494949;
+		border-color: #4e8eab;
+		border-style: solid;
+		border-width: 1px;
+		padding: 2px 5px; 
+		}
+
+	#widgetHeader h2{
+		color: #fff;
+		font-size: 1.2em;
+		line-height: 1;
+		margin: 0;
+		padding: 0.2em 0 0 0.2em;
+		}
+
+	#widgetselect li {
+		list-style-type: none;
+		}
+
+	#citeMore ul {
+		display: block;
+		font-style: normal;
+		margin-left: 4em;
+		}
+
+	#databasesMore ul {
+		display: block;
+		font-style: normal;
+		margin-left: 7em;
+	}
+
+	#citeMore > h4, #databasesMore > h4 {
+		float: left;
+		font-weight: normal;
+		margin: 0;
+		}
+</style>
+</head>
+
+<body>
+<div class="framed">
+<img class="floatleft" width="10%" alt="Freel Library in Canvas Logo" src="images/FIC_logo.png" style="padding: 0.5em; position: relative; left: -1em; top: -0.5em;">
+<h1> Custom Library Links </h1>
+
+<p><strong>Custom Library Links</strong> allow you to create a block in your Canvas course with <strong>links to the library resources you think are most useful for your students</strong>. This wizard will walk you through selecting the links and adding the block to your class.</p>
+<hr class="clearleft">
+
+<div id="widgetselect">
+<h2> 1. Select the links you want to appear.</h2>
+<h3> Guides &amp; Help</h3>
+<ul id="guidesandhelp">
+
+<li id="course" class="widgetOption">
+	<label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="guide" onclick="toggle_visibility('course')"> Course Guide </label>
+		<div id="courseMore" class="more hide"> Course:
+			<select id="courseCourse" name="coursecourse" onchange="courseGuide();" autocomplete="off" >
+				<option value="http://library.mcla.edu/guides/course|Please select a subject!" selected="selected">Select a course.</option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/dimensions?source=customlinks|Dimensions Course Guide">Dimensions (First Semester Seminar)</option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/engcomp?source=customlinks|English Comp. Course Guide">English Comp. I & II</option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/global?source=customlinks|Global Issues in the Media Course Guide">Global Issues in the Media </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/college?source=customlinks|Intro to College Studies Course Guide">Intro to College Studies</option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/introlit?source=customlinks|Intro to Literature Course Guide">Intro to Literature</option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/research?source=customlinks|Intro to Research Methods Course Guide">Intro to Research Methods</option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/sei?source=customlinks|Seminar in Educational Inquiry Course Guide">Seminar in Educational Inquiry</option>
+							</select>
+		</div>
+	</li>
+
+	<li id="subject" class="widgetOption">
+	<label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="guide" onclick="toggle_visibility('guide')"> Subject Guide </label>
+		<div id="guideMore" class="more hide"> Subject:
+			<select id="guideSubject" name="guidesubject" onchange="subjectGuide();" autocomplete="off" >
+				<option value="http://library.mcla.edu/guides/subject|Please select a subject!" selected="selected">Select a subject.</option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/accounting?source=customlinks|Accounting Subject Guide">Accounting </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/adminmanagement?source=customlinks|Administrative Management Subject Guide">Administrative Management </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/appliedbusiness?source=customlinks|Applied Business Practices Subject Guide">Applied Business Practices </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/biology?source=customlinks|Biology Subject Guide">Biology </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/business?source=customlinks|Business Subject Guide">Business </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/careers?source=customlinks|Career Resources Subject Guide">Career Resources </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/communications?source=customlinks|Communications Subject Guide">Communications </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/computersystemsmanagement?source=customlinks|Computer Systems Management Subject Guide">Computer Systems Management </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/criminal?source=customlinks|Criminal Justice Subject Guide">Criminal Justice </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/statistics?source=customlinks|Data &amp; Statistics Subject Guide">Data &amp; Statistics </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/digitalmarketing?source=customlinks|Digital Marketing Subject Guide">Digital Marketing </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/earlychildhood?source=customlinks|Early Childhood Education Subject Guide">Early Childhood Education </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/education?source=customlinks|Education Subject Guide">Education </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/emergency?source=customlinks|Emergency Management Subject Guide">Emergency Management </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/environment?source=customlinks|Environmental Science Subject Guide">Environmental Science </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/graphicdesign?source=customlinks|Graphic Design Subject Guide">Graphic Design </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/health?source=customlinks|Health &amp; Wellness Subject Guide">Health &amp; Wellness </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/hospitality?source=customlinks|Hospitality &amp; Tourism Subject Guide">Hospitality &amp; Tourism </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/literature?source=customlinks|Literature Subject Guide">Literature </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/mathematics?source=customlinks|Mathematics Subject Guide">Mathematics </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/medicalassisting?source=customlinks|Medical Assisting Subject Guide">Medical Assisting </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/multimedia?source=customlinks|Multimedia Communications Subject Guide">Multimedia Communications </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/mythology?source=customlinks|Mythology Subject Guide">Mythology </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/netadmin?source=customlinks|Network Administration Subject Guide">Network Administration </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/physicalsciences?source=customlinks|Physical Sciences Subject Guide">Physical Sciences </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/psychology?source=customlinks|Psychology Subject Guide">Psychologyg </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/religion?source=customlinks|Religion &amp; Philosophy Subject Guide">Religion &amp; Philosophy </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/socialwork?source=customlinks|Social Work &amp; Human Services Subject Guide">Social Work &amp; Human Services </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/sociology?source=customlinks|Sociology Subject Guide">Sociology </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/vermont?source=customlinks|Vermont Subject Guide">Vermont </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/arts?source=customlinks|Visual Arts Subject Guide">Visual Arts </option>
+				<option value="http://libguides.hartness.vsc.edu/ccv/writing?source=customlinks|Writing Subject Guide">Writing </option>
+			</select>
+		</div>
+	</li>
+	
+	<li id="topics" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="topics" onclick="toggle_visibility('topics')"> Research Topics</label></li>	
+	
+	<li id="citation" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="databases" onclick="toggle_visibility('cite')"> Citation Guide</label>
+		<div id="citeMore" class="more hide"><h4>Style:</h4>
+		<ul>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="apa" onclick="toggle_visibility('apa')"> APA</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="mla" onclick="toggle_visibility('mla')"> MLA</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="chicago" onclick="toggle_visibility('chicago')"> Chicago</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="cse" onclick="toggle_visibility('cse')"> CSE</label></li>
+		</ul>
+		</div>
+	</li>			
+			
+	<li id="linking" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="linking" onclick="toggle_visibility('linking')"> Linking to Library Content</label></li>
+</ul>
+	
+<h3>Tutorials</h3>
+<ul id="tutorials">	
+	<li id="orientation" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="orientation" onclick="toggle_visibility('orientation')"> Library Orientation</label></li>
+	<li id="rbg" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="rbg" onclick="toggle_visibility('rbg')"> Research Basics Guide</label></li>
+	<li id="plagiarism" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="plagiarism" onclick="toggle_visibility('plagiarism')"> Understanding Plagiarism</label></li>
+</ul>
+
+<h3>Library Resources</h3>
+<ul id="resources">	
+	<li id="catalog" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="catalog" onclick="toggle_visibility('catalog')"> Library Catalog (search books, ebooks &amp; videos)</label></li>
+	<li id="databases" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="databases" onclick="toggle_visibility('databases')"> Suggested Databases</label>
+		<div id="databasesMore" class="more hide"><h4>Databases:</h4>
+		<ul>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="ov" onclick="toggle_visibility('ov')"> Opposing Viewpoints</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="ebsco" onclick="toggle_visibility('ebsco')"> EBSCO PowerSearch</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="gale" onclick="toggle_visibility('gale')"> Gale PowerSearch</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="asp" onclick="toggle_visibility('asp')"> Academic Search Premier</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="sciencedirect" onclick="toggle_visibility('sciencedirect')"> ScienceDirect</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="sico" onclick="toggle_visibility('sic')"> Science in Context</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="ahl" onclick="toggle_visibility('ahl')"> America: History & Life with Full Text</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="bie" onclick="toggle_visibility('bie')"> Business Insights: Essentials</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="art" onclick="toggle_visibility('art')">Artstor</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="jstor" onclick="toggle_visibility('jstor')"> JSTOR</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="nb" onclick="toggle_visibility('nb')"> NewsBank</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="vermont" onclick="toggle_visibility('vermont')"> Vermont News Sources</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="credo" onclick="toggle_visibility('credo')"> CREDO Reference</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="gvrl" onclick="toggle_visibility('gvrl')"> Gale Virtual Reference Library</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="bic" onclick="toggle_visibility('bic')"> Biography in Context</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="dsm" onclick="toggle_visibility('dsm')"> DSM Library</label></li>
+			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="lrc" onclick="toggle_visibility('lrc')"> Literary Reference Center</label></li>	
+		</ul>
+		</div>
+	</li>
+</ul>
+
+</div>
+
+
+<div id="previewcontainer">
+<div id="widgetpreview">
+<h2>Preview</h2>
+
+	<div id="widgetHeader"><h2>Library Links</h2></div>
+	<div id="widgetpreviewcontent">
+		<div id="headerPreview" style="text-align:center;"><a href="http://library.mcla.edu/freel_library" target="_blank" style="display:block; margin-bottom:0.5em; "><img src="images/Freel_logo_widget.png" alt="Freel Library Text Image" style="margin: 0.5em 0px; max-width: 150px;"></a></div>
+		
+		<div id="coursePreview" class="hide"></div>
+		
+		<div id="guidePreview" class="hide"></div>
+		
+		<div id="topicsPreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/topics?source=customlinks"  target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/topics.png" alt="Research Topics Icon"> Research Topics</a></div>
+
+		<div id="citePreview" class="hide">
+		
+			<div id="apaPreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/citing/apa?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/citation_guides.png" alt="Citation Guide Icon"> APA Citation Guide</a></div>
+			<div id="mlaPreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/citing/mla?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/citation_guides.png" alt="Citation Guide Icon"> MLA Citation Guide</a></div>
+			<div id="chicagoPreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/citing/chicago?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/citation_guides.png" alt="Citation Guide Icon"> Chicago Citation Guide</a></div>
+			<div id="csePreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/citing/cse?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/citation_guides.png" alt="Citation Guide Icon"> CSE Citation Guide</a></div>
+			
+		</div>
+		
+		<div id="linkingPreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/linking?source=customlinks"  target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/linking.png" alt="Linking Icon"> Linking to Library Content</a></div>
+		
+		<div id="orientationPreview" class="hide"><a href="http://tutorials.libraries.vsc.edu/orientation?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/tutorials.png" alt="Tutorial Icon"> Library Orientation</a></div>
+		
+		<div id="rbgPreview" class="hide"><a href="http://tutorials.libraries.vsc.edu/rbg?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/tutorials.png" alt="Tutorial Icon"> Research Basics Guide</a></div>
+				
+		<div id="plagiarismPreview" class="hide"><a href="http://tutorials.libraries.vsc.edu/plagiarism?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/tutorials.png" alt="Tutorial Icon"> Understanding Plagiarism</a></div>
+		
+		<div id="catalogPreview" class="hide"><a href="https://catalog.vsc.edu/hrtfind?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/catalog.png" alt="Library Catalog Icon"> Library Catalog (search books, ebooks &amp; videos)</a></div>
+		
+		<div id="databasesPreview" class="hide">
+			<h4 style="margin-bottom: 0.3em;">Suggested Databases:</h4>
+						
+			<div id="ovPreview" class="hide"><a href="http://find.galegroup.com.hrt-proxy.libraries.vsc.edu/menu/start?userGroupName=vol_ccv&prod=OVIC" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Opposing Viewpoints</a></div>
+			
+			<div id="ebscoPreview" class="hide"><a href="http://search.ebscohost.com.hrt-proxy.libraries.vsc.edu/login.aspx?authtype=ip,uid&profile=pwr" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> EBSCO PowerSearch</a></div>
+			
+			<div id="galePreview" class="hide"><a href="http://go.galegroup.com.hrt-proxy.libraries.vsc.edu/ps/infomark.do?source=gale&page=BasicSearch&userGroupName=vol_ccv&prodId=GPS&action=interpret&infoPage=infoMarkPage&type=static&version=1.0" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Gale PowerSearch</a></div>	
+			
+			<div id="aspPreview" class="hide"><a href="http://search.ebscohost.com.hrt-proxy.libraries.vsc.edu/login.asp?profile=ehost&defaultdb=aph" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Academic Search Premier</a></div>
+				
+			<div id="sciencedirectPreview" class="hide"><a href="http://www.sciencedirect.com.hrt-proxy.libraries.vsc.edu/science/search/allsources" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> ScienceDirect</a></div>
+						
+			<div id="sicPreview" class="hide"><a href="http://find.galegroup.com.hrt-proxy.libraries.vsc.edu/menu/start?userGroupName=vol_ccv&prod=SCIC" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Science in Context</a></div>
+			
+			<div id="ahlPreview" class="hide"><a href="http://search.ebscohost.com.hrt-proxy.libraries.vsc.edu/login.asp?profile=ehost&defaultdb=31h" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> America: History & Life with Full Text</a></div>
+			
+			<div id="biePreview" class="hide"><a href="http://find.galegroup.com.hrt-proxy.libraries.vsc.edu/menu/start?userGroupName=vol_ccv&prodPlatform=BOTH&prod=BIE" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Business Insights: Essentials</a></div>
+			
+			<div id="artPreview" class="hide"><a href="http://library.artstor.org.hrt-proxy.libraries.vsc.edu/library/#1h" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Artstor</a></div>
+
+			<div id="jstorPreview" class="hide"><a href="http://www.jstor.org.hrt-proxy.libraries.vsc.edu/action/showAdvancedSearch" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> JSTOR</a></div>
+									
+			<div id="nbPreview" class="hide"><a href="http://infoweb.newsbank.com.hrt-proxy.libraries.vsc.edu/" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> NewsBank</a></div>
+												
+			<div id="vermontPreview" class="hide"><a href="http://infoweb.newsbank.com.hrt-proxy.libraries.vsc.edu/?db=NEWSBANK&s_sources=location&d_place=VT" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Vermont News Sources</a></div>
+																		
+			<div id="credoPreview" class="hide"><a href="http://www.credoreference.com.hrt-proxy.libraries.vsc.edu/" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> CREDO Reference</a></div>
+																		
+			<div id="gvrlPreview" class="hide"><a href="http://find.galegroup.com.hrt-proxy.libraries.vsc.edu/menu/start?userGroupName=vol_ccv&prod=GVRL-0" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Gale Virtual Reference Library</a></div>
+			
+			<div id="bicPreview" class="hide"><a href="http://find.galegroup.com.hrt-proxy.libraries.vsc.edu/menu/start?userGroupName=vol_ccv&prod=BIC1" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Biography in Context</a></div>
+			
+			<div id="dsmPreview" class="hide"><a href="http://dsm.psychiatryonline.org.hrt-proxy.libraries.vsc.edu/doi/book/10.1176/appi.books.9780890425596" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> DSM Library</a></div>
+			
+			<div id="lrcPreview" class="hide"><a href="http://search.ebscohost.com.hrt-proxy.libraries.vsc.edu/login.aspx?authtype=ip&profile=lrc" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Literary Reference Center</a></div>
+		</div>
+	</div>
+</div>
+</div>
+
+<p class="clearleft" style="padding-top:1em;"><em>Want to link to a library resource that's not on this list? Email Pamela Contakos (<a href="mailto:p.contakos@mcla.edu">p.contakos@mcla.edu</a>) and she'll add it for you!</em></p>
+
+<div id="widgetcode">
+<h2 style="margin-top:0.5em;">2. Copy the generated code.</h2>
+
+<div id="widgetcodecontent">
+	<div>&lt;div style="float: right; width: 300px; min-height: 200px; border: 1px solid black; margin: 10px;"&gt;</div>
+
+	<div>&lt;div id="widgetHeader" style="background: none repeat scroll 0 0 #494949; border-color: #4e8eab; border-style: solid; border-width: 1px; 		padding: 2px 5px;"&gt;&lt;h2 style="font-weight: bold; color: #fff; line-height: 1; margin: 0; padding: 0.2em 0 0 0.2em;"&gt;Library Links&lt;/h2&gt;&lt;/div&gt;</div>
+
+	<div id="headerCode"></div>
+	
+	<div>&lt;div id="freel-widget" style="min-height: 150px; padding: 5px; text-align: left;"&gt;</div>
+
+	<div id="courseCode" class="hide"></div>
+	
+	<div id="guideCode" class="hide"></div>
+	
+	<div id="topicsCode" class="hide"></div>
+	
+	<div id="citeCode" class="hide"></div>
+		
+	<div id="apaCode" class="hide"></div>
+		
+	<div id="mlaCode" class="hide"></div>
+		
+	<div id="chicagoCode" class="hide"></div>
+		
+	<div id="cseCode" class="hide"></div>
+	
+	<div id="linkingCode" class="hide"></div>
+	
+	<div id="orientationCode" class="hide"></div>
+	
+	<div id="rbgCode" class="hide"></div>
+	
+	<div id="plagiarismCode" class="hide"></div>
+	
+	<div id="catalogCode" class="hide"></div>
+	
+	<div id="databasesCode" class="hide">
+	
+	&lt;h4 style=&quot;margin-bottom: 0.3em;&quot;&gt;Suggested Databases:&lt;/h4&gt;
+	
+		<div id="ovCode" class="hide"></div>
+	
+		<div id="ebscoCode" class="hide"></div>
+		
+		<div id="galeCode" class="hide"></div>
+		
+		<div id="aspCode" class="hide"></div>
+		
+		<div id="sciencedirectCode" class="hide"></div>
+		
+		<div id="sicCode" class="hide"></div>
+		
+		<div id="ahlCode" class="hide"></div>
+		
+		<div id="bieCode" class="hide"></div>
+		
+		<div id="jstorCode" class="hide"></div>
+		
+		<div id="artCode" class="hide"></div>
+		
+		<div id="nbCode" class="hide"></div>
+		
+		<div id="vermontCode" class="hide"></div>
+		
+		<div id="credoCode" class="hide"></div>
+		
+		<div id="gvrlCode" class="hide"></div>
+		
+		<div id="bicCode" class="hide"></div>
+		
+		<div id="dsmCode" class="hide"></div>
+		
+		<div id="lrcCode" class="hide"></div>
+	
+		<div>&lt;/div&gt;</div>
+
+	</div>
+</div>
+	
+<script type="text/javascript">
+function generateCode(option) {
+var previewDiv = option + 'Preview';
+var codeDiv = option + 'Code';
+var previewElement = document.getElementById(previewDiv);
+var previewCode = previewElement.innerHTML;
+var codeCode =  escapeHTML(previewCode);
+var codeElement = document.getElementById(codeDiv);
+codeElement.innerHTML = codeCode;
+}
+
+generateCode('header');
+generateCode('linking');
+generateCode('topics');
+generateCode('orientation');
+generateCode('rbg');
+generateCode('plagiarism');
+generateCode('catalog');
+generateCode('ov');
+generateCode('ebsco');
+generateCode('asp');
+generateCode('gale');
+generateCode('sciencedirect');
+generateCode('sic');
+generateCode('nb');
+generateCode('vermont');
+generateCode('credo');
+generateCode('gvrl');
+generateCode('apa');
+generateCode('mla');
+generateCode('chicago');
+generateCode('cse');
+generateCode('ahl');
+generateCode('bie');
+generateCode('lrc');
+generateCode('dsm');
+generateCode('bic');
+generateCode('art');
+generateCode('jstor');
+
+</script>
+
+<h2 style="margin-top:0.5em;">3. Paste the code onto a Page in your Canvas course, using the "HTML Editor" view.</h2>
+<img class="floatleft" src="images/add_html.png" alt="Add HTML Screenshot" style="max-width: 55%; float: left; margin: 10px;"> 
+<ul style="margin-top:12%">Open your Canvas course, select the Page where you want the widget, and click the Edit button. Switch to the <a href="https://community.canvaslms.com/docs/DOC-1819" target="_blank">HTML Editor</a> view, then simply paste the code. Once added, click the Save (or Save and Publish) button.</ul>
+
+<hr class="clearleft">
+
+
+<h2 style="margin-top:0.5em;">Troubleshooting &amp; Help</h2>
+<p> Please contact Pamela if you have any questions, or need help adding the widget to your Canvas class.</p>
+
+<p><br style="clear: left;" /> <img src="http://s3.amazonaws.com/libapps/accounts/812/profiles/464/profile_picture_libguides.jpg" alt="Pamela Contakos" width="100" style="float: left; padding: 0 1em 1em 1em;" /></p>
+<p><strong>Pamela Contakos</strong><br /> Digital Librarian<br /><a href="mailto:p.contakos@mcla.edu">p.contakos@mcla.edu</a><br /> (413) 662-5321</p>
+</div>
+</body>
+<!--
+ Developed for CCV by Michael Braun Hamilton
+ Adapted, with permission, for MCLA by Gerol Petruzella -->
+
+</html>
