@@ -1,0 +1,190 @@
+
+body p h1 h2 { 
+    font-family:"Arial";
+    font-size: 10vmax;
+    background:transparent;
+}
+
+.member {
+    font-family:"Arial";
+    font-size: 20vmax;
+}
+
+a:link { text-decoration:none; color:black; }
+a:visited {text-decoration:none; color:black;}
+a:hover {text-decoration:underline; color:black;}
+a:active {text-decoration:underline; color:black;}
+
+a.head:link { text-decoration:none; color:white; }
+a.head:visited {text-decoration:none; color:white;}
+a.head:hover {text-decoration:underline; color:white;}
+a.head:active {text-decoration:underline; color:white;}
+
+
+/*
+input[type=submit] {
+    width: 6em;  height: 1.5em;
+}
+*/
+
+ul.submenu, li.submenu {
+   line-height: 10vmax
+}
+
+a.submenu {
+   font-family:"Arial";
+   font-size: 10vmax;
+}
+
+
+table.outer {
+	border-width: 0px;
+
+	border-collapse: collapse;
+	/* background-color: white; */
+}
+
+table.list th {
+        font-family:"Arial";
+        border-width: 0px;
+        padding: 6px;
+        border-style: none;
+        font-size: 10vmax;
+}
+
+table.list td {
+        font-family:"Arial";
+        border-width: 0px;
+        padding: 6px;
+        border-style: none;
+        font-size: 10vmax;
+}
+
+table.prefs td {
+    	font-family:"Arial";
+	border-width: 0px;
+	padding: 6px;
+	border-style: none;
+        font-size: 10vmax;
+}
+
+table.menu td {
+    	font-family:"Arial";
+	border-width: 0px;
+	padding: 6px;
+	border-style: none;
+}
+
+p.peoplefinder { 
+    margin-left:auto;
+    margin-right:auto;
+    font-family:"Arial";
+    font-size: 10vmax;
+} 
+
+td.peoplefinder {
+    margin-left:auto;
+    margin-right:auto;
+    font-family:"Arial";
+    font-size: 10vmax;
+}
+
+body.inner{
+    background:transparent;
+}
+
+table.inner {
+    font-family:"Arial";
+    font-size:10vmax;
+    border-collapse: collapse; 
+    background-color:transparent;
+    background:transparent;
+}
+
+td.inner { 
+    font-family:"Arial";
+    font-size: 10vmax;
+    vertical-align: top;
+} 
+
+td.vcenter { 
+    font-family:"Arial";
+    font-size: 10vmax;
+    vertical-align: middle;
+    text-align:center;
+} 
+
+table.cal {
+    font-family:"Arial";
+    font-size:10vmax;
+    border-collapse: collapse;
+    background-color:transparent;
+    background:transparent;
+    vertical-align: middle;
+    text-align:center;
+}
+
+td.cal {
+    vertical-align: middle;
+    font-size:10vmax;
+   /*
+    font-family:"Arial";
+    font-size:10vmax;
+    border-collapse: collapse;
+    background-color:transparent;
+    background:transparent;
+    vertical-align: middle;
+    text-align:center;
+   */
+}
+
+/*
+table.btn tr.btn td.btn {
+   border-spacing: 0px;
+   height:45px;
+   width:100px;
+}
+*/
+
+/***FIRST STYLE THE BUTTON***/ 
+button#col1button {
+border:2px groove #7c93ba;
+cursor:pointer; /*forces the cursor to change to a hand when the button is hovered*/ 
+padding: 5px 25px; 
+/*give the background a gradient - see cssdemos.tupence.co.uk/gradients.htm for more info*/
+background-color:#6b6dbb; /*required for browsers that don't support gradients*/
+background: -webkit-gradient(linear, left top, left bottom, from(#88add7), to(#6b6dbb));
+background: -webkit-linear-gradient(top, #88add7, #6b6dbb);
+background: -moz-linear-gradient(top, #88add7, #6b6dbb);
+background: -o-linear-gradient(top, #88add7, #6b6dbb);
+background: linear-gradient(top, #88add7, #6b6dbb);
+/*style to the text inside the button*/ 
+font-family:Andika, Arial, sans-serif; /*Andkia is available at http://www.google.com/webfonts/specimen/Andika*/
+color:#fff;
+font-size:20vmax;
+letter-spacing:.1em;
+font-variant:small-caps;
+/*give the corners a small curve*/ 
+-webkit-border-radius: 0 15px 15px 0;
+-moz-border-radius: 0 15px 15px 0;
+border-radius: 0 15px 15px 0;
+/*add a drop shadow to the button*/ 
+-webkit-box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
+-moz-box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
+box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
+}
+/***NOW STYLE THE BUTTON'S HOVER AND FOCUS STATES***/
+button#col1button:hover, input#col1button:focus {
+color:#edebda;
+/*reduce the spread of the shadow to give a pushed effect*/ 
+-webkit-box-shadow: rgba(0, 0, 0, .25) 0 1px 0px;
+-moz-box-shadow: rgba(0, 0, 0, .25) 0 1px 0px;
+box-shadow: rgba(0, 0, 0, .25) 0 1px 0px;
+}
+
+.btn {
+   height: 45px; 
+   width: 100px;   
+   background-image:url('home/images/menu_bg.png');
+   background-repeat:no-repeat;
+}
