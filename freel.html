@@ -1,462 +1,659 @@
-<!DOCTYPE html>
-<html>
-<head>
-<script type="text/javascript">
-    function toggle_visibility(id) { //adds resources (preview links and code) when selected
-		var preview = id + "Preview";
-		var code = id + "Code";
-		var more = id + "More";
+<div class="framed"><img alt="Freel Library in Canvas 
 
-		var e = document.getElementById(preview);
-		if (e.style.display == 'block') {
-		   e.style.display = 'none';
-		} else {
-		   e.style.display = 'block';
-		   e.style.clear = 'left';
-		}
-		   
-		var f = document.getElementById(code);
-		if (f.style.display == 'block') {
-		   f.style.display = 'none';
-		} else {
-		   f.style.display = 'block';
-		   f.style.clear = 'left';
-		}
-		   
-		if (document.getElementById(more)) {
-			var g = document.getElementById(more);
-			if (g.style.display == 'block') {
-				g.style.display = 'none';
-			} else {
-				g.style.display = 'block';
-				g.style.clear = 'left';
-			}
-			}
-	}
-		
-	function escapeHTML(s) { //escape special characters in URLs
-		return s.replace(/&/g, '&amp;')
-			.replace(/"/g, '&quot;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;');
-	}
+Logo" class="floatleft" src="https://s3.amazonaws.com/libapps/accounts/812/images/FIC_l
 
-	function subjectGuide() { //add subject guides
-		var guideSubject = document.getElementById("guideSubject");
-		var selectedValue = guideSubject.options[guideSubject.selectedIndex].value;
-		var codeLink = document.getElementById("guideCode");
-		var splitSubject = selectedValue.split("|"); 
-		var subjectLink = '<a href="' + splitSubject[0] + '" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/subject_guides.png" alt="subject guides logo"> ' + splitSubject[1] + '</a>';
-		var previewLink = document.getElementById("guidePreview");
-		previewLink.innerHTML = subjectLink;
-		var escapedsubjectLink = escapeHTML(subjectLink);
-		codeLink.innerHTML = escapedsubjectLink;
-		}
-		
-	function courseGuide() { // add course guides
-		var courseCourse = document.getElementById("courseCourse");
-		var selectedValue = courseCourse.options[courseCourse.selectedIndex].value;
-		var codeLink = document.getElementById("courseCode");
-		var splitCourse = selectedValue.split("|"); 
-		var courseLink = '<a href="' + splitCourse[0] + '" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/course_guides.png" alt="course guides logo"> ' + splitCourse[1] + '</a>';
-		var previewLink = document.getElementById("coursePreview");
-		previewLink.innerHTML = courseLink;
-		var escapedcourseLink = escapeHTML(courseLink);
-		codeLink.innerHTML = escapedcourseLink;
-		}
-</script>
+ogo.png" style="padding: 0.5em; position: relative; left: -1em; 
 
-<style type="text/css">
-	#widgetselect {
-		width:40%;
-		float:left;
-		}
-
-	.framed {
-		width: 70%;
-		margin: auto;
-	}
-
-	.clearleft {
-		clear: left;
-		}
-
-	.floatleft {
-		float: left;
-	}
-
-	.more {
-		margin-left: 3em;
-		font-style: italic;
-		}
-
-	.hide {
-		display: none;
-	}
-
-	#previewcontainer {
-		background-image: url("images/widgets/widgetframe-top.png"), url("images/widgets/widgetframe-bottom.png"), url("images/widgets/widgetframe-middle.png");
-		background-position: center top, center bottom, center top;
-		background-repeat: no-repeat, no-repeat, repeat;
-		float: left;
-		padding-bottom: 24px;
-		width: 304px;
-		}
-
-	#widgetpreview {
-		width: 210px;
-		margin-left: 58px;
-		}
-
-	#widgetpreviewcontent {
-		border: 1px solid #4e8eab;
-		min-height: 3em;
-		padding: 5px 10px;
-		}
-
-	#widgetcode > h2 {
-		padding-top: 2em;
-		}
-
-	#widgetpreview a:link, #widgetpreview a:visited {
-		color: #4e8eab;
-		text-decoration: none;
-		font-weight: normal;
-		}
-
-	#widgetcode {
-		clear:left;
-		margin-bottom: 3em;
-		}
-
-	#widgetcodecontent {
-		min-height: 3em;
-		background-color: gray;
-		color: white;
-		padding: 1em;
-		}
-
-	#widgetHeader {
-		background: none repeat scroll 0 0 #494949;
-		border-color: #4e8eab;
-		border-style: solid;
-		border-width: 1px;
-		padding: 2px 5px; 
-		}
-
-	#widgetHeader h2{
-		color: #fff;
-		font-size: 1.2em;
-		line-height: 1;
-		margin: 0;
-		padding: 0.2em 0 0 0.2em;
-		}
-
-	#widgetselect li {
-		list-style-type: none;
-		}
-
-	#citeMore ul {
-		display: block;
-		font-style: normal;
-		margin-left: 4em;
-		}
-
-	#databasesMore ul {
-		display: block;
-		font-style: normal;
-		margin-left: 7em;
-	}
-
-	#citeMore > h4, #databasesMore > h4 {
-		float: left;
-		font-weight: normal;
-		margin: 0;
-		}
-</style>
-</head>
-
-<body>
-<div class="framed">
-<img class="floatleft" width="10%" alt="Freel Library in Canvas Logo" src="images/FIC_logo.png" style="padding: 0.5em; position: relative; left: -1em; top: -0.5em;">
-<h1> Custom Library Links </h1>
+top: -0.5em;" width="10%" />
+<h1>Custom Library Links</h1>
 
 <p><strong>Custom Library Links</strong> allow you to create a block in your Canvas course with <strong>links to the library resources you think are most useful for your students</strong>. This wizard will walk you through selecting the links and adding the block to your class.</p>
-<hr class="clearleft">
 
+<hr class="clearleft" />
 <div id="widgetselect">
-<h2> 1. Select the links you want to appear.</h2>
-<h3> Guides &amp; Help</h3>
-<ul id="guidesandhelp">
+<h2>1. Select the links you want to appear.</h2>
 
-<li id="course" class="widgetOption">
-	<label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="guide" onclick="toggle_visibility('course')"> Course Guide </label>
-		<div id="courseMore" class="more hide"> Course:
-			<select id="courseCourse" name="coursecourse" onchange="courseGuide();" autocomplete="off" >
-				<option value="http://library.mcla.edu/guides/course|Please select a subject!" selected="selected">Select a course.</option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/dimensions?source=customlinks|Dimensions Course Guide">Dimensions (First Semester Seminar)</option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/engcomp?source=customlinks|English Comp. Course Guide">English Comp. I & II</option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/global?source=customlinks|Global Issues in the Media Course Guide">Global Issues in the Media </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/college?source=customlinks|Intro to College Studies Course Guide">Intro to College Studies</option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/introlit?source=customlinks|Intro to Literature Course Guide">Intro to Literature</option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/research?source=customlinks|Intro to Research Methods Course Guide">Intro to Research Methods</option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/sei?source=customlinks|Seminar in Educational Inquiry Course Guide">Seminar in Educational Inquiry</option>
-							</select>
-		</div>
+<h3>Guides</h3>
+
+<ul id="guides">
+	<li class="widgetOption" id="rbg"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('rbg')" type="checkbox" value="rbg" /> Research Process</label></li>
+	<li class="widgetOption" id="course"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility
+
+('course')" type="checkbox" value="guide" /> Course Guide </label>
+	<div class="more hide" id="courseMore">Course: <select autocomplete="off" id="courseCourse" name="coursecourse" onchange="courseGuide();"><option selected="selected" value="http://library.mcla.edu/guides/course|Please select a 
+
+subject!">Select a course.</option><option value="http://library.mcla.edu/african_american_womens_history?
+
+source=customlinks|African American Women's History Research 
+
+Guide">African American Women&#39;s History</option><option value="http://library.mcla.edu/african_diaspora?
+
+source=customlinks|African Diaspora Research Guide">African Diaspora</option><option value="http://library.mcla.edu/aging?source=customlinks|Aging 
+
+and the Life Course Research Guide">Aging and the Life Course</option><option value="http://library.mcla.edu/annotatedbib?
+
+source=customlinks|Annotated Bibliography Research 
+
+Guide">Annotated Bibliography</option><option value="http://library.mcla.edu/astronomy?source=customlinks|
+
+Astronomy Research Guide">Astronomy</option><option value="http://library.mcla.edu/childrenslit?
+
+source=customlinks|Children's Literature Research 
+
+Guide">Children&#39;s Literature</option><option value="http://library.mcla.edu/firstyearexperience?
+
+source=customlinks|First Year Experience Research Guide">First Year Experience</option><option value="http://library.mcla.edu/foodnutritionculture?
+
+source=customlinks|Food, Nutrition and Culture Research 
+
+Guide">Food, Nutrition and Culture</option><option value="http://library.mcla.edu/historiography?
+
+source=customlinks|Historiography Research 
+
+Guide">Historiography</option><option value="http://library.mcla.edu/posc210?source=customlinks|
+
+Political Science Research &amp; Methods Research 
+
+Guide">Political Science Research &amp; Methods - POSC 210</option><option value="http://library.mcla.edu/population?source=customlinks|
+
+Population Research Guide">Population</option><option value="http://library.mcla.edu/raceinamerica?
+
+source=customlinks|Race in America Research Guide">Race in America</option><option value="http://library.mcla.edu/dubois?source=customlinks|
+
+Reading W.E.B. Du Bois Research Guide">Reading W.E.B. Du Bois</option><option value="http://library.mcla.edu/idst350?source=customlinks|
+
+Rethinking the Third World: Afro/Arab/Asian Connections 
+
+Research Guide">Rethinking the Third World: Afro/Arab/Asian Connections</option><option value="http://library.mcla.edu/1960s?source=customlinks|The 
+
+1960s Research Guide">The 1960s</option><option value="http://library.mcla.edu/writingassociate?
+
+source=customlinks|Writing Associate Workshop Research 
+
+Guide">Writing Associate Workshop - English 308</option> </select></div>
+	</li>
+	<li class="widgetOption" id="subject"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility
+
+('guide')" type="checkbox" value="guide" /> Subject Guide </label>
+	<div class="more hide" id="guideMore">Subject: <select autocomplete="off" id="guideSubject" name="guidesubject" onchange="subjectGuide();"><option value="http://library.mcla.edu/accounting?source=customlinks|
+
+Accounting Research Guide">Accounting</option><option value="http://library.mcla.edu/art?source=customlinks|Art">Art Research Guide</option><option value="http://library.mcla.edu/artsmanagement?
+
+source=customlinks|Arts Management Research Guide">Arts Management</option><option value="http://library.mcla.edu/asian_history?
+
+source=customlinks|Asian History Research Guide">Asian History</option><option value="http://library.mcla.edu/athletic_training?
+
+source=customlinks|Athletic Training Research Guide">Athletic Training</option><option value="http://library.mcla.edu/biology?source=customlinks|
+
+Biology Research Guide">Biology</option><option value="http://library.mcla.edu/business?source=customlinks|
+
+Business Research Guide">Business</option><option value="http://library.mcla.edu/chemistry?source=customlinks|
+
+Chemistry Research Guide">Chemistry</option><option value="http://library.mcla.edu/college_writing?
+
+source=customlinks|College Writing Research Guide">College Writing</option><option computer="" guide="" research="" science="" value="http://library.mcla.edu/computerscience?
+
+source=customlinks|">Computer Science</option><option value="http://library.mcla.edu/criminology?source=customlinks|
+
+Criminology Research Guide">Criminology</option><option value="http://library.mcla.edu/economics?source=customlinks|
+
+Economics Research Guide">Economics</option><option value="http://library.mcla.edu/education?source=customlinks|
+
+Education Research Guide">Education</option><option value="http://library.mcla.edu/engineering?source=customlinks|
+
+Engineering Research Guide">Engineering</option><option value="http://library.mcla.edu/englishlanguagearts?
+
+source=customlinks|English &amp; Language Arts Research 
+
+Guide">English and Language Arts</option><option value="http://library.mcla.edu/environmentalstudies?
+
+source=customlinks|Environmental Studies Research 
+
+Guide">Environmental Studies</option><option value="http://library.mcla.edu/european_history?
+
+source=customlinks|European History Research Guide">European History</option><option value="http://library.mcla.edu/eventsportmanagement?
+
+source=customlinks|Event &amp; Sport Management Research 
+
+Guide">Event &amp; Sport Management</option><option film="" http:="" library.mcla.edu="" value="http://library.mcla.edu/evidencebased?
+
+source=customlinks|Evidence-Based Practice in Sports Medicine 
+
+Research Guide&gt;Evidence-Based Practice in Sports 
+
+Medicine&lt;/option&gt;
+				&lt;option 
+
+value=">Film</option><option value="http://library.mcla.edu/french?source=customlinks|French 
+
+Language Research Guide">French Langauge</option><option value="http://library.mcla.edu/history?source=customlinks|
+
+History Research Guide">History</option><option value="http://library.mcla.edu/immigration?source=customlinks|
+
+Immigration Research Guide">Immigration</option><option value="http://library.mcla.edu/journalism?source=customlinks|
+
+Journalism Research Guide">Journalism</option><option value="http://library.mcla.edu/massmedia?source=customlinks|
+
+Mass Media &amp; Communication Research Guide">Mass Media &amp; Communication</option><option value="http://library.mcla.edu/math?source=customlinks|Math 
+
+Research Guide">Math</option><option value="http://library.mcla.edu/music?source=customlinks|Music 
+
+Research Guide">Music</option><option value="http://library.mcla.edu/philosophy?source=customlinks|
+
+Philosophy Research Guide">Philosophy</option><option value="http://library.mcla.edu/physics?source=customlinks|
+
+Physics Research Guide">Physics</option><option value="http://library.mcla.edu/political_science?
+
+source=customlinks|Political Science Research Guide">Political Science</option><option value="http://library.mcla.edu/psychology?source=customlinks|
+
+Psychology Research Guide">Psychology</option><option value="http://library.mcla.edu/socialwork?source=customlinks|
+
+Social Work Research Guide">Social Work</option><option value="http://library.mcla.edu/sociology?source=customlinks|
+
+Sociology Research Guide">Sociology</option><option value="http://library.mcla.edu/spanish?source=customlinks|
+
+Spanish Language Research Guide">Spanish Language</option><option value="http://library.mcla.edu/sportcoaching?
+
+source=customlinks|Sport Coaching Research Guide">Sport Coaching</option><option value="http://library.mcla.edu/statistics?source=customlinks|
+
+Statistics Research Guide">Statistics</option><option value="http://library.mcla.edu/theatre?source=customlinks|
+
+Theatre Research Guide">Theatre</option><option value="http://library.mcla.edu/us_history?source=customlinks|
+
+United States History Research Guide">United States History</option><option value="http://library.mcla.edu/womens_studies?
+
+source=customlinks|Women's Studies Research Guide">Women&#39;s Studies</option> </select></div>
 	</li>
 
-	<li id="subject" class="widgetOption">
-	<label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="guide" onclick="toggle_visibility('guide')"> Subject Guide </label>
-		<div id="guideMore" class="more hide"> Subject:
-			<select id="guideSubject" name="guidesubject" onchange="subjectGuide();" autocomplete="off" >
-				<option value="http://library.mcla.edu/guides/subject|Please select a subject!" selected="selected">Select a subject.</option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/accounting?source=customlinks|Accounting Subject Guide">Accounting </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/adminmanagement?source=customlinks|Administrative Management Subject Guide">Administrative Management </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/appliedbusiness?source=customlinks|Applied Business Practices Subject Guide">Applied Business Practices </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/biology?source=customlinks|Biology Subject Guide">Biology </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/business?source=customlinks|Business Subject Guide">Business </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/careers?source=customlinks|Career Resources Subject Guide">Career Resources </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/communications?source=customlinks|Communications Subject Guide">Communications </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/computersystemsmanagement?source=customlinks|Computer Systems Management Subject Guide">Computer Systems Management </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/criminal?source=customlinks|Criminal Justice Subject Guide">Criminal Justice </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/statistics?source=customlinks|Data &amp; Statistics Subject Guide">Data &amp; Statistics </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/digitalmarketing?source=customlinks|Digital Marketing Subject Guide">Digital Marketing </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/earlychildhood?source=customlinks|Early Childhood Education Subject Guide">Early Childhood Education </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/education?source=customlinks|Education Subject Guide">Education </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/emergency?source=customlinks|Emergency Management Subject Guide">Emergency Management </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/environment?source=customlinks|Environmental Science Subject Guide">Environmental Science </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/graphicdesign?source=customlinks|Graphic Design Subject Guide">Graphic Design </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/health?source=customlinks|Health &amp; Wellness Subject Guide">Health &amp; Wellness </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/hospitality?source=customlinks|Hospitality &amp; Tourism Subject Guide">Hospitality &amp; Tourism </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/literature?source=customlinks|Literature Subject Guide">Literature </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/mathematics?source=customlinks|Mathematics Subject Guide">Mathematics </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/medicalassisting?source=customlinks|Medical Assisting Subject Guide">Medical Assisting </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/multimedia?source=customlinks|Multimedia Communications Subject Guide">Multimedia Communications </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/mythology?source=customlinks|Mythology Subject Guide">Mythology </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/netadmin?source=customlinks|Network Administration Subject Guide">Network Administration </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/physicalsciences?source=customlinks|Physical Sciences Subject Guide">Physical Sciences </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/psychology?source=customlinks|Psychology Subject Guide">Psychologyg </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/religion?source=customlinks|Religion &amp; Philosophy Subject Guide">Religion &amp; Philosophy </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/socialwork?source=customlinks|Social Work &amp; Human Services Subject Guide">Social Work &amp; Human Services </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/sociology?source=customlinks|Sociology Subject Guide">Sociology </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/vermont?source=customlinks|Vermont Subject Guide">Vermont </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/arts?source=customlinks|Visual Arts Subject Guide">Visual Arts </option>
-				<option value="http://libguides.hartness.vsc.edu/ccv/writing?source=customlinks|Writing Subject Guide">Writing </option>
-			</select>
-		</div>
-	</li>
-	
-	<li id="topics" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="topics" onclick="toggle_visibility('topics')"> Research Topics</label></li>	
-	
-	<li id="citation" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="databases" onclick="toggle_visibility('cite')"> Citation Guide</label>
-		<div id="citeMore" class="more hide"><h4>Style:</h4>
-		<ul>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="apa" onclick="toggle_visibility('apa')"> APA</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="mla" onclick="toggle_visibility('mla')"> MLA</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="chicago" onclick="toggle_visibility('chicago')"> Chicago</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="cse" onclick="toggle_visibility('cse')"> CSE</label></li>
-		</ul>
-		</div>
-	</li>			
-			
-	<li id="linking" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="linking" onclick="toggle_visibility('linking')"> Linking to Library Content</label></li>
+<li class="widgetOption" id="cite"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('cite')" type="checkbox" value="databases" /> Citation Guide</label></li>
 </ul>
-	
+
 <h3>Tutorials</h3>
-<ul id="tutorials">	
-	<li id="orientation" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="orientation" onclick="toggle_visibility('orientation')"> Library Orientation</label></li>
-	<li id="rbg" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="rbg" onclick="toggle_visibility('rbg')"> Research Basics Guide</label></li>
-	<li id="plagiarism" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="plagiarism" onclick="toggle_visibility('plagiarism')"> Understanding Plagiarism</label></li>
+
+<ul id="tutorials">
+	<li class="widgetOption" id="orientation"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('orientation')" type="checkbox" value="orientation" /> Library Orientation</label></li>
+	<li class="widgetOption" id="youtube1"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('youtube1')" type="checkbox" value="youtube1" /> Searching the Library Databases</label></li>
+	<li class="widgetOption" id="youtube2"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('youtube2')" type="checkbox" value="youtube2" /> Find Things on the Library Website</label></li>
+	<li class="widgetOption" id="youtube3"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('youtube3')" type="checkbox" value="youtube3" /> Searching the Library Catalog</label></li>
+	<li class="widgetOption" id="youtube4"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('youtube4')" type="checkbox" value="youtube4" /> Using a Call Number to Find a Book</label></li>
 </ul>
 
 <h3>Library Resources</h3>
-<ul id="resources">	
-	<li id="catalog" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="catalog" onclick="toggle_visibility('catalog')"> Library Catalog (search books, ebooks &amp; videos)</label></li>
-	<li id="databases" class="widgetOption"><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="databases" onclick="toggle_visibility('databases')"> Suggested Databases</label>
-		<div id="databasesMore" class="more hide"><h4>Databases:</h4>
-		<ul>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="ov" onclick="toggle_visibility('ov')"> Opposing Viewpoints</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="ebsco" onclick="toggle_visibility('ebsco')"> EBSCO PowerSearch</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="gale" onclick="toggle_visibility('gale')"> Gale PowerSearch</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="asp" onclick="toggle_visibility('asp')"> Academic Search Premier</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="sciencedirect" onclick="toggle_visibility('sciencedirect')"> ScienceDirect</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="sico" onclick="toggle_visibility('sic')"> Science in Context</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="ahl" onclick="toggle_visibility('ahl')"> America: History & Life with Full Text</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="bie" onclick="toggle_visibility('bie')"> Business Insights: Essentials</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="art" onclick="toggle_visibility('art')">Artstor</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="jstor" onclick="toggle_visibility('jstor')"> JSTOR</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="nb" onclick="toggle_visibility('nb')"> NewsBank</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="vermont" onclick="toggle_visibility('vermont')"> Vermont News Sources</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="credo" onclick="toggle_visibility('credo')"> CREDO Reference</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="gvrl" onclick="toggle_visibility('gvrl')"> Gale Virtual Reference Library</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="bic" onclick="toggle_visibility('bic')"> Biography in Context</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="dsm" onclick="toggle_visibility('dsm')"> DSM Library</label></li>
-			<li><label><input autocomplete="off" type="checkbox" name="colorCheckbox" value="lrc" onclick="toggle_visibility('lrc')"> Literary Reference Center</label></li>	
-		</ul>
-		</div>
+
+<ul id="resources">
+	<li class="widgetOption" id="catalog"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('catalog')" type="checkbox" value="catalog" /> Library Catalog (search books, ebooks &amp; videos)</label></li>
+	<li class="widgetOption" id="databases"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('databases')" type="checkbox" value="databases" /> Suggested Databases</label>
+	<div class="more 
+
+hide" id="databasesMore">
+	<h4>Databases:</h4>
+
+	<ul>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('ebsco')" type="checkbox" value="ebsco" /> EBSCOHost</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('jstor')" type="checkbox" value="jstor" /> JSTOR</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('gale')" type="checkbox" value="gale" /> Gale PowerSearch</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('google')" type="checkbox" value="google" /> Google Scholar</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('asp')" type="checkbox" value="asp" /> Academic Search Premier</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('ageline')" type="checkbox" value="ageline" /> AgeLine</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('artemis')" type="checkbox" value="artemis" /> Artemis Literary Sources</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('bic')" type="checkbox" value="bic" /> Biography in Context</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('bsp')" type="checkbox" value="bsp" /> Business Source Premier</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('cmm')" type="checkbox" value="cmm" /> Communications &amp; Mass Media Complete</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('env')" type="checkbox" value="env" />Environment Complete</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('eric')" type="checkbox" value="eric" /> ERIC</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('lxnx')" type="checkbox" value="lxnx" /> LexisNexis</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('med')" type="checkbox" value="med" /> MEDLINE</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('mla')" type="checkbox" value="mla" /> MLA International Bibliography</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('opp')" type="checkbox" value="opp" /> Opposing Viewpoints</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('psycart')" type="checkbox" value="psycart" /> PsycARTICLES</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('psycbsc')" type="checkbox" value="psycbsc" /> Psychology &amp; Behaviorial Sciences Collection</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('psycinfo')" type="checkbox" value="psycinfo" /> PsycINFO</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('pubm')" type="checkbox" value="pubm" /> PubMed</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('relphil')" type="checkbox" value="relphil" /> Religion &amp; Philosophy Collection</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('soc')" type="checkbox" value="soc" /> SocINDEX with Full Text</label></li>
+		<li><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('sport')" type="checkbox" value="sport" /> SPORTDiscus with Full Text</label></li>
+	</ul>
+	</div>
 	</li>
+	<li class="widgetOption" id="reserves"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('reserves')" type="checkbox" value="reserves" /> Course Reserves </label>
+	<div class="more hide" id="reservesMore">course: <select autocomplete="off" id="reservesSubject" name="reservessubject" onchange="reservesGuide();"><option selected="selected" value="http://RESERVES/course|Please select a course!">Select a course.</option><option value="http://rb.cwmars.org/mcla/site/210/?source=customlinks|
+
+AMGT 330 Course Reserves">AMGT 330: Fundamentals of Arts Management</option><option value="http://rb.cwmars.org/mcla/site/193/?source=customlinks|
+
+ANTH 140-01 Course Reserves">ANTH 140-01 : People of the World</option><option value="http://rb.cwmars.org/mcla/site/52/?source=customlinks|
+
+ART-117-01 Course Reserves">ART-117-01: Great Monuments of Art</option><option value="http://rb.cwmars.org/mcla/site/218/?source=customlinks|
+
+ATTR-201-01 Course Reserves">ATTR-201-01: Practicum in Athletic Training</option><option value="http://rb.cwmars.org/mcla/site/120/?source=customlinks|
+
+BADM-224-02 Course Reserves">BADM-224-02: Financial Accounting</option><option value="http://rb.cwmars.org/mcla/site/209/?source=customlinks|
+
+BADM-384-01 Course Reserves">BADM-384-01: Marketing Communications</option><option value="http://rb.cwmars.org/mcla/site/125/?source=customlinks|
+
+BIOL-310-01 Course Reserves">BIOL-310-01: Animal Physiology</option><option value="http://rb.cwmars.org/mcla/site/102/?source=customlinks|
+
+BIOL-343-01 Course Reserves">BIOL-343-01: Anatomy and Physiology</option><option value="http://rb.cwmars.org/mcla/site/226/?source=customlinks|
+
+CCAP-300-01 Course Reserves">CCAP-300-01: DNA to Homo Sapien</option><option value="http://rb.cwmars.org/mcla/site/171/?source=customlinks|
+
+CCAP-300-01 Course Reserves">CCAP-300-01: Service Leadership</option><option value="http://rb.cwmars.org/mcla/site/188/?source=customlinks|
+
+CCAP-300-04 Course Reserves">CCAP-300-04: Creative Economy of the Berkshires</option><option value="http://rb.cwmars.org/mcla/site/204/?source=customlinks|
+
+CCAP-300-06 Course Reserves">CCAP-300-06: Film as Philosphy</option><option value="http://rb.cwmars.org/mcla/site/224/?source=customlinks|
+
+CCCA-101-01 Course Reserves">CCCA-101-01: Creative Arts</option><option value="http://rb.cwmars.org/mcla/site/219/?source=customlinks|
+
+CCCA-300-08 Course Reserves">CCCA-300-08: Ecoturism</option><option value="http://rb.cwmars.org/mcla/site/127/?source=customlinks|
+
+CCSS-269-01 Course Reserves">CCSS-269-01: Education &amp; Society</option><option value="http://rb.cwmars.org/mcla/site/230/?source=customlinks|
+
+CCST 102-02 Course Reserves">CCST 102-02: Case Studies Approach to Sciences</option><option value="http://rb.cwmars.org/mcla/site/107/?source=customlinks|
+
+CCST-105-01 Course Reserves">CCST-105-01: The Chemistry of CSI</option><option value="http://rb.cwmars.org/mcla/site/133/?source=customlinks|
+
+CHEM-152-01 Course Reserves">CHEM-152-01: Intro to Chem II</option><option value="http://rb.cwmars.org/mcla/site/106/?source=customlinks|
+
+CHEM-201-01 Course Reserves">CHEM-201-01: Organic Chemistry</option><option value="http://rb.cwmars.org/mcla/site/80/?source=customlinks|
+
+CSCI-235-01 Course Reserves">CSCI-235-01: Digital Circuit Design</option><option value="http://rb.cwmars.org/mcla/site/192/?source=customlinks|
+
+EDUC 338-01 Course Reserves">EDUC 338-01: Reading and Language Arts</option><option value="http://rb.cwmars.org/mcla/site/94/?source=customlinks|
+
+ENGL-150-06 Course Reserves">ENGL-150-06: College Writing</option><option value="http://rb.cwmars.org/mcla/site/8/?source=customlinks|
+
+ENGL-211-01 Course Reserves">ENGL-211-01: Introduction to Mass Media</option><option value="http://rb.cwmars.org/mcla/site/53/?source=customlinks|
+
+ENGL-250-01 Course Reserves">ENGL-250-01: Introduction to Literature</option><option value="http://rb.cwmars.org/mcla/site/110/?source=customlinks|
+
+ENGL-250-04 Course Reserves">ENGL-250-04: Introduction to Literature</option><option value="http://rb.cwmars.org/mcla/site/159/?source=customlinks|
+
+ENGL-270-01 Course Reserves">ENGL-270-01: Fantasy</option><option value="http://rb.cwmars.org/mcla/site/207/?source=customlinks|
+
+ENGL-270-02 Course Reserves">ENGL-270-02: Dramatic Literature</option><option value="http://rb.cwmars.org/mcla/site/208/?source=customlinks|
+
+ENGL-303-01 Course Reserves">ENGL-303-01: Writing Prose for Fantasy</option><option value="http://rb.cwmars.org/mcla/site/86/?source=customlinks|
+
+ENGL-305-01 Course Reserves">ENGL-305-01: Magazine Writing &amp; Editing</option><option value="http://rb.cwmars.org/mcla/site/223/?source=customlinks|
+
+ENGL-313-01 Course Reserves">ENGL-313-01: Global Anglophone</option><option value="http://rb.cwmars.org/mcla/site/180/?source=customlinks|
+
+ENGL 331-01 Course Reserves">ENGL-331-01: History of English</option><option value="http://rb.cwmars.org/mcla/site/222/?source=customlinks|
+
+ENGL-381-01 Course Reserves">ENGL-381-01: African American Literature</option><option value="http://rb.cwmars.org/mcla/site/184/?source=customlinks|
+
+ENGL-396-01 Course Reserves">ENGL-396-01: Public Relations Writing</option><option value="http://rb.cwmars.org/mcla/site/211/?source=customlinks|
+
+ENGL-490-01 Course Reserves">ENGL-490-01: Mediating Mental Health</option><option value="http://rb.cwmars.org/mcla/site/23/?source=customlinks|
+
+ENVI-150H-01 Course Reserves">ENVI-150H-01: Intro to Environmental Systems</option><option value="http://rb.cwmars.org/mcla/site/164/?source=customlinks|
+
+HIST-104-01 Course Reserves">HIST-104-01: Modern World Civilization</option><option value="http://rb.cwmars.org/mcla/site/70/?source=customlinks|
+
+HIST-104-02 Course Reserves">HIST-104-02: Modern World Civilization</option><option value="http://rb.cwmars.org/mcla/site/140/?source=customlinks|
+
+HIST 401-01 Course Reserves">HIST 401-01: European Empires in the 19th Century</option><option value="http://rb.cwmars.org/mcla/site/231/?source=customlinks|
+
+HIST-403-01 Course Reserves">HIST-403-01: European Empires</option><option value="http://rb.cwmars.org/mcla/site/187/?source=customlinks|
+
+HONR-100-02 Course Reserves">HONR-100-02: Nature of Human Nature</option><option value="http://rb.cwmars.org/mcla/site/104/?source=customlinks|
+
+IDST-150 Course Reserves">IDST-150: Introduction to Cross- Cultural and Social Justice Studies</option><option value="http://rb.cwmars.org/mcla/site/217/?source=customlinks|
+
+IDST-299-01 Course Reserves">IDST-299-01: Introduction of Women&#39;s Studies</option><option value="http://rb.cwmars.org/mcla/site/206/?source=customlinks|
+
+IDST-299-02 Course Reserves">IDST-299-02: Geography of Place, Space &amp; Power</option><option value="http://rb.cwmars.org/mcla/site/221/?source=customlinks|
+
+IDST-350-01 Course Reserves">IDST-350-01: World of Work</option><option value="http://rb.cwmars.org/mcla/site/220/?source=customlinks|
+
+IDST-360-01 Course Reserves">IDST-360-01: Leading Women</option><option value="http://rb.cwmars.org/mcla/site/105/?source=customlinks|
+
+IDST-360-02 Course Reserves">IDST-360-02: Bollywood</option><option value="http://rb.cwmars.org/mcla/site/160/?source=customlinks|
+
+Math-232-01 Course Reserves">Math-232-01: Introduction to statistics</option><option value="http://rb.cwmars.org/mcla/site/213/?source=customlinks|
+
+MATH 261-01 Course Reserves">MATH 261-01: Linear Algebra</option><option value="http://rb.cwmars.org/mcla/site/161/?source=customlinks|
+
+Math-486-01 Course Reserves">Math-486-01: Graph Theory</option><option value="http://rb.cwmars.org/mcla/site/203/?source=customlinks|
+
+MUSC 251-01 Course Reserves">MUSC 251-01: Introduction of Music</option><option value="http://rb.cwmars.org/mcla/site/212/?source=customlinks|
+
+PHIL-385-01 Course Reserves">PHIL-385-01: Logic</option><option value="http://rb.cwmars.org/mcla/site/225/?source=customlinks|
+
+POSC 201-01 Course Reserves">POSC 201-01: US Government &amp; Public Policy</option><option value="http://rb.cwmars.org/mcla/site/216/?source=customlinks|
+
+POSC 202-01 Course Reserves">POSC 202-01: Comparative Government</option><option value="http://rb.cwmars.org/mcla/site/109/?source=customlinks|
+
+POSC-304-01 Course Reserves">POSC-304-01: Constitutional Law</option><option value="http://rb.cwmars.org/mcla/site/37/?source=customlinks|
+
+PSYC-100-01 Course Reserves">PSYC-100-01: Introduction to Psychology</option><option value="http://rb.cwmars.org/mcla/site/229/?source=customlinks|
+
+PSYC 208-08 Course Reserves">PSYC 208-08: Applied Developmental Psychology</option><option value="http://rb.cwmars.org/mcla/site/228/?source=customlinks|
+
+PSYC 270-02 Course Reserves">PSYC 270-02: Theories of Personality</option><option value="http://rb.cwmars.org/mcla/site/116/?source=customlinks|
+
+PSYC-290-01 Course Reserves">PSYC-290-01: PSYC Research and Stats</option><option value="http://rb.cwmars.org/mcla/site/227/?source=customlinks|
+
+PSYC 357-01 Course Reserves">PSYC 357-01: Psychology of Women</option><option value="http://rb.cwmars.org/mcla/site/97/?source=customlinks|
+
+SOCI-395-01 Course Reserves">SOCI-395-01: Sociology of Happiness</option><option value="http://rb.cwmars.org/mcla/site/205/?source=customlinks|
+
+SOCI-395-01 Course Reserves">SOCI-395-01: Representations of Mental Health</option><option value="http://rb.cwmars.org/mcla/site/214/?source=customlinks|
+
+SOCI-395-03 Course Reserves">SOCI-395-03: Sociology of Latinas</option><option value="http://rb.cwmars.org/mcla/site/45/?source=customlinks|
+
+SPAN-101-01 Course Reserves">SPAN-101-01: Elementary Spanish I</option><option value="http://rb.cwmars.org/mcla/site/17/?source=customlinks|
+
+SOCI-395-01 Course Reserves">SPAN-102: Elementary Spanish II</option><option value="http://rb.cwmars.org/mcla/site/202/?source=customlinks|
+
+TRVL-300-01 Course Reserves">TRVL-300-01: Travel Course To Ireland</option> </select></div>
+	</li>
+	<li class="widgetOption" id="linking"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('linking')" type="checkbox" value="linking" /> Linking to Library Content</label></li>
+	<li class="widgetOption" id="ask"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('ask')" type="checkbox" value="ask" /> Ask A Librarian</label></li>
+	<li class="widgetOption" id="easybib"><label><input autocomplete="off" name="colorCheckbox" onclick="toggle_visibility('easybib')" type="checkbox" value="easybib" /> EasyBib</label></li>
 </ul>
-
 </div>
-
 
 <div id="previewcontainer">
 <div id="widgetpreview">
 <h2>Preview</h2>
 
-	<div id="widgetHeader"><h2>Library Links</h2></div>
-	<div id="widgetpreviewcontent">
-		<div id="headerPreview" style="text-align:center;"><a href="http://library.mcla.edu/freel_library" target="_blank" style="display:block; margin-bottom:0.5em; "><img src="images/Freel_logo_widget.png" alt="Freel Library Text Image" style="margin: 0.5em 0px; max-width: 150px;"></a></div>
-		
-		<div id="coursePreview" class="hide"></div>
-		
-		<div id="guidePreview" class="hide"></div>
-		
-		<div id="topicsPreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/topics?source=customlinks"  target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/topics.png" alt="Research Topics Icon"> Research Topics</a></div>
+<div id="widgetHeader">
+<h2>Library Links</h2>
+</div>
 
-		<div id="citePreview" class="hide">
-		
-			<div id="apaPreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/citing/apa?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/citation_guides.png" alt="Citation Guide Icon"> APA Citation Guide</a></div>
-			<div id="mlaPreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/citing/mla?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/citation_guides.png" alt="Citation Guide Icon"> MLA Citation Guide</a></div>
-			<div id="chicagoPreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/citing/chicago?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/citation_guides.png" alt="Citation Guide Icon"> Chicago Citation Guide</a></div>
-			<div id="csePreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/citing/cse?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/citation_guides.png" alt="Citation Guide Icon"> CSE Citation Guide</a></div>
-			
-		</div>
-		
-		<div id="linkingPreview" class="hide"><a href="http://hartness.vsc.edu/ccv/guides/linking?source=customlinks"  target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/linking.png" alt="Linking Icon"> Linking to Library Content</a></div>
-		
-		<div id="orientationPreview" class="hide"><a href="http://tutorials.libraries.vsc.edu/orientation?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/tutorials.png" alt="Tutorial Icon"> Library Orientation</a></div>
-		
-		<div id="rbgPreview" class="hide"><a href="http://tutorials.libraries.vsc.edu/rbg?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/tutorials.png" alt="Tutorial Icon"> Research Basics Guide</a></div>
-				
-		<div id="plagiarismPreview" class="hide"><a href="http://tutorials.libraries.vsc.edu/plagiarism?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/tutorials.png" alt="Tutorial Icon"> Understanding Plagiarism</a></div>
-		
-		<div id="catalogPreview" class="hide"><a href="https://catalog.vsc.edu/hrtfind?source=customlinks" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/catalog.png" alt="Library Catalog Icon"> Library Catalog (search books, ebooks &amp; videos)</a></div>
-		
-		<div id="databasesPreview" class="hide">
-			<h4 style="margin-bottom: 0.3em;">Suggested Databases:</h4>
-						
-			<div id="ovPreview" class="hide"><a href="http://find.galegroup.com.hrt-proxy.libraries.vsc.edu/menu/start?userGroupName=vol_ccv&prod=OVIC" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Opposing Viewpoints</a></div>
-			
-			<div id="ebscoPreview" class="hide"><a href="http://search.ebscohost.com.hrt-proxy.libraries.vsc.edu/login.aspx?authtype=ip,uid&profile=pwr" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> EBSCO PowerSearch</a></div>
-			
-			<div id="galePreview" class="hide"><a href="http://go.galegroup.com.hrt-proxy.libraries.vsc.edu/ps/infomark.do?source=gale&page=BasicSearch&userGroupName=vol_ccv&prodId=GPS&action=interpret&infoPage=infoMarkPage&type=static&version=1.0" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Gale PowerSearch</a></div>	
-			
-			<div id="aspPreview" class="hide"><a href="http://search.ebscohost.com.hrt-proxy.libraries.vsc.edu/login.asp?profile=ehost&defaultdb=aph" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Academic Search Premier</a></div>
-				
-			<div id="sciencedirectPreview" class="hide"><a href="http://www.sciencedirect.com.hrt-proxy.libraries.vsc.edu/science/search/allsources" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> ScienceDirect</a></div>
-						
-			<div id="sicPreview" class="hide"><a href="http://find.galegroup.com.hrt-proxy.libraries.vsc.edu/menu/start?userGroupName=vol_ccv&prod=SCIC" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Science in Context</a></div>
-			
-			<div id="ahlPreview" class="hide"><a href="http://search.ebscohost.com.hrt-proxy.libraries.vsc.edu/login.asp?profile=ehost&defaultdb=31h" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> America: History & Life with Full Text</a></div>
-			
-			<div id="biePreview" class="hide"><a href="http://find.galegroup.com.hrt-proxy.libraries.vsc.edu/menu/start?userGroupName=vol_ccv&prodPlatform=BOTH&prod=BIE" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Business Insights: Essentials</a></div>
-			
-			<div id="artPreview" class="hide"><a href="http://library.artstor.org.hrt-proxy.libraries.vsc.edu/library/#1h" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Artstor</a></div>
+<div id="widgetpreviewcontent">
+<div id="headerPreview" style="text-
 
-			<div id="jstorPreview" class="hide"><a href="http://www.jstor.org.hrt-proxy.libraries.vsc.edu/action/showAdvancedSearch" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> JSTOR</a></div>
-									
-			<div id="nbPreview" class="hide"><a href="http://infoweb.newsbank.com.hrt-proxy.libraries.vsc.edu/" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> NewsBank</a></div>
-												
-			<div id="vermontPreview" class="hide"><a href="http://infoweb.newsbank.com.hrt-proxy.libraries.vsc.edu/?db=NEWSBANK&s_sources=location&d_place=VT" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Vermont News Sources</a></div>
-																		
-			<div id="credoPreview" class="hide"><a href="http://www.credoreference.com.hrt-proxy.libraries.vsc.edu/" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> CREDO Reference</a></div>
-																		
-			<div id="gvrlPreview" class="hide"><a href="http://find.galegroup.com.hrt-proxy.libraries.vsc.edu/menu/start?userGroupName=vol_ccv&prod=GVRL-0" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Gale Virtual Reference Library</a></div>
-			
-			<div id="bicPreview" class="hide"><a href="http://find.galegroup.com.hrt-proxy.libraries.vsc.edu/menu/start?userGroupName=vol_ccv&prod=BIC1" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Biography in Context</a></div>
-			
-			<div id="dsmPreview" class="hide"><a href="http://dsm.psychiatryonline.org.hrt-proxy.libraries.vsc.edu/doi/book/10.1176/appi.books.9780890425596" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> DSM Library</a></div>
-			
-			<div id="lrcPreview" class="hide"><a href="http://search.ebscohost.com.hrt-proxy.libraries.vsc.edu/login.aspx?authtype=ip&profile=lrc" target="_blank" style="display:block; margin-bottom:0.5em;"><img src="images/databases.png" alt="Database Icon"> Literary Reference Center</a></div>
-		</div>
-	</div>
+align:center;"><a href="http://library.mcla.edu/freel_library" style="display:block; margin-bottom:0.5em; 
+
+" target="_blank"><img alt="Freel Library Text Image" src="https://s3.amazonaws.com/libapps/accounts/812/images/Freel
+
+_logo_widget.png" style="display: block; margin-left: auto; margin-right: auto; 
+
+max-width: 150px;" /></a></div>
+
+<div class="hide" id="coursePreview">&nbsp;</div>
+
+<div class="hide" id="guidePreview">&nbsp;</div>
+
+<div class="hide" id="topicsPreview"><a href="http://library.mcla.edu/research_process" style="display:block; margin-
+
+bottom:0.5em;" target="_blank"><img alt="Research Topics Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/topic
+
+s.png" /> Research Topics</a></div>
+
+<div class="hide" id="citePreview"><a href="http://library.mcla.edu/citations" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Citation Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/citation_guides.png" /> Citation Guide</a></div>
+
+<div class="hide" id="linkingPreview"><a href="http://mcla.vsc.edu/ccv/guides/linking?
+
+source=customlinks" style="display:block; 
+
+margin-bottom:0.5em;" target="_blank"><img alt="Linking Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/linki
+
+ng.png" /> Linking to Library Content</a></div>
+
+<div class="hide" id="askPreview"><a href="http://library.mcla.edu/friendly.php?s=shared/help" style="display:block; margin-
+
+bottom:0.5em;" target="_blank"><img alt="Ask Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/icon_
+
+question_mark.png" /> Ask A Librarian</a></div>
+
+<div class="hide" id="easybibPreview"><a href="http://libproxy.mcla.edu:2048/login?
+
+url=http://www.easybib.com" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="EasyBib Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/easyb
+
+ib_icon.png" /> EasyBib</a></div>
+
+<div class="hide" id="reservesPreview">&nbsp;</div>
+
+<div class="hide" id="orientationPreview"><a href="http://orientation.libraries.vsc.edu/orientation?
+
+source=customlinks" style="display:block; 
+
+margin-bottom:0.5em;" target="_blank"><img alt="Orientation Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/orien
+
+tation_icon.png" /> Library Orientation</a></div>
+
+<div class="hide" id="youtube1Preview"><a href="http://prezi.com/_t02jv9zrodi/?
+
+utm_campaign=share&amp;utm_medium=copy&amp;rc=ex0share" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Tutorial Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/tutor
+
+ials.png" /> Searching the Library Databases</a></div>
+
+<div class="hide" id="youtube2Preview"><a href="https://youtu.be/FkR8GjuCsJg" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Tutorial Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/tutor
+
+ials.png" /> Find Things on the Library Website</a></div>
+
+<div class="hide" id="youtube3Preview"><a href="https://youtu.be/T3CS1rpSeY0" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Tutorial Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/tutor
+
+ials.png" /> Searching the Library Catalog</a></div>
+
+<div class="hide" id="youtube4Preview"><a href="https://youtu.be/ke9CkRyJks0" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Tutorial Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/tutor
+
+ials.png" /> Using a Call Number to Find a Book</a></div>
+
+<div class="hide" id="rbgPreview"><a href="http://library.mcla.edu/research_process" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Research Process Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/resea
+
+rch.png" /> Research Process</a></div>
+
+<div class="hide" id="catalogPreview"><a href="https://bark.cwmars.org/eg/opac/home?loc=235" style="display:block; margin-
+
+bottom:0.5em;" target="_blank"><img alt="Library Catalog Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/catal
+
+og.png" /> Library Catalog (search books, ebooks &amp; videos)</a></div>
+
+<div class="hide" id="databasesPreview">
+<h4 style="margin-bottom: 
+
+0.3em;">Suggested Databases:</h4>
+
+<div class="hide" id="ebscoPreview"><a href="http://libproxy.mcla.edu:2048/login?
+
+url=http://search.ebscohost.com/" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> EBSCOHost</a></div>
+
+<div class="hide" id="jstorPreview"><a href="http://library.mcla.edu/go.php?c=2157784" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> JSTOR</a></div>
+
+<div class="hide" id="galePreview"><a href="http://libproxy.mcla.edu:2048/login?
+
+url=http://libraries.state.ma.us/login?
+
+db=gale&amp;locid=mlin_w_masscol" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> Gale PowerSearch</a></div>
+
+<div class="hide" id="googlePreview"><a href="http://libproxy.mcla.edu:2048/login?
+
+url=http://scholar.google.com/" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> Google Scholar</a></div>
+
+<div class="hide" id="aspPreview"><a href="http://library.mcla.edu/go.php?c=2157706" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> Academic Search Premier</a></div>
+
+<div class="hide" id="agelinePreview"><a href="http://library.mcla.edu/go.php?c=2157781" style="display:block; margin-
+
+bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> AgeLine</a></div>
+
+<div class="hide" id="artemisPreview"><a href="http://library.mcla.edu/go.php?c=2157711" style="display:block; margin-
+
+bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> Artemis Literary Sources</a></div>
+
+<div class="hide" id="bicPreview"><a href="http://library.mcla.edu/go.php?c=2157721" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> Biography in Context</a></div>
+
+<div class="hide" id="bspPreview"><a href="http://library.mcla.edu/go.php?c=2157709" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> Business Source Premier</a></div>
+
+<div class="hide" id="cmmPreview"><a href="http://library.mcla.edu/go.php?c=2157710" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> Communications &amp; Mass Media Complete</a></div>
+
+<div class="hide" id="envPreview"><a href="http://library.mcla.edu/go.php?c=2157717" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> Envrionment Complete</a></div>
+
+<div class="hide" id="ericPreview"><a href="http://library.mcla.edu/go.php?c=2157718" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> ERIC</a></div>
+
+<div class="hide" id="lxnxPreview"><a href="http://library.mcla.edu/go.php?c=2157726" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> LexisNexis</a></div>
+
+<div class="hide" id="medPreview"><a href="http://library.mcla.edu/go.php?c=2157729" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> MEDLINE</a></div>
+
+<div class="hide" id="mlaPreview"><a href="http://library.mcla.edu/go.php?c=2157730" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> MLA International Bibliography</a></div>
+
+<div class="hide" id="oppPreview"><a href="http://library.mcla.edu/go.php?c=2157748" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> Opposing Viewpoints</a></div>
+
+<div class="hide" id="psycartPreview"><a href="http://library.mcla.edu/go.php?c=2157735" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/databases.png" /> PsycARTICLES</a></div>
+
+<div class="hide" id="psycbscPreview"><a href="http://library.mcla.edu/go.php?c=2157736" style="display:block; margin-
+
+bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> Psychology &amp; Behavioral Sciences Collection</a></div>
+
+<div class="hide" id="psycinfoPreview"><a href="http://library.mcla.edu/go.php?c=2157737" style="display:block; margin-
+
+bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> PsycINFO</a></div>
+
+<div class="hide" id="pubmPreview"><a href="http://library.mcla.edu/go.php?c=2170174" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> PubMed</a></div>
+
+<div class="hide" id="relphilPreview"><a href="http://library.mcla.edu/go.php?c=2157739" style="display:block; margin-
+
+bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> Religion &amp; Philosophy Collection</a></div>
+
+<div class="hide" id="socPreview"><a href="http://library.mcla.edu/go.php?c=2157741" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> SocINDEX with Full Text</a></div>
+
+<div class="hide" id="sportPreview"><a href="http://library.mcla.edu/go.php?c=2157775" style="display:block; margin-bottom:0.5em;" target="_blank"><img alt="Database Icon" src="https://s3.amazonaws.com/libapps/accounts/812/images/datab
+
+ases.png" /> SPORTDiscus with Full Text</a></div>
+</div>
+</div>
 </div>
 </div>
 
-<p class="clearleft" style="padding-top:1em;"><em>Want to link to a library resource that's not on this list? Email Pamela Contakos (<a href="mailto:p.contakos@mcla.edu">p.contakos@mcla.edu</a>) and she'll add it for you!</em></p>
+<p class="clearleft" style="padding-top:1em;"><em>Want to link to a library resource that&#39;s not on this list? Email Pamela Contakos (<a href="mailto:p.contakos@mcla.edu">p.contakos@mcla.edu</a>) and she&#39;ll add it for you!</em></p>
 
 <div id="widgetcode">
 <h2 style="margin-top:0.5em;">2. Copy the generated code.</h2>
 
 <div id="widgetcodecontent">
-	<div>&lt;div style="float: right; width: 300px; min-height: 200px; border: 1px solid black; margin: 10px;"&gt;</div>
+<div>&lt;div style=&quot;float: right; width: 300px; min- height: 200px; border: 1px solid black; margin: 10px;&quot;&gt;</div>
 
-	<div>&lt;div id="widgetHeader" style="background: none repeat scroll 0 0 #494949; border-color: #4e8eab; border-style: solid; border-width: 1px; 		padding: 2px 5px;"&gt;&lt;h2 style="font-weight: bold; color: #fff; line-height: 1; margin: 0; padding: 0.2em 0 0 0.2em;"&gt;Library Links&lt;/h2&gt;&lt;/div&gt;</div>
+<div>&lt;div id=&quot;widgetHeader&quot; style=&quot;background: none repeat scroll 0 0 #494949; border-color: #4e8eab; border-style: solid; border-width: 1px; padding: 2px 5px;&quot;&gt;&lt;h2 style=&quot;font-weight: bold; color: #fff; line-height: 1; margin: 0; padding: 0.2em 0 0 0.2em;&quot;&gt;Library Links&lt;/h2&gt;&lt;/div&gt;</div>
 
-	<div id="headerCode"></div>
-	
-	<div>&lt;div id="freel-widget" style="min-height: 150px; padding: 5px; text-align: left;"&gt;</div>
+<div id="headerCode">&nbsp;</div>
 
-	<div id="courseCode" class="hide"></div>
-	
-	<div id="guideCode" class="hide"></div>
-	
-	<div id="topicsCode" class="hide"></div>
-	
-	<div id="citeCode" class="hide"></div>
-		
-	<div id="apaCode" class="hide"></div>
-		
-	<div id="mlaCode" class="hide"></div>
-		
-	<div id="chicagoCode" class="hide"></div>
-		
-	<div id="cseCode" class="hide"></div>
-	
-	<div id="linkingCode" class="hide"></div>
-	
-	<div id="orientationCode" class="hide"></div>
-	
-	<div id="rbgCode" class="hide"></div>
-	
-	<div id="plagiarismCode" class="hide"></div>
-	
-	<div id="catalogCode" class="hide"></div>
-	
-	<div id="databasesCode" class="hide">
-	
-	&lt;h4 style=&quot;margin-bottom: 0.3em;&quot;&gt;Suggested Databases:&lt;/h4&gt;
-	
-		<div id="ovCode" class="hide"></div>
-	
-		<div id="ebscoCode" class="hide"></div>
-		
-		<div id="galeCode" class="hide"></div>
-		
-		<div id="aspCode" class="hide"></div>
-		
-		<div id="sciencedirectCode" class="hide"></div>
-		
-		<div id="sicCode" class="hide"></div>
-		
-		<div id="ahlCode" class="hide"></div>
-		
-		<div id="bieCode" class="hide"></div>
-		
-		<div id="jstorCode" class="hide"></div>
-		
-		<div id="artCode" class="hide"></div>
-		
-		<div id="nbCode" class="hide"></div>
-		
-		<div id="vermontCode" class="hide"></div>
-		
-		<div id="credoCode" class="hide"></div>
-		
-		<div id="gvrlCode" class="hide"></div>
-		
-		<div id="bicCode" class="hide"></div>
-		
-		<div id="dsmCode" class="hide"></div>
-		
-		<div id="lrcCode" class="hide"></div>
-	
-		<div>&lt;/div&gt;</div>
+<div>&lt;div id=&quot;freel-widget&quot; style=&quot;min-height: 150px; padding: 5px; text-align: left;&quot;&gt;</div>
 
-	</div>
+<div class="hide" id="courseCode">&nbsp;</div>
+
+<div class="hide" id="guideCode">&nbsp;</div>
+
+<div class="hide" id="topicsCode">&nbsp;</div>
+
+<div class="hide" id="citeCode">&nbsp;</div>
+
+<div class="hide" id="linkingCode">&nbsp;</div>
+
+<div class="hide" id="askCode">&nbsp;</div>
+
+<div class="hide" id="easybibCode">&nbsp;</div>
+
+<div class="hide" id="orientationCode">&nbsp;</div>
+
+<div class="hide" id="youtube1Code">&nbsp;</div>
+
+<div class="hide" id="youtube2Code">&nbsp;</div>
+
+<div class="hide" id="youtube3Code">&nbsp;</div>
+
+<div class="hide" id="youtube4Code">&nbsp;</div>
+
+<div class="hide" id="rbgCode">&nbsp;</div>
+
+<div class="hide" id="catalogCode">&nbsp;</div>
+
+<div class="hide" id="reservesCode">&nbsp;</div>
+
+<div class="hide" id="databasesCode">&lt;h4 style=&quot;margin-bottom: 0.3em;&quot;&gt;Suggested Databases:&lt;/h4&gt;
+<div class="hide" id="googleCode">&nbsp;</div>
+
+<div class="hide" id="ebscoCode">&nbsp;</div>
+
+<div class="hide" id="jstorCode">&nbsp;</div>
+
+<div class="hide" id="galeCode">&nbsp;</div>
+
+<div class="hide" id="aspCode">&nbsp;</div>
+
+<div class="hide" id="agelineCode">&nbsp;</div>
+
+<div class="hide" id="artemisCode">&nbsp;</div>
+
+<div class="hide" id="bicCode">&nbsp;</div>
+
+<div class="hide" id="bspCode">&nbsp;</div>
+
+<div class="hide" id="cmmCode">&nbsp;</div>
+
+<div class="hide" id="envCode">&nbsp;</div>
+
+<div class="hide" id="ericCode">&nbsp;</div>
+
+<div class="hide" id="lxnxCode">&nbsp;</div>
+
+<div class="hide" id="medCode">&nbsp;</div>
+
+<div class="hide" id="mlaCode">&nbsp;</div>
+
+<div class="hide" id="oppCode">&nbsp;</div>
+
+<div class="hide" id="pyscartCode">&nbsp;</div>
+
+<div class="hide" id="pyscbscCode">&nbsp;</div>
+
+<div class="hide" id="pyscinfoCode">&nbsp;</div>
+
+<div class="hide" id="pubmCode">&nbsp;</div>
+
+<div class="hide" id="relphilCode">&nbsp;</div>
+
+<div class="hide" id="soc">&nbsp;</div>
+
+<div class="hide" id="sport">&nbsp;</div>
+
+<div>&lt;/div&gt;</div>
 </div>
-	
+</div>
 <script type="text/javascript">
 function generateCode(option) {
 var previewDiv = option + 'Preview';
@@ -473,48 +670,68 @@ generateCode('linking');
 generateCode('topics');
 generateCode('orientation');
 generateCode('rbg');
-generateCode('plagiarism');
 generateCode('catalog');
-generateCode('ov');
 generateCode('ebsco');
 generateCode('asp');
 generateCode('gale');
-generateCode('sciencedirect');
-generateCode('sic');
-generateCode('nb');
-generateCode('vermont');
-generateCode('credo');
-generateCode('gvrl');
-generateCode('apa');
-generateCode('mla');
-generateCode('chicago');
-generateCode('cse');
-generateCode('ahl');
-generateCode('bie');
-generateCode('lrc');
-generateCode('dsm');
+generateCode('ageline');
+generateCode('asp');
 generateCode('bic');
-generateCode('art');
+generateCode('pyscart');
+generateCode('google');
+generateCode('artemis');
+generateCode('reserves');
+generateCode('easybib');
+generateCode('ask');
+generateCode('cite');
+generateCode('youtube1');
+generateCode('youtube2');
+generateCode('youtube3');
+generateCode('youtube4');
+generateCode('ageline');
+generateCode('bsp');
+generateCode('cmm');
+generateCode('env');
+generateCode('eric');
+generateCode('lxnx');
 generateCode('jstor');
+generateCode('med');
+generateCode('mla');
+generateCode('opp');
+generateCode('psycbsc');
+generateCode('psycinfo');
+generateCode('pubm');
+generateCode('relphil');
+generateCode('soc');
+generateCode('sport');
 
 </script>
 
-<h2 style="margin-top:0.5em;">3. Paste the code onto a Page in your Canvas course, using the "HTML Editor" view.</h2>
-<img class="floatleft" src="images/add_html.png" alt="Add HTML Screenshot" style="max-width: 55%; float: left; margin: 10px;"> 
-<ul style="margin-top:12%">Open your Canvas course, select the Page where you want the widget, and click the Edit button. Switch to the <a href="https://community.canvaslms.com/docs/DOC-1819" target="_blank">HTML Editor</a> view, then simply paste the code. Once added, click the Save (or Save and Publish) button.</ul>
+<h2 style="margin-top:0.5em;">3. Paste the code onto a Page in your Canvas course, using the &quot;HTML Editor&quot; view.</h2>
+<img alt="Add HTML Screenshot" class="floatleft" src="https://s3.amazonaws.com/libapps/accounts/812/images/add_h
 
-<hr class="clearleft">
+tml.png" style="max-width: 55%; 
 
+float: left; margin: 10px;" />
+<ul style="margin-top:12%">
+	<li>Open your Canvas course, select the Page where you want the widget, and click the Edit button. Switch to the <a href="https://community.canvaslms.com/docs/DOC-1819" target="_blank">HTML Editor</a> view, then simply paste the code. Once added, click the Save (or Save and Publish) button.</li>
+</ul>
 
+<hr class="clearleft" />
 <h2 style="margin-top:0.5em;">Troubleshooting &amp; Help</h2>
-<p> Please contact Pamela if you have any questions, or need help adding the widget to your Canvas class.</p>
 
-<p><br style="clear: left;" /> <img src="http://s3.amazonaws.com/libapps/accounts/812/profiles/464/profile_picture_libguides.jpg" alt="Pamela Contakos" width="100" style="float: left; padding: 0 1em 1em 1em;" /></p>
-<p><strong>Pamela Contakos</strong><br /> Digital Librarian<br /><a href="mailto:p.contakos@mcla.edu">p.contakos@mcla.edu</a><br /> (413) 662-5321</p>
+<p>Please contact Pamela if you have any questions, or need help adding the widget to your Canvas class.</p>
+
+<p><br style="clear: left;" />
+<img alt="Pamela Contakos" src="http://s3.amazonaws.com/libapps/accounts/812/profiles/464/
+
+profile_picture_libguides.jpg" style="float: left; padding: 0 1em 1em 1em;" width="100" /></p>
+
+<p><strong>Pamela Contakos</strong><br />
+Digital Services Librarian<br />
+<a href="mailto:p.contakos@mcla.edu">p.contakos@mcla.edu</a><br />
+(413) 662-5542</p>
 </div>
-</body>
 <!--
  Developed for CCV by Michael Braun Hamilton
- Adapted, with permission, for MCLA by Gerol Petruzella -->
-
-</html>
+ Adapted, with permission, for MCLA by Gerol Petruzella --></div>
