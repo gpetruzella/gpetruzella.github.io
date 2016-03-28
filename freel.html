@@ -1922,7 +1922,7 @@ function generateCode(option) {
 var previewDiv = option + 'Preview';
 var codeDiv = option + 'Code';
 var previewElement = document.getElementById(previewDiv);
-var previewCode = previewElement.innerHTML;
+var previewCode = document.innerHTML(previewElement);
 var codeCode =  escapeHTML(previewCode);
 var codeElement = document.getElementById(codeDiv);
 codeElement.innerHTML = codeCode;
@@ -1940,7 +1940,6 @@ generateCode('gale');
 generateCode('ageline');
 generateCode('asp');
 generateCode('bic');
-generateCode('pyscart');
 generateCode('google');
 generateCode('artemis');
 generateCode('reserves');
