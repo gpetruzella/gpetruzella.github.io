@@ -86,7 +86,7 @@
 		var previewDiv = option + 'Preview';
 		var codeDiv = option + 'Code';
 		var previewElement = document.getElementById(previewDiv);
-		var previewCode = previewElement.innerHTML;
+		var previewCode = document.innerHTML(previewElement);
 		var codeCode =  escapeHTML(previewCode);
 		var codeElement = document.getElementById(codeDiv);
 		codeElement.innerHTML = codeCode;
@@ -2011,9 +2011,7 @@ profile_picture_libguides.jpg" alt="Pamela Contakos"
 width="100" style="float: left; padding: 0 1em 1em 1em;" /></p>
 <p><strong>Pamela Contakos</strong><br /> Digital Services 
 
-Librarian<br /><a 
-
-href="mailto:p.contakos@mcla.edu">p.contakos@mcla.edu</a><br /> 
+Librarian<br /><a href="mailto:p.contakos@mcla.edu">p.contakos@mcla.edu</a><br /> 
 
 (413) 662-5542</p>
 </div>
