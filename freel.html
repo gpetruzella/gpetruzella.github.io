@@ -8,7 +8,7 @@
 		$('#'+code).toggleClass('hide clearLeft');
 		$('#'+more).toggleClass('hide clearLeft');
 		
-		/* THIS ORIGINAL CODE WAS REPLACED WITH THE ABOVE JQUERY FOR USE IN LIBGUIDES: */
+		/* THIS ORIGINAL CODE WAS REPLACED WITH THE ABOVE JQUERY FOR USE IN LIBGUIDES:
 		var e = document.getElementById(preview);
 		if (e.style.display == 'block') {
 		   e.style.display = 'none';
@@ -34,7 +34,7 @@
 				g.style.clear = 'left';
 			}
 			}
-		
+		*/
 	}
 		
 	function escapeHTML(s) { //escape special characters in URLs
@@ -86,7 +86,7 @@
 		var previewDiv = option + 'Preview';
 		var codeDiv = option + 'Code';
 		var previewElement = document.getElementById(previewDiv);
-		var previewCode = document.innerHTML(previewElement);
+		var previewCode = previewElement.innerHTML;
 		var codeCode =  escapeHTML(previewCode);
 		var codeElement = document.getElementById(codeDiv);
 		codeElement.innerHTML = codeCode;
@@ -1922,7 +1922,7 @@ function generateCode(option) {
 var previewDiv = option + 'Preview';
 var codeDiv = option + 'Code';
 var previewElement = document.getElementById(previewDiv);
-var previewCode = document.innerHTML(previewElement);
+var previewCode = previewElement.innerHTML;
 var codeCode =  escapeHTML(previewCode);
 var codeElement = document.getElementById(codeDiv);
 codeElement.innerHTML = codeCode;
@@ -1940,6 +1940,7 @@ generateCode('gale');
 generateCode('ageline');
 generateCode('asp');
 generateCode('bic');
+generateCode('pyscart');
 generateCode('google');
 generateCode('artemis');
 generateCode('reserves');
@@ -2010,7 +2011,9 @@ profile_picture_libguides.jpg" alt="Pamela Contakos"
 width="100" style="float: left; padding: 0 1em 1em 1em;" /></p>
 <p><strong>Pamela Contakos</strong><br /> Digital Services 
 
-Librarian<br /><a href="mailto:p.contakos@mcla.edu">p.contakos@mcla.edu</a><br /> 
+Librarian<br /><a 
+
+href="mailto:p.contakos@mcla.edu">p.contakos@mcla.edu</a><br /> 
 
 (413) 662-5542</p>
 </div>
