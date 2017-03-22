@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="keywords" content="souls black folk mcla demo dubois frances jones sneed"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <title>The Souls of Black Folk</title> 
+  <style>
+	body{
+		font-family: Georgia, Helvetica, sans-serif;
+		width: 100%;
+		margin:0;
+		padding:0;
+		background-image: url("https://image.freepik.com/free-vector/textured-background-design_1117-108.jpg");
+	}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+<script>
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var a = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal 
+a.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+	.topbar {
+		position:fixed;
+		top:-15px;  
+		width:100%;
+		height:20px;
+		z-index:999;
+		clear:both;
+	}
+
+	.topbar ul {
+		text-align:center;
+		background: #999;
+		padding:0;
+		font-size:15px;
+		color:#3366cc;
+		list-style-type: none;
+		overflow:hidden;
+	}
+    
+	nav a:link {
+		text-decoration:none;
+	}
+
+	nav ul li {
+		text-align: center;
+		width: 6%;
+		float:left;
+		padding:5px 0;
+		border-top:solid 2px #bad3ea;
+		border-left:solid 1px #bad3ea;   
+	}
+	
+	nav ul li:active{
+		border-top: solid 3px #1a54e1;
+		color:#363636;
+		font-weight:bold;
+	}
+	
+	nav ul li:hover   {
+		background:#e4ebf8;
+		cursor:pointer;
+	}
+	
+	a {
+		color:#003;
+	}
+	
+	.rest_page{
+		position:absolute;
+		top:29px;
+		width:100%;
+		padding:0 10px 50px 10px;
+	}
+
+	footer {
+		width:100%;
+		height:200px;
+		background:#EECBAD;
+		clear:both;
+		padding:0 10px 50px 10px;
+		background-image: url("https://image.freepik.com/free-vector/textured-background-design_1117-108.jpg");
+	}
+
+	footer nav {   
+	}
+
+	footer ul{
+		list-style-type: none;
+	}
+
+	.icon_column_left{
+		width:25%;
+		float:left;
+		text-align:center;
+		margin: 0 5px;
+	}
+
+	.icon_column_center{
+		width:40%;
+		float:left;
+		background:#ffffff;
+		margin: 0 35px;
+	}
+
+	.icon_column_right{
+		width:25%;
+		float:left;
+		text-align:center;
+		margin: 0 5px;
+	}
+
+	.headlines{	
+		text-align:center;
+	}
+    
+	.center-column {
+		border-left: solid 2px #bad3ea; 
+		border-right: solid 2px #bad3ea; 
+		padding: 0 10px;
+	}
+
+	.left-panel-float {
+		float: left;
+		clear:left;
+		width: 30%;
+	}
+
+  </style>
+</head> 
+
+
+<body>
+<nav class="topbar">
+	<div width="99%" style="margin:auto;"><ul>	
+		<li></li>
+		<li></li>
+		<li><img src="https://openclipart.org/image/800px/svg_to_png/271735/imagebot-backward.png" width="30%" /></li>
+		<li><a href="#">1</a></li>
+		<li><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li><a href="#">5</a></li>
+		<li><a href="#">6</a></li>
+		<li><a href="#">7</a></li>
+		<li><a href="#">8</a></li>
+		<li><a href="#">9</a></li>
+		<li><a href="#">10</a></li>
+		<li><img src="https://openclipart.org/image/800px/svg_to_png/271736/imagebot-forward.png" width="30%" /></li>
+		<li></li>
+		<li></li>
+	</ul></div>
+</nav>
+  
+<div class="rest_page">
+	
+		<h1 style="text-align:center;">The Souls of Black Folk</h1>
+		
+			<div class="icon_column_left">
+				<a title="By W.E.B. DuBois (original book) [Public domain], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File%3AThe_Souls_of_Black_Folk_title_page.jpg"><img width="50%" alt="The Souls of Black Folk title page" src="https://upload.wikimedia.org/wikipedia/commons/5/52/The_Souls_of_Black_Folk_title_page.jpg"/></a>
+				<div class="headlines">
+                <caption><em>The Souls of Black Folk</em></caption></br>
+				<caption>First edition, 1903.</caption>
+				<p></p>
+				<input type="text" value="Search"><a href="#"><img src="https://openclipart.org/image/800px/svg_to_png/211861/matt-icons_system-search.png" width="6%" /></a>
+				<h3>About This Site</h3>
+				<p>William Edward Burghardt Du Bois was born in 1868 in Great Barrington, Massachusetts, to a free-black family. He attended the local schools and excelled in his studies, eventually graduating as valedictorian of his class. However, when in 1885 he began attending Fisk University in Tennessee, he encountered for the first time the open bigotry and repression of the Jim Crow South, and the experience had a profound impact on his thinking. Du Bois returned to the North to further his education, with nothing less than equal rights for black Americans being his goal. When he earned his Ph.D. from Harvard University in 1895, he was the first black man to have done so, and his dissertation, "The Suppression of the African Slave Trade to the United States of America, 1638–1870," was one of the first academic works on the subject.</p>
+
+				<p>This website is a transcription of his most famous work, <em>The Souls of Black Folk</em> that was published in 1903. In it, he recounts the problems of race in American culture, which he defined as the problem of the twentieth century. He writes about African-American cultural, political and social relevance to American history and civic life and documents how black people were central figures in the formation of the country and how and why the country failed to continue support for civil rights for blacks in the aftermath of Reconstruction.</p>
+				</div><!-- END headlines 1 -->
+			</div><!-- END icon_column_left -->
+          
+			<div class="icon_column_center">
+				<div class="center-column">	
+				<h2>Introduction to the Chapter</h2>
+				<p>The second chapter of W.E.B. Du Bois' The Souls of Black Folk, an essay entitled "Of the Dawn of Freedom," is a historical account of the time between an ebb and flow of the fortunes of African Americans in the period immediately after slavery and before the onset of the period of segregation, in which the freedom of most African Americans was precariously balanced on the abilities of those charged with the management of the Freedmen's Bureau.</p>
+				<h2>Sorrow Song</h2>
+				<caption>musical notation from <a href="http://www.hymnary.org/text/youll_hear_the_trumpet_sound">"My Lord, What a Morning"</a>
+
+				<img src="https://images.rapgenius.com/60100b7203a3e16554c5f46efb59bc7d.457x158x1.gif" width="90%"/>
+				<p>The first stanza of the <a href="http://xroads.virginia.edu/~hyper/twh/higg.html">spiritual</a> or <a href="http://www.bartleby.com/114/14.html">sorrow song</a> that Du Bois uses to introduce the chapter reads:</p>
+				<p>My Lord, what a morning!</br>
+				My Lord, what a morning!</br>
+				O my Lord, what a morning!</br>
+				When the stars begin to fall.</p>
+				<p>The end of the institution of slavery must have been a cataclysmic event for slaveholders but most especially for the enslaved. Du Bois’ use of this old spiritual gives new meaning to freedom. The enslaved were a deeply religious group who believed that their prayers of deliverance had been answered.</p>
+				<p>"This spiritual was arranged and harmonized by <a href="http://www.blackpast.org/aah/burleigh-harry-thacker-1866-1949">Harry Thacker Burleigh</a> (1866-1949), an influential black composer who was passionate about preserving the tradition of African American spirituals. Spirituals, said Burleigh, are hymns of soulful depth and rhythm that express the profound faith of slaves in the face of unspeakable injustice. The striking imagery of <em>My Lord, What a Morning</em> offers a glimpse of this faith. The hymn even carries a double name that is revealing — <em>My Lord, What a Mourning/Morning.</em> What is the meaning of this double name? The bitter tears of mourning that flow out of oppression and marginalization give way to a new morning in the birth, life, death, and resurrection of Jesus."</p>
+				<h2>Poem</h2>
+				<p>Careless seems the great Avenger;</br>
+				History's lessons but record</br>
+				One death-grapple in the darkness</br>
+				'Twixt old systems and the Word;</br>
+				Truth forever on the scaffold,</br>
+				Wrong forever on the throne;</br>
+				Yet that scaffold sways the future,</br>
+				And behind the dim unknown</br>
+				Standeth God within the shadow</br>
+				Keeping watch above His own.</p>
+				<p><a href="https://www.poets.org/poetsorg/poem/present-crisis">Lowell</a></p>
+				<p>Du Bois used the first stanza of James Russell Lowell’s poem "The Present Crisis" to headline the second chapter of The Souls of Black Folk. Lowell, a New England poet wrote the poem in 1845 about that national slavery crisis. This works well with this chapter because it stresses the aftermath of the Civil War and "The Present Crisis" of the newly freed. Although sympathetic to the abolitionist cause because of his first wife Maria White, Lowell was ambivalent about African Americans. Nonetheless, his poem has remained important in African American life and culture. Later, Du Bois chose the title of the poem for the <a href="http://www.naacp.org/">NAACP</a> journal. Martin Luther King, Jr. often quoted this first stanza in many of his speeches.</p>
+
+
+				<p style="text-align:right;"><a href="#">Comments</a></p>
+				</div><!-- END headlines 2 -->
+			</div><!-- END icon_column_center -->
+          
+			<div class="icon_column_right">
+				<div class="headlines">
+					<a href="#"><img src="https://openclipart.org/image/800px/svg_to_png/271735/imagebot-backward.png" width="6%" /> Previous Page</a>  ||  <a href="#">Next Page <img src="https://openclipart.org/image/800px/svg_to_png/271736/imagebot-forward.png" width="6%" /></a>
+					<h3>Original Manuscript Page</h3>
+					<p></p>
+				</div><!-- END headlines 3 -->
+				<a href="#"><img src="http://scua.library.umass.edu/exhibits/dubois/images/6_1_2.jpg" width="60%" height="" alt="original manuscript page"/></a>
+				<p>Click page image above to enlarge.</p>
+				<p>Annotations, where available, are denoted by the <a>blue links</a> in the transcriptions.</p>
+			</div><!-- END icon_column_right -->
+	
+	<footer>
+	        <p style="text-align: center;"><a href="#">Contact Us</a> | <a href="#">Join us on Facebook</a> | <a href="#">Follow Us on Twitter</a>
+	        <img src="http://www.mcla.edu/Assets/MCLA-Files/Administrative-Offices/Marketing-Commun/Block-logo/MCLA-block-logo-800.png" width="10%" /></p>
+	</footer>
+</div><!-- END rest_page -->
+
+</body>
+</html>
