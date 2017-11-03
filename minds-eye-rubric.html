@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mind's Eye Submission Rubric</title>
+<meta name="description" content="Rubric for editorial board to evaluate submissions">
+<meta name="author" content="Gerol C Petruzella">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <style>
+      body {
+        font-family: 'Lato', sans;
+        font-size: 16px;
+      }
+      .wrapper {
+      	text-align: center;
+      }
+    </style>
+</head>
+<body>
+<h2>Tier 1 Criteria</h2>
+
+<ol>
+<li>Submission fits the <strong>theme</strong> of the issue.
+	<form action="">
+  <input type="radio" name="settheme" id="t1" value="2"> clearly
+  <input type="radio" name="settheme" id="t2" value="1"> somewhat
+  <input type="radio" name="settheme" id="t3" value="0"> not at all
+	</form>
+</li></br>
+<li>Submission meets minimum <strong>quantitative</strong> threshold for a work of its kind.
+	<form action="">
+  <input type="radio" name="setquant" id="q1" value="2"> Yes
+  <input type="radio" name="setquant" id="q2" value="0"> no
+	</form>
+</li></br>
+<li>Submission conveys substantially <strong>original</strong> thinking and/or research.
+	<form action="">
+  <input type="radio" name="setorig" id="o1" value="2"> clearly
+  <input type="radio" name="setorig" id="o2" value="1"> somewhat
+  <input type="radio" name="setorig" id="o3" value="0"> not at all
+	</form>
+</li></br>
+<li>Submission intentionally represents voice(s) typically <strong>under-represented</strong> in scholarly or creative discourse, or in the readership community.
+	<form action="">
+  <input type="radio" name="setdiv" id="d1" value="2"> clearly
+  <input type="radio" name="setdiv" id="d2" value="1"> somewhat
+  <input type="radio" name="setdiv" id="d3" value="0"> not at all
+	</form>
+</li></br>
+<li>Submission requires <strong>editing</strong> to meet publication standards.
+	<form action="">
+  <input type="radio" name="setedit" id="e1" value="0"> substantial
+  <input type="radio" name="setedit" id="e2" value="1"> minimal
+  <input type="radio" name="setedit" id="e3" value="2"> no editing
+	</form>
+</li></br>
+<li>Submission meets all stated <strong>formatting</strong> requirements.
+	<form action="">
+  <input type="radio" name="setformat" id="f1" value="2"> Yes
+  <input type="radio" name="setformat" id="f2" value="0"> no
+	</form>
+</li>
+</ol>
+
+<h2>Tier 2 Criteria</h2>
+
+<ol>
+<li>Contributor has published other work in <em>The Mind's Eye</em> within the <strong>past calendar year.</strong>
+	<form action="">
+  <input type="radio" name="setrep" id="r1" value="-1"> Yes
+  <input type="radio" name="setrep" id="r2" value="0"> no
+	</form>
+</li></br>
+<li>Mode/format of submission is particularly suited to <strong>online</strong> publication (e.g., transmedia project).
+	<form action="">
+  <input type="radio" name="setdigi" id="s1" value="1"> Yes
+  <input type="radio" name="setdigi" id="s2" value="0"> no
+	</form>
+</li></br>
+<li>Contributor is a member of a <strong>local</strong> community.
+	<form action="">
+  <input type="radio" name="setloc" id="l1" value="1"> MCLA
+  <input type="radio" name="setloc" id="l2" value="1"> North Adams
+  <input type="radio" name="setloc" id="l3" value="1"> Berkshire County
+  <input type="radio" name="setloc" id="l4" value="0"> no
+	</form>
+</li>
+</ol>
+<div class="wrapper"><button onclick="displayScore()">Calculate score</button></div>
+
+<p style="text-align: center;" id="result"></p>
+<p style="text-align: center;" id="thresh"></p>
+
+<script>
+function getSum(to, nu) {
+    return to + nu;
+}
+function displayScore() {
+
+var vars = [];
+var opts = ["t1", "t2", "t3", "q1", "q2", "o1", "o2", "o3", "d1", "d2", "d3", "e1", "e2", "e3", "f1", "f2", "r1", "r2", "s1", "s2", "l1", "l2", "l3", "l4"];
+var i;
+var j;
+	for (i = 0; i < opts.length; i++) {
+		if (document.getElementById(opts[i]).checked) {
+		vars.push(Number(document.getElementById(opts[i]).value))
+		}
+	}
+document.getElementById('result').innerHTML = "The score of this submission is: " + vars.reduce(getSum);
+document.getElementById('thresh').innerHTML = "The minimum score is: 10.";
+}
+</script>
+</body>
+</html>
