@@ -13,6 +13,11 @@
 <button type="button" onclick="loadXML()">Click for accessible data</button>
 </div>
 
+<div id="json2">
+<button type="button" onclick="loadStuff()">Click to parse</button>
+</div>
+
+  
 <script>
 
 function loadXML() {
@@ -25,7 +30,13 @@ function loadXML() {
   xhttp.open("GET", "https://uploads.knightlab.com/storymapjs/264d1187a29448e1252d90856e644ca1/history-careers/draft.json", true);
   xhttp.send();  
 }
-//   var obj = JSON.parse(xhttp);
+  
+var obj = JSON.parse(xhttp);
+
+function loadStuff() {
+  document.getElementById("json2").innerHTML = obj;
+}
+
 </script>
 </body>
 </html>
