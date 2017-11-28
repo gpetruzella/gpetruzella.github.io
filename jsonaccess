@@ -1,0 +1,41 @@
+<html>
+<head>
+<style>
+body {
+text-align: center;
+}
+</style>
+</head>
+<body>
+<h2>Using the XMLHttpRequest Object</h2>
+
+<div id="jsontable">
+<button type="button" onclick="loadXMLDoc()">Change Content</button>
+</div>
+
+<script>
+
+function loadXMLDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("jsontable").innerHTML =
+      this.responseText;
+    }
+  };
+  xhttp.open("GET", "https://uploads.knightlab.com/storymapjs/264d1187a29448e1252d90856e644ca1/history-careers/draft.json", true);
+  xhttp.send();
+}
+
+
+var obj = JSON.parse(xhttp);
+
+for (i = 0; i < obj.length; i++) {
+
+document.getElementById("jsontable").innerHTML = xhttp;
+
+}
+
+</script>
+</body>
+</html>
