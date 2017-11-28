@@ -19,7 +19,7 @@ function loadXML() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("jsontable").innerHTML = xhttp;
+      document.getElementById("jsontable").innerHTML = this;
     }
   };
   xhttp.open("GET", "https://uploads.knightlab.com/storymapjs/264d1187a29448e1252d90856e644ca1/history-careers/draft.json", true);
