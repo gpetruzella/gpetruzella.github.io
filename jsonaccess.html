@@ -16,10 +16,9 @@
 
 <script>
 
+function loadXML() {
   var xhttp = new XMLHttpRequest();
   var obj = JSON.parse(xhttp);
-
-function loadXML() {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 
