@@ -12,11 +12,6 @@
 <div id="jsontable">
 <button type="button" onclick="loadXML()">Click for accessible data</button>
 </div>
-
-<div id="json2">
-<button type="button" onclick="loadStuff()">Click to parse</button>
-</div>
-
   
 <script>
   var xhttp = new XMLHttpRequest();
@@ -32,10 +27,6 @@ function loadXML() {
   xhttp.send();  
 }
 
-function loadStuff() {
-  document.getElementById("json2").innerHTML = obj;
-}
-
-</script>
+  </script>
 </body>
 </html>
