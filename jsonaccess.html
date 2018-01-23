@@ -8,25 +8,162 @@
   </head>
 <body>
 <h2>Using XMLHttpRequest to Generate Accessible StoryMap Content</h2>
+<iframe id="storymap" src="https://uploads.knightlab.com/storymapjs/264d1187a29448e1252d90856e644ca1/history-careers/draft.html" scrolling="auto" title="MCLA Internships" marginheight="" marginwidth="" height="577" frameborder="0" width="735">
+<p>Your browser does not support frames or is currently configured not to display frames. However, you may browse the content of frames by
+<a href="https://uploads.knightlab.com/storymapjs/264d1187a29448e1252d90856e644ca1/history-careers/draft.html">clicking here.</a></p>
+</iframe>
 
 <div id="jsontable">
-<button type="button" onclick="loadXML()">Click for accessible StoryMaps data</button>
+<a title="StoryMapJS data in table format" href="#jsontable" style="text-align:center;" onclick="loadXML()">Display StoryMapJS data in table format</a>
 </div>
-  
+
 <script>
   var xhttp = new XMLHttpRequest();
-  
-function loadXML() {
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 2 && this.status == 200) {
-      var obj = JSON.parse(xhttp);
-      document.getElementById("jsontable").innerHTML = this.responseText;
+// Note that the <iframe> containing the StoryMapsJS object must have id="storymap" to establish var urlHtml.
+  var urlHtml = document.getElementById("storymap").getAttribute("src");
+// The two replace()s below convert the StoryMapJS URL into the URI of the JSON data which will populate the table.
+  var urlJson = urlHtml.replace("index", "draft");
+  var urlJson = urlJson.replace("html", "json");
+// The function loadXML() gets data from urlJson, stringifies it, edits the string, then calls ConvertJsonToTable().
+function loadXML() { 
+ xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var obj = JSON.parse(this.responseText);
+      var obj = JSON.stringify(obj);
+// The replace()s below scrub the obj string for a more human-readable table.
+      var obj = obj.replace(/zoomify|location|head|storymap|media|text|attribution|call_to_action|true|false|slides|date|caption|credit|type|overview|line|osm|zoom|map_as_image|map_subdomains|map_|,|url|::|\/\/|[{\[\]}_\"]/gim , "");
+// The replace()s below prepend the text 'image url' to each image url, & 'New Slide:' before that (colon intentional, to trigger creation of a new table row).
+      var obj = obj.replace(/uploads\.k/gim , "image url is uploads.k"); obj = obj.replace(/image url/gim , "New Slide:image url");
+// The replace()s below replace StoryMapJS's 'lat' and 'lon' with human-readable words.
+      var obj = obj.replace(/lat:/gim , "latitude "); obj = obj.replace(/lon:/gim , "longitude ");
+// The replace() below divides the string objclean into a colon-separated array.
+      var jsonarray = obj.split(":");
+      var jtable = ConvertJsonToTable(jsonarray);
+// The two replace()s below eliminate empty <table> elements.
+      var jtable = jtable.replace(/<td><\/td>/g, "");
+      var jtable = jtable.replace(/<tr><\/tr>/g, "");
+      var jtable = jtable.replace(/<tr><td>standard<\/td><\/tr>/gim, "");
+      document.getElementById("jsontable").innerHTML = jtable;
     }
   };
-  xhttp.open("GET", "https://uploads.knightlab.com/storymapjs/264d1187a29448e1252d90856e644ca1/history-careers/draft.json", true);
+  xhttp.open("GET", urlJson, true);
+  xhttp.setRequestHeader("Accept", "*/*");
   xhttp.send();  
 }
 
-  </script>
-</body>
+// below from https://github.com/afshinm/Json-to-HTML-Table/blob/master/json-to-table.js
+/** JavaScript format string function */
+String.prototype.format = function()
+{
+  var args = arguments;
+
+  return this.replace(/{(\d+)}/g, function(match, number)
+  {
+    return typeof args[number] != 'undefined' ? args[number] :
+                                                '{' + number + '}';
+  });
+};
+/**
+ * Convert a Javascript Object array or String array to an HTML table
+ * JSON parsing has to be made before function call
+ * It allows use of other JSON parsing methods like jQuery.parseJSON
+ * http(s)://, ftp://, file:// and javascript:; links are automatically computed
+ * @author Afshin Mehrabani <afshin dot meh at gmail dot com>
+ */
+function ConvertJsonToTable(parsedJson, tableId, tableClassName, linkText)
+{
+    //Patterns for links and NULL value
+    var italic = '<i>{0}</i>';
+    var link = linkText ? '<a href="{0}">' + linkText + '</a>' :
+                          '<a href="{0}">{0}</a>';
+
+    //Pattern for table                          
+    var idMarkup = tableId ? ' id="' + tableId + '"' :
+                             '';
+    var classMarkup = tableClassName ? ' class="' + tableClassName + '"' :
+                                       '';
+    var tbl = '<table border="1" cellpadding="1" cellspacing="1"' + idMarkup + classMarkup + '>{0}{1}</table>';
+
+    //Patterns for table content
+    var th = '<thead>{0}</thead>';
+    var tb = '<tbody>{0}</tbody>';
+    var tr = '<tr>{0}</tr>';
+    var thRow = '<th>{0}</th>';
+    var tdRow = '<td>{0}</td>';
+    var thCon = '';
+    var tbCon = '';
+    var trCon = '';
+
+    if (parsedJson)
+    {
+        var isStringArray = typeof(parsedJson[0]) == 'string';
+        var headers;
+
+        // Create table headers from JSON data
+        // If JSON data is a simple string array we create a single table header
+        if(isStringArray)
+            thCon += thRow.format('StoryMapJS Data');
+        else
+        {
+            // If JSON data is an object array, headers are automatically computed
+            if(typeof(parsedJson[0]) == 'object')
+            {
+                headers = array_keys(parsedJson[0]);
+
+                for (var i = 0; i < headers.length; i++)
+                    thCon += thRow.format(headers[i]);
+            }
+        }
+        th = th.format(tr.format(thCon));
+        
+        // Create table rows from Json data
+        if(isStringArray)
+        {
+            for (var i = 0; i < parsedJson.length; i++)
+            {
+                tbCon += tdRow.format(parsedJson[i]);
+                trCon += tr.format(tbCon);
+                tbCon = '';
+            }
+        }
+        else
+        {
+            if(headers)
+            {
+                var urlRegExp = new RegExp(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig);
+                var javascriptRegExp = new RegExp(/(^javascript:[\s\S]*;$)/ig);
+                for (var i = 0; i < parsedJson.length; i++)
+                {
+                    for (var j = 0; j < headers.length; j++)
+                    {
+                        var value = parsedJson[i][headers[j]];
+                        var isUrl = urlRegExp.test(value) || javascriptRegExp.test(value);
+                        if(isUrl)   // If value is URL we auto-create a link
+                            tbCon += tdRow.format(link.format(value));
+                        else
+                        {
+                            if(value){
+                              if(typeof(value) == 'object'){
+                                //for supporting nested tables
+                                tbCon += tdRow.format(ConvertJsonToTable(eval(value.data), value.tableId, value.tableClassName, value.linkText));
+                              } else {
+                                tbCon += tdRow.format(value);
+                              }
+                            } else {    // If value == null we format it like PhpMyAdmin NULL values
+                                tbCon += tdRow.format(italic.format(value).toUpperCase());
+                            }
+                        }
+                    }
+                    trCon += tr.format(tbCon);
+                    tbCon = '';
+                }
+            }
+        }
+        tb = tb.format(trCon);
+        tbl = tbl.format(th, tb);
+        return tbl;
+    }
+    return null;
+}
+</script></body>
 </html>
