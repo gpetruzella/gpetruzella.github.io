@@ -1,0 +1,8 @@
+javascript:(function printQuiz(){
+var zed = document.querySelector("#submit_quiz_form").outerHTML;
+var zed = zed.replace(/Links to an external site\./gim , "");
+var zed = zed.replace(/class=\"screenreader-only\"|class=\"form-actions\"/gim , "hidden=\"hidden\"");
+var zed = zed.replace(/class=\"accessibility-warning screenreader-only\"/gim , "hidden=\"hidden\"");
+var myWindow = window.open();
+myWindow.document.write("<p>Here is the printer-friendly Quiz - use your browser's Print feature:</p>" + zed);
+})();
