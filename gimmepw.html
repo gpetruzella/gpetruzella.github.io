@@ -6,14 +6,20 @@
 <body>
 
 <div>
-<a href="http://gpetruzella.github.io/phished.html"><img src="./phishing-image-google.png" style="width:80%; margin-left:auto; display:block; margin-right:auto;" alt="googley password" /></a>
+<img id="surp" onclick="myFunction()" src="./phishing-image-google.png" style="width:80%; margin-left:auto; display:block; margin-right:auto;" alt="googley password" />
 </div>
 
 <div style="margin:auto;position:fixed;bottom:53%;right:47%;transform:scale(1.7);">
-  <form action="phishy.php" method="post">
-  <input type="password" name="psw" value="">
+  <form>
+  <input type="password" name="psw" id="pass" value="">
   </form>
 </div>
+
+<script>
+  function muFunction() {
+document.getElementById("surp").innerHTML = "Congratulations: your password" + document.getElementById("pass").value + "is now in my black-market database. Cha-ching!";
+  }
+  </script>
 
 </body>
 </html>
