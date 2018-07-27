@@ -23,7 +23,7 @@
   function myFunction01() {
     document.getElementById("secret01").innerHTML = document.getElementById("pass").value;
     document.getElementById("pic").src = "./phishing-image-google-02.png";
-    document.getElementById("pic").onclick = "myFunction02()";
+    document.getElementById("pic").setAttribute("onClick","myFunction02()");
     document.getElementById("pass").value = "";
   };
   
