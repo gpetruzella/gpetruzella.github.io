@@ -7,7 +7,7 @@
 
 <h1 id="surp" style="text-align:center;"></h1>
 <div>
-<img onclick="myFunction()" src="./phishing-image-google.png" style="width:80%; margin-left:auto; display:block; margin-right:auto;" alt="googley password" />
+<img id="pic" onclick="myFunction01()" src="./phishing-image-google-01.png" style="width:80%; margin-left:auto; display:block; margin-right:auto;" alt="googley password" />
 </div>
 
 <div style="margin:auto;position:fixed;bottom:53%;right:47%;transform:scale(1.7);">
@@ -16,9 +16,20 @@
   </form>
 </div>
 
-<script>
-  function myFunction() {
-document.getElementById("surp").innerHTML = "Congratulations: you've been phished! Your password " + document.getElementById("pass").value + " is now in my black-market database. Cha-ching!";
+  <div id="secret01" style="visibility:hidden;"></div>
+  <div id="secret02" style="visibility:hidden;"></div>
+
+  <script>
+  function myFunction01() {
+    document.getElementById("secret01").innerHTML = document.getElementById("pass").value;
+    document.getElementById("pic").src = "./phishing-image-google-02.png";
+    document.getElementById("pic").onclick = "myFunction02()";
+    document.getElementById("pass").value = "";
+  };
+  
+  function myFunction02() {
+    document.getElementById("secret02").innerHTML = document.getElementById("pass").value;
+document.getElementById("surp").innerHTML = "Congratulations: you've been phished! Your password " + document.getElementById("secret02").innerHTML + " is now in my black-market database. Cha-ching!";
   };
   </script>
 
