@@ -1,10 +1,10 @@
-javascript:(function printQuiz(){
-var zed = document.querySelector("#submit_quiz_form").outerHTML;
-var zed = document.querySelector(".quiz-header").outerHTML + zed;
-var zed = zed.replace(/Links to an external site\./gim , "");
-var zed = zed.replace(/aria-level=\"2\">/gim , "aria-level=\"2\"><br />");
-var zed = zed.replace(/class=\"screenreader-only\"|class=\"form-actions\"|class=\"accessibility-warning screenreader-only\"|class=\"alert\"/gim , "hidden=\"hidden\"");
-var dt = new Date(); var dd = dt.getDate(); var mm = dt.getMonth()+1; var yy = dt.getFullYear();
-var myWindow = window.open();
-myWindow.document.write("<p>Printer-friendly Quiz generated: " + mm + "/" + dd + "/" + yy + "</p>" + zed);
+javascript:(function printQuiz(){ 
+var zed = document.querySelector("#submit_quiz_form").outerHTML; 
+var zed = document.querySelector(".quiz-header").outerHTML + zed; 
+var zed = zed.replace(/Links to an external site\./gim , ""); 
+var zed = zed.replace(/aria-level=\"2\">/gim , "aria-level=\"2\"><br />"); 
+var zed = zed.replace(/class=\"screenreader-only\"|class=\"form-actions\"|class=\"accessibility-warning screenreader-only\"|class=\"alert\"/gim , "hidden=\"hidden\""); 
+var zed = zed.replace(/class=\"answer_input\">/gim, "class=\"answer_input\" style=\" width: 25px;\">"); 
+var dt = new Date(); var dd = dt.getDate(); var mm = dt.getMonth()+1; var yy = dt.getFullYear(); 
+var myWindow = window.open(); myWindow.document.write("<p>Printer-friendly Quiz generated: " + mm + "/" + dd + "/" + yy + "</p>" + zed);
 })();
