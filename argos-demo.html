@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Faculty Dashboard</title>
+ 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+</head>
+<body style="text-align: center;">
+
+<div id="argos-Kibble" style="background-color:#0076D9; display:none;" class="w3-container"><img style="float:left;" src="http://gpetruzella.github.io/argos-kibble-01.png"/><img style="float:right;" src="http://gpetruzella.github.io/argos-kibble-02.png"/></div>
+
+<div id="fo-Logo" style="display:block;"><img alt="MCLA logo" style="width:400px;" src="https://www.mcla.edu/Assets/MCLA-Files/Administrative-Offices/Marketing-Commun/New-logos/MCLA-block-logo-800.png"></div>
+
+<div id="fo-Label9"><h1>Faculty Dashboard</h1></div>
+
+<div id="fo-Main_DD_Term">
+<form action="/action_page.php">
+  <label for="terms">Choose Term:</label>
+  <select id="terms" onchange="dispView();">
+    <option value=""></option>
+    <option value="202120">Spring 2021</option>
+    <option value="202140">Summer 2021</option>
+    <option value="202160">Fall 2021</option>
+    <option value="202220">Spring 2022</option>
+  </select>
+</form>
+</div>
+<div id="fo-Main_DD_Selection" style="display:none;">
+<form action="/action_page.php">
+  <label for="view">Choose View:</label>
+  <select id="view" onchange="dispStudents();">
+    <option value=""></option>
+    <option value="123456">Advisees</option>
+    <option value="654321">PHIL-100-01</option>
+    <option value="987654">PHIL-200-01</option>
+    <option value="456789">HONR-265-02</option>
+  </select>
+</form>
+</div>
+
+<div class="w3-row">
+<div class="w3-col m3 w3-center">&nbsp;</div>
+<div id="fo-Label35" style="display:none;" class="w3-col m6 w3-center"><h2>Student List:</h2>
+<ul>
+<li class="w3-dropdown-hover">Crom Cruach
+	<div class="w3-dropdown-content w3-bar-block w3-border">
+		<a href="#" id="overview0" class="w3-bar-item w3-button" onclick="dispOverview();">Overview</a>
+		<a href="#" id="contact0" class="w3-bar-item w3-button" onclick="dispContact();">Contact Info</a>
+		<a href="#" id="schedule0" class="w3-bar-item w3-button" onclick="dispSchedule();">Class Schedule</a>
+		<a href="#" class="w3-bar-item w3-button">GPA Info</a>
+		<a href="#" class="w3-bar-item w3-button">Notes</a>
+	</div></li>
+<li class="w3-dropdown-hover">Martialis Dannotalos</li>
+<li class="w3-dropdown-hover">Kortar Grethor</li>
+<li class="w3-dropdown-hover">Zeus Horkios</li>
+<li class="w3-dropdown-hover">Athena Promachos</li>
+<li class="w3-dropdown-hover">Josephine Student</li>
+<li class="w3-dropdown-hover">Wakan Tanka</li>
+<li class="w3-dropdown-hover">Xing Tian</li>
+<li class="w3-dropdown-hover">Olaf Tryggvason</li>
+<li class="w3-dropdown-hover">Sekhmet Werethekau</li>
+</ul>
+</div>
+<div class="w3-col m3 w3-center">&nbsp;</div>
+
+<div class="w3-row">
+<div class="w3-col m3 w3-center">&nbsp;</div>
+  <div id="container" class="w3-col m6 w3-center">
+    <div id="cont-overview" style="display:none;" class="w3-panel w3-border w3-round-large w3-cyan"><h2><strong>Overview:</strong></h2>
+    <img src="http://gpetruzella.github.io/crom_cruach.jpg"/>
+    <p><strong>Crom Cruach</strong><br/>
+    A100010000<br/>
+    he, him, his</p>
+    <p><strong>Class:</strong> Junior</p>
+    <p><strong>Major/Concentration:</strong> BIOL</p>
+    <p><strong>Minor:</strong> PSYC</p>
+    <p><strong>Advisor:</strong> Anne Goodwin</p>
+    </div>
+
+    <div id="cont-contact" style="display:none;" class="w3-panel w3-border w3-round-large w3-yellow"><h2><strong>Contact Info:</strong></h2>
+    <p><strong>Email:</strong> crom.cruach@mcla.edu</p>
+    <p><strong>Phone (Cell):</strong> 413-555-1212</p>
+    <p><strong>Phone (Permanent):</strong> 413-867-5309</p>
+    </div>
+
+    <div id="cont-schedule" style="display:none;" class="w3-panel w3-border w3-round-large w3-lime"><h2><strong>Class Schedule:</strong></h2>
+    <p>CRN: 123456 | BIOL-144-05 | Herpetology | Golub</p>
+    <p>CRN: 313459 | PSYC-237-08 | Institutional Psychology | Claffey</p>
+    <p>CRN: 009215 | ENGL-318-00 | 14th Century Haiku | Beilin</p>
+    <p>CRN: 916440 | FPA-271-13 | Tuba Recital | Dilthey</p>
+    </div>
+    
+    <div id="cont-gpa" style="display:none;" class="w3-panel w3-border w3-round-large w3-blue"><h2><strong>GPA Info:</strong></h2></div>
+    
+    <div id="cont-notes" style="display:none;" class="w3-panel w3-border w3-round-large w3-grey"><h2><strong>Notes:</strong></h2></div>
+  
+  </div>
+<div class="w3-col m3 w3-center">&nbsp;</div>
+</div>
+<script type="text/javascript">
+	function dispView() {
+  var x = document.getElementById("fo-Main_DD_Selection");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+};
+	function dispStudents() {
+  var x = document.getElementById("fo-Label35");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+};
+	function dispOverview() {
+  var x = document.getElementById("cont-overview");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+};
+  function dispContact() {
+  var x = document.getElementById("cont-contact");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+};
+  function dispSchedule() {
+  var x = document.getElementById("cont-schedule");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+};
+
+</script>
+</body>
+</html>
