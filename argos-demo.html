@@ -14,9 +14,20 @@
 
 <div id="fo-Label9"><h1><strong>Faculty Dashboard</strong></h1></div>
 
+<div class="w3-dropdown-hover">
+<div class="w3-button w3-round w3-purple"><strong>Quick Tools</strong>
+  <div class="w3-dropdown-content w3-bar-block w3-border">
+    <a href="https://banweb.mcla.edu:8443/PRD8/bwzkattd.P_FacAttend?Crn=40160&Term=202040" class="w3-bar-item w3-button" target="_blank">Attendance Reporting</a>
+    <a href="https://banweb.mcla.edu:8443/PRD8/bwlkfmgd.P_FacMidGrd?Crn=40160&Term=202040" target="_blank" class="w3-bar-item w3-button">Midterm Reporting</a>
+    <a href="https://banweb.mcla.edu:8443/PRD8/bwlkffgd.P_FacFinGrd?Crn=40160&Term=202040" target="_blank" class="w3-bar-item w3-button">Final Grade Reporting</a>
+    <a href="https://banweb.mcla.edu:8443/PRD8/twbkwbis.P_GenMenu?name=bmenu.MCLA_WebFocus" target="_blank" class="w3-bar-item w3-button">Academic Reporting</a>
+    <a href="https://lnk.mcla.edu/canvasrequest" target="_blank" class="w3-bar-item w3-button">Canvas Request Form</a>
+    <a href="https://dwprd.mcla.edu:9904/Dashboard/" target="_blank" class="w3-bar-item w3-button">Degree Works</a>
+  </div></div></div>
+<hr/>
 <div id="fo-Main_DD_Term">
 <form action="/action_page.php">
-  <label for="terms">Choose Term:</label>
+  <label for="terms"><strong>Choose Term:</strong></label>
   <select id="terms" onchange="dispView();">
     <option value=""></option>
     <option value="202120">Spring 2021</option>
@@ -26,10 +37,10 @@
   </select>
 </form>
 </div>
-
+<hr />
 <div id="fo-Main_DD_Selection" style="display:none;">
 <form action="/action_page.php">
-  <label for="view">Choose View:</label>
+  <label for="view"><strong>Choose View:</strong></label>
   <select id="view" onchange="dispStudents();">
     <option value=""></option>
     <option value="123456">Advisees</option>
@@ -50,12 +61,27 @@
 		<a href="#" id="overview0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-overview').style.display='block'">Overview</a>
 		<a href="#" id="contact0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-contact').style.display='block'">Contact Info</a>
 		<a href="#" id="schedule0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-schedule').style.display='block'">Class Schedule</a>
-		<a href="#" id="gpa0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-gpa').style.display='block'">GPA Info</a>
+		<a href="#" id="gpa0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-gpa').style.display='block'">GPA/Academic Info</a>
 		<a href="#" id="notes0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-notes').style.display='block'">Notes</a>
     <a href="#" id="all0" class="w3-bar-item w3-button" onclick="dispAll();">View All</a>
 	</div></li>
-<li class="w3-dropdown-hover">Martialis Dannotalos</li>
-<li class="w3-dropdown-hover">Kortar Grethor</li>
+<li class="w3-dropdown-hover">Martialis Dannotalos
+  <div class="w3-dropdown-content w3-bar-block w3-border">
+    <a href="#" id="overview0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-overview').style.display='block'">Overview</a>
+    <a href="#" id="contact0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-contact').style.display='block'">Contact Info</a>
+    <a href="#" id="schedule0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-schedule').style.display='block'">Class Schedule</a>
+    <a href="#" id="gpa0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-gpa').style.display='block'">GPA/Academic Info</a>
+    <a href="#" id="notes0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-notes').style.display='block'">Notes</a>
+    <a href="#" id="all0" class="w3-bar-item w3-button" onclick="dispAll();">View All</a>
+  </div></li>
+<li class="w3-dropdown-hover">Kortar Grethor<div class="w3-dropdown-content w3-bar-block w3-border">
+    <a href="#" id="overview0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-overview').style.display='block'">Overview</a>
+    <a href="#" id="contact0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-contact').style.display='block'">Contact Info</a>
+    <a href="#" id="schedule0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-schedule').style.display='block'">Class Schedule</a>
+    <a href="#" id="gpa0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-gpa').style.display='block'">GPA/Academic Info</a>
+    <a href="#" id="notes0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-notes').style.display='block'">Notes</a>
+    <a href="#" id="all0" class="w3-bar-item w3-button" onclick="dispAll();">View All</a>
+  </div></li>
 <li class="w3-dropdown-hover">Zeus Horkios</li>
 <li class="w3-dropdown-hover">Athena Promachos</li>
 <li class="w3-dropdown-hover">Josephine Student</li>
@@ -102,8 +128,9 @@
     
     <div id="cont-gpa" style="display:none;" class="w3-panel w3-cell w3-third w3-border w3-round-large w3-blue w3-display-container"><span onclick="this.parentElement.style.display='none'"
   class="w3-button w3-red w3-display-topright">x</span><h2><strong>GPA Info:</strong></h2>
-    <p><strong>Current GPA:</strong> 3.17</p>
-    <p><strong>Transfer GPA:</strong> 3.00</p></div>
+    <p><strong>Current GPA:</strong> 3.17 | <strong>Transfer GPA:</strong> 3.00</p>
+    <p><strong>Academic Standing:</strong> GS (Good Standing)</p>
+    <p><strong>Dropout Detective Risk Score:</strong> 11 (<a href="https://mcla.instructure.com/accounts/81455/external_tools/158388" target="_blank">launch</a>)</div>
     
     <div id="cont-notes" style="display:none;" class="w3-panel w3-third w3-cell w3-border w3-round-large w3-grey w3-display-container"><span onclick="this.parentElement.style.display='none'"
   class="w3-button w3-red w3-display-topright">x</span><h2><strong>Notes:</strong></h2>
@@ -132,12 +159,13 @@
 };
   function dispAll() {
   var x = document.getElementsByTagName("div");
-    x[13].style.display = "block";
-    x[14].style.display = "block";
-    x[15].style.display = "block";
-    x[16].style.display = "block";
-    x[17].style.display = "block";
     x[18].style.display = "block";
+    x[19].style.display = "block";
+    x[20].style.display = "block";
+    x[21].style.display = "block";
+    x[22].style.display = "block";
+    x[23].style.display = "block";
+    x[24].style.display = "block";
 };
 </script>
 </body>
