@@ -4,18 +4,23 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Faculty Dashboard</title>
- 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+ 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style type="text/css">
+    body {
+      font-size: w3-xlarge;
+    }
+  </style> 
 </head>
-<body style="text-align: center;">
+<body style="text-align: center; background-color: #0085CA;">
 
-<div id="argos-Kibble" style="background-color:#0076D9;"><img style="width:100%;" src="http://gpetruzella.github.io/argos-kibble-03.png"/></div>
+<div id="argos-Kibble" style="background-color:#0085CA"><img style="width:100%;" src="http://gpetruzella.github.io/argos-kibble-03.png"/></div>
 
 <div id="fo-Logo" style="display:block;"><img alt="MCLA logo" style="width:300px; max-width: 99%;" src="https://www.mcla.edu/Assets/MCLA-Files/Administrative-Offices/Marketing-Commun/New-logos/MCLA-block-logo-800.png"></div>
 
 <div id="fo-Label9"><h1><strong>Faculty Dashboard</strong></h1></div>
 
 <div class="w3-dropdown-hover">
-<div class="w3-button w3-round w3-purple"><strong>Quick Tools</strong>
+<div class="w3-button w3-border-black" style="background-color:#E3E935;"><strong>Quick Tools</strong>
   <div class="w3-dropdown-content w3-bar-block w3-border">
     <a href="https://banweb.mcla.edu:8443/PRD8/bwzkattd.P_FacAttend?Crn=40160&Term=202040" class="w3-bar-item w3-button" target="_blank">Attendance Reporting</a>
     <a href="https://banweb.mcla.edu:8443/PRD8/bwlkfmgd.P_FacMidGrd?Crn=40160&Term=202040" target="_blank" class="w3-bar-item w3-button">Midterm Reporting</a>
@@ -53,15 +58,15 @@
 
 <div class="w3-container">
 <div class="w3-row-padding">
-<div class="w3-col m3 w3-center">&nbsp;</div>
-<div id="fo-Label35" style="display:none;" class="w3-col m6 w3-center"><h2>Student List:</h2>
-<ul class="w3-ul w3-small">
-<li class="w3-dropdown-hover">Crom Cruach
+
+<div id="fo-Label35" style="display:none;" class="w3-col m12 w3-center"><h2><strong>Student List:</strong></h2>
+<ul class="w3-ul w3-hoverable">
+<li class="w3-dropdown-hover w3-red">Crom Cruach
 	<div class="w3-dropdown-content w3-bar-block w3-border">
 		<a href="#" id="overview0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-overview').style.display='block'">Overview</a>
 		<a href="#" id="contact0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-contact').style.display='block'">Contact Info</a>
 		<a href="#" id="schedule0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-schedule').style.display='block'">Class Schedule</a>
-		<a href="#" id="gpa0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-gpa').style.display='block'">GPA/Academic Info</a>
+		<a href="#" id="gpa0" class="w3-bar-item w3-button w3-red" onclick="document.getElementById('cont-gpa').style.display='block'">GPA/Academic Info</a>
 		<a href="#" id="notes0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-notes').style.display='block'">Notes</a>
     <a href="#" id="all0" class="w3-bar-item w3-button" onclick="dispAll();">View All</a>
 	</div></li>
@@ -91,13 +96,13 @@
 <li class="w3-dropdown-hover">Sekhmet Werethekau</li>
 </ul>
 </div>
-<div class="w3-col m3 w3-center">&nbsp;</div>
+<div class="w3-col m1 w3-center">&nbsp;</div>
 
 <div class="w3-row-padding">
 
-  <div id="container">
-    <div id="cont-overview" style="display:none;" class="w3-panel w3-third w3-cell w3-border w3-round-large w3-cyan w3-display-container"><span onclick="this.parentElement.style.display='none'"
-  class="w3-button w3-red w3-display-topright">x</span>
+  <div id="cont">
+    <div id="cont-overview" style="display:none; background-color: #88DBDF;" class="w3-third w3-cell w3-border w3-round-large w3-card-4 w3-display-container"><span onclick="this.parentElement.style.display='none'"
+  class="w3-button w3-pale-red w3-round-large w3-display-topright">x</span>
   <h2><strong>Overview:</strong></h2>
     <a href="#"><img src="http://gpetruzella.github.io/arrow-back.png"/></a>
     <img src="http://gpetruzella.github.io/crom_cruach.jpg"/>
@@ -111,29 +116,31 @@
     <p><strong>Advisor:</strong> Anne Goodwin</p>
     </div>
 
-    <div id="cont-contact" style="display:none;" class="w3-panel w3-third w3-cell w3-border w3-round-large w3-yellow w3-display-container"><span onclick="this.parentElement.style.display='none'"
-  class="w3-button w3-red w3-display-topright">x</span><h2><strong>Contact Info:</strong></h2>
-    <p><strong>Email:</strong> <a href="#">crom.cruach@mcla.edu</a></p>
+    <div id="cont-contact" style="display:none;" class="w3-card-4 w3-third w3-cell w3-border w3-round-large w3-yellow w3-display-container"><span onclick="this.parentElement.style.display='none'"
+  class="w3-button w3-pale-red w3-round-large w3-display-topright">x</span><h2><strong>Contact Info:</strong></h2>
+    <p><strong>Email:</strong> <a href="mailto:crom.cruach@mcla.edu">crom.cruach@mcla.edu</a></p>
     <p><strong>Phone (Cell):</strong> 413-555-1212</p>
     <p><strong>Phone (Permanent):</strong> 413-867-5309</p>
     </div>
 
-    <div id="cont-schedule" style="display:none;" class="w3-panel w3-third w3-cell w3-border w3-round-large w3-lime w3-display-container"><span onclick="this.parentElement.style.display='none'"
-  class="w3-button w3-red w3-display-topright">x</span><h2><strong>Class Schedule:</strong></h2>
-    <p>[CRN 123456] <strong>BIOL-144-05</strong> | Herpetology | Golub</p>
-    <p>[CRN 313459] <strong>PSYC-237-08</strong> | Institutional Psychology | Claffey</p>
-    <p>[CRN 009215] <strong>ENGL-318-00</strong> | 14th Century Haiku | Beilin</p>
-    <p>[CRN 916440] <strong>FPA-271-13</strong> | Tuba Recital | Dilthey</p>
+    <div id="cont-schedule" style="display:none;" class="w3-third w3-cell w3-border w3-card-4 w3-round-large w3-lime w3-display-container"><span onclick="this.parentElement.style.display='none'"
+  class="w3-button w3-pale-red w3-round-large w3-display-topright">x</span><h2><strong>Class Schedule:</strong></h2>
+  <ul class="w3-ul w3-hoverable">
+    <li>[CRN 123456] <strong>BIOL-144-05</strong> | Herpetology | Golub</li>
+    <li>[CRN 313459] <strong>PSYC-237-08</strong> | Institutional Psychology | Claffey</li>
+    <li>[CRN 009215] <strong>ENGL-318-00</strong> | 14th Century Haiku | Beilin</li>
+    <li>[CRN 916440] <strong>FPA-271-13</strong> | Tuba Recital | Dilthey</li>
+  </ul>
     </div>
     
-    <div id="cont-gpa" style="display:none;" class="w3-panel w3-cell w3-third w3-border w3-round-large w3-blue w3-display-container"><span onclick="this.parentElement.style.display='none'"
-  class="w3-button w3-red w3-display-topright">x</span><h2><strong>GPA Info:</strong></h2>
+    <div id="cont-gpa" style="display:none;" class="w3-card-4 w3-cell w3-third w3-border w3-round-large w3-blue w3-display-container"><span onclick="this.parentElement.style.display='none'"
+  class="w3-button w3-pale-red w3-round-large w3-display-topright">x</span><h2><strong>GPA Info:</strong></h2>
     <p><strong>Current GPA:</strong> 3.17 | <strong>Transfer GPA:</strong> 3.00</p>
-    <p><strong>Academic Standing:</strong> GS (Good Standing)</p>
-    <p><strong>Dropout Detective Risk Score:</strong> 11 (<a href="https://mcla.instructure.com/accounts/81455/external_tools/158388" target="_blank">launch</a>)</div>
+    <p><strong>Academic Standing:</strong> <span class="w3-tooltip">GS [?]<span class="w3-text w3-tag">(Good Standing)</span></p>
+    <p class="w3-red"><strong>Dropout Detective Risk Score: 67</span></strong> (<a href="https://mcla.instructure.com/accounts/81455/external_tools/158388" target="_blank">launch</a>)</div>
     
-    <div id="cont-notes" style="display:none;" class="w3-panel w3-third w3-cell w3-border w3-round-large w3-grey w3-display-container"><span onclick="this.parentElement.style.display='none'"
-  class="w3-button w3-red w3-display-topright">x</span><h2><strong>Notes:</strong></h2>
+    <div id="cont-notes" style="display:none;" class="w3-card-4 w3-third w3-cell w3-border w3-round-large w3-grey w3-display-container"><span onclick="this.parentElement.style.display='none'"
+  class="w3-button w3-pale-red w3-round-large w3-display-topright">x</span><h2><strong>Notes:</strong></h2>
     <iframe src="https://docs.google.com/document/d/e/2PACX-1vSikMi4-5bHjJYDfpCMbHAgDWy_m98-ubJhOLZ6bzc9DS4Hw7Vp5PBNnIECTSfeMgE_UN1GqbgHJTpZ/pub?embedded=true"></iframe></div>
   
   </div>
@@ -159,13 +166,13 @@
 };
   function dispAll() {
   var x = document.getElementsByTagName("div");
+    x[17].style.display = "block";
     x[18].style.display = "block";
     x[19].style.display = "block";
     x[20].style.display = "block";
     x[21].style.display = "block";
     x[22].style.display = "block";
     x[23].style.display = "block";
-    x[24].style.display = "block";
 };
 </script>
 </body>
