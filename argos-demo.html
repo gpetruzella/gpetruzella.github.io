@@ -5,37 +5,30 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Faculty Dashboard</title>
  	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <style type="text/css">
-    body {
-      font-size: w3-xlarge;
-    }
-  </style> 
 </head>
 <body style="text-align: center; background-color: #0085CA;">
-
 <div class="w3-top">
   <div id="argos-Kibble" class="w3-bar" style="background-color:#0085CA"><img style="width:100%;" src="https://gpetruzella.github.io/argos-kibble-03.png"/></div>
 </div>
 <br><br><br><br><br>
 <div id="fo-Logo" style="display:block;"><img alt="MCLA logo" style="width:300px; max-width: 99%;" src="https://www.mcla.edu/Assets/MCLA-Files/Administrative-Offices/Marketing-Commun/New-logos/MCLA-block-logo-800.png"></div>
-
 <div id="fo-Label9"><h1><strong>Faculty Dashboard</strong></h1></div>
 
 <div class="w3-dropdown-hover">
-<div class="w3-button w3-border-black" style="background-color:#E3E935;"><strong>Quick Tools</strong>
-  <div class="w3-dropdown-content w3-bar-block w3-border">
+  <div class="w3-button w3-border-black" style="background-color:#E3E935;"><strong>Quick Tools</strong>
+    <div class="w3-dropdown-content w3-bar-block w3-border">
     <a href="https://banweb.mcla.edu:8443/PRD8/bwzkattd.P_FacAttend?Crn=40160&Term=202040" class="w3-bar-item w3-button" target="_blank">Attendance Reporting</a>
     <a href="https://banweb.mcla.edu:8443/PRD8/bwlkfmgd.P_FacMidGrd?Crn=40160&Term=202040" target="_blank" class="w3-bar-item w3-button">Midterm Reporting</a>
     <a href="https://banweb.mcla.edu:8443/PRD8/bwlkffgd.P_FacFinGrd?Crn=40160&Term=202040" target="_blank" class="w3-bar-item w3-button">Final Grade Reporting</a>
     <a href="https://banweb.mcla.edu:8443/PRD8/twbkwbis.P_GenMenu?name=bmenu.MCLA_WebFocus" target="_blank" class="w3-bar-item w3-button">Academic Reporting</a>
     <a href="https://lnk.mcla.edu/canvasrequest" target="_blank" class="w3-bar-item w3-button">Canvas Request Form</a>
     <a href="https://dwprd.mcla.edu:9904/Dashboard/" target="_blank" class="w3-bar-item w3-button">Degree Works</a>
-  </div></div></div>
+    </div></div></div>
 <hr/>
 <div id="fo-Main_DD_Term">
 <form action="/action_page.php">
-  <label for="terms"><strong>Choose Term:</strong></label>
-  <select id="terms" onchange="dispView();">
+  <label for="terms" class="w3-large"><strong>Choose Term:</strong></label>
+  <select id="terms" onchange="document.getElementById('fo-Main_DD_Selection').style.display='block'">
     <option value=""></option>
     <option value="202120">Spring 2021</option>
     <option value="202140">Summer 2021</option>
@@ -47,8 +40,8 @@
 <hr />
 <div id="fo-Main_DD_Selection" style="display:none;">
 <form action="/action_page.php">
-  <label for="view"><strong>Choose View:</strong></label>
-  <select id="view" onchange="dispStudents();">
+  <label for="view" class="w3-large"><strong>Choose View:</strong></label>
+  <select id="view" onchange="document.getElementById('fo-Label35').style.display='block'">
     <option value=""></option>
     <option value="123456">Advisees</option>
     <option value="654321">PHIL-100-01</option>
@@ -57,7 +50,6 @@
   </select>
 </form>
 </div>
-
 <div class="w3-container">
 <div class="w3-row-padding">
 
@@ -70,7 +62,7 @@
 		<a href="#" id="schedule0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-schedule').style.display='block'">Class Schedule</a>
 		<a href="#" id="gpa0" class="w3-bar-item w3-button w3-red" onclick="document.getElementById('cont-gpa').style.display='block'">GPA/Academic Info</a>
 		<a href="#" id="notes0" class="w3-bar-item w3-button" onclick="document.getElementById('cont-notes').style.display='block'">Notes</a>
-    <a href="#" id="all0" class="w3-bar-item w3-button" onclick="dispAll();">View All</a>
+    <a href="#" id="all0" class="w3-bar-item w3-button" onclick="dispAll();">View All Blocks</a>
 	</div></li>
 <li class="w3-dropdown-hover">Martialis Dannotalos
   <div class="w3-dropdown-content w3-bar-block w3-border">
@@ -101,7 +93,6 @@
 <div class="w3-col m1 w3-center">&nbsp;</div>
 
 <div class="w3-row-padding">
-
   <div id="cont">
     <div id="cont-overview" style="display:none; background-color: #88DBDF;" class="w3-third w3-cell w3-border w3-round-large w3-card-4 w3-display-container"><span onclick="this.parentElement.style.display='none'"
   class="w3-button w3-pale-red w3-round-large w3-display-topright">x</span>
@@ -146,29 +137,10 @@
     <div id="cont-notes" style="display:none;" class="w3-card-4 w3-third w3-cell w3-border w3-round-large w3-grey w3-display-container"><span onclick="this.parentElement.style.display='none'"
   class="w3-button w3-pale-red w3-round-large w3-display-topright">x</span><h2><strong>Notes:</strong></h2>
     <iframe src="https://docs.google.com/document/d/e/2PACX-1vSikMi4-5bHjJYDfpCMbHAgDWy_m98-ubJhOLZ6bzc9DS4Hw7Vp5PBNnIECTSfeMgE_UN1GqbgHJTpZ/pub?embedded=true"></iframe></div>
-  
   </div>
-
 </div>
 </div>
-
 <script type="text/javascript">
-	function dispView() {
-  var x = document.getElementById("fo-Main_DD_Selection");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-};
-	function dispStudents() {
-  var x = document.getElementById("fo-Label35");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-};
   function dispAll() {
   var x = document.getElementsByTagName("div");
     x[17].style.display = "block";
