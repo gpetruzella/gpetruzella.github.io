@@ -55,7 +55,6 @@
           }
         };
       });
-
       function start() {
         navigator.mediaDevices.getUserMedia({ audio: true }).then(s => {
           stream = s;
@@ -96,7 +95,6 @@
           console.error('Microphone error:', err);
         });
       }
-
       function stop() {
         if (recorder && recorder.state !== 'inactive') {
           clearInterval(timer);
