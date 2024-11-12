@@ -17,7 +17,6 @@
 <body>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Your recordAudio function code goes here
       if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
         alert('Audio recording requires HTTPS for security reasons.');
         return;
@@ -109,7 +108,7 @@
         if (!recorder || recorder.state === 'inactive') start();
         else stop();
       };
-    }); // Close the DOMContentLoaded event listener
+    });
   </script>
 </body>
 </html>
