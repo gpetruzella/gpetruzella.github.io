@@ -60,7 +60,7 @@
           stream = s;
           const chunks = [];
           recorder = new MediaRecorder(s);
-          let countdown = 5;
+          let countdown = 10;
           recorder.ondataavailable = e => chunks.push(e.data);
           recorder.onstop = () => {
             stream.getTracks().forEach(t => t.stop());
