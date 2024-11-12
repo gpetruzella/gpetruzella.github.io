@@ -37,6 +37,7 @@
       let recorder = null;
       let stream = null;
       let timer = null;
+
       navigator.permissions.query({ name: 'microphone' }).then(p => {
         if (p.state === 'denied') {
           status.textContent = 'Microphone blocked';
@@ -55,29 +56,24 @@
           }
         };
       });
+
       function start() {
         navigator.mediaDevices.getUserMedia({ audio: true }).then(s => {
           stream = s;
           const chunks = [];
           recorder = new MediaRecorder(s);
           let countdown = 10;
+
+          // Save recording on stop
           recorder.ondataavailable = e => chunks.push(e.data);
           recorder.onstop = () => {
-            stream.getTracks().forEach(t => t.stop());
-            const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `recording-${new Date().toISOString()}.ogg`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            saveRecording(chunks);
             btn.textContent = 'Start Recording';
             btn.style.backgroundColor = '#4CAF50';
             status.textContent = 'Saved';
             setTimeout(() => status.textContent = 'Ready', 2000);
           };
+
           recorder.start();
           btn.textContent = 'Stop Recording';
           btn.style.backgroundColor = '#f44336';
@@ -95,13 +91,27 @@
           console.error('Microphone error:', err);
         });
       }
+
       function stop() {
         if (recorder && recorder.state !== 'inactive') {
           clearInterval(timer);
-          recorder.stop();
+          recorder.stop();  // Triggers the `onstop` event, which will call saveRecording
           stream = null;
         }
       }
+
+      function saveRecording(chunks) {
+        const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `recording-${new Date().toISOString()}.ogg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
       btn.onclick = () => {
         if (!recorder || recorder.state === 'inactive') start();
         else stop();
