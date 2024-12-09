@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>Printable-Syllabus Bookmarklet!</title>
+<meta charset="UTF-8">
+<meta name="author" content="Gerol Petruzella">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        font-family: sans-serif;
+        font-size: 1.2em;
+        line-height: 1.5em;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<p>Drag-and-drop the following link into your bookmarks toolbar: <a href="javascript:(function(document) {
+    const contentDiv = document.getElementById('content');
+    const secondaryHeaderDiv = document.querySelector('.ic-Action-header__Secondary');
+    const printContent = (content, exclude) => {
+      const originalDisplay = exclude.style.display;
+      exclude.style.display = 'none';
+      window.print();
+      exclude.style.display = originalDisplay;
+    };
+    printContent(contentDiv, secondaryHeaderDiv);
+  })(document);">Printable Syllabus</a></p>
+<p>On the 'Syllabus' page of any Glow course, use the bookmark to immediately print a clean printable version of the Syllabus content!</p>
+</body>
+</html>
+
