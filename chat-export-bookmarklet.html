@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Export Bookmarklet</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .bookmarklet-container {
+            background: #f5f5f5;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .bookmarklet-link {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .bookmarklet-link:hover {
+            background: #0056b3;
+        }
+        .instructions {
+            background: #e8f4f8;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .demo-area {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        #chat-history {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #fafafa;
+            border-radius: 4px;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+        }
+        .message strong {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>📚 Chat Export Bookmarklet</h1>
+    
+    <p>This bookmarklet captures content from a chat window (with <code>id="chat-history"</code>), strips all but basic formatting, and downloads it as a clean HTML file.</p>
+
+    <div class="bookmarklet-container">
+        <p><strong>Drag this button to your bookmarks bar:</strong></p>
+        <a class="bookmarklet-link" href="javascript:(function()%7Bconst%20chatDiv%3Ddocument.getElementById('chat-history')%3Bif(!chatDiv)%7Balert('No%20element%20with%20id%3D%22chat-history%22%20found%20on%20this%20page.')%3Breturn%7Dconst%20cleanHTML%3Dhtml%3D%3E%7Bconst%20temp%3Ddocument.createElement('div')%3Btemp.innerHTML%3Dhtml%3Bconst%20userMessages%3Dtemp.querySelectorAll('%5Bclass%5E%3D%22user-query%22%5D%2C%20%5Bclass*%3D%22%20user-query%22%5D')%3BuserMessages.forEach(msg%3D%3E%7Bif(!msg.closest('%5Bdata-speaker%5D'))%7Bmsg.setAttribute('data-speaker'%2C'user')%7D%7D)%3Bconst%20allElements%3Dtemp.querySelectorAll('p%2C%20div%2C%20blockquote%2C%20pre%2C%20ul%2C%20ol')%3BallElements.forEach(elem%3D%3E%7Bif(elem.textContent.trim()%26%26!elem.hasAttribute('data-speaker')%26%26!elem.closest('%5Bdata-speaker%5D'))%7Bconst%20hasUserQuery%3Delem.querySelector('%5Bclass%5E%3D%22user-query%22%5D%2C%20%5Bclass*%3D%22%20user-query%22%5D')%3Bif(!hasUserQuery)%7Belem.setAttribute('data-speaker'%2C'bot')%7D%7D%7D)%3Bconst%20walker%3Ddocument.createTreeWalker(temp%2CNodeFilter.SHOW_ELEMENT%2Cnull%2Cfalse)%3Bconst%20nodesToRemove%3D%5B%5D%3Bconst%20allowedTags%3D%5B'P'%2C'DIV'%2C'SPAN'%2C'BR'%2C'B'%2C'STRONG'%2C'I'%2C'EM'%2C'U'%2C'H1'%2C'H2'%2C'H3'%2C'H4'%2C'H5'%2C'H6'%2C'UL'%2C'OL'%2C'LI'%2C'BLOCKQUOTE'%2C'PRE'%2C'CODE'%2C'A'%5D%3Bwhile(walker.nextNode())%7Bconst%20node%3Dwalker.currentNode%3Bif(!allowedTags.includes(node.tagName))%7BnodesToRemove.push(node)%7Delse%7BArray.from(node.attributes).forEach(attr%3D%3E%7Bif(attr.name!%3D%3D'href'%26%26attr.name!%3D%3D'data-speaker')%7Bif(node.tagName!%3D%3D'A'%7C%7Cattr.name!%3D%3D'href')%7Bnode.removeAttribute(attr.name)%7D%7D%7D)%7D%7DnodesToRemove.forEach(node%3D%3E%7Bif(node.parentNode)%7Bwhile(node.firstChild)%7Bnode.parentNode.insertBefore(node.firstChild%2Cnode)%7Dnode.parentNode.removeChild(node)%7D%7D)%3Breturn%20temp.innerHTML.replace(%2F%5Cs%2B%2Fg%2C'%20').replace(%2F%3E%5Cs%2B%3C%2Fg%2C'%3E%3C').trim()%7D%3Bconst%20content%3DcleanHTML(chatDiv.innerHTML)%3Bconst%20html%3D%60%3C!DOCTYPE%20html%3E%0A%3Chtml%20lang%3D%22en%22%3E%0A%3Chead%3E%0A%20%20%20%20%3Cmeta%20charset%3D%22UTF-8%22%3E%0A%20%20%20%20%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1.0%22%3E%0A%20%20%20%20%3Ctitle%3EChat%20Export%20-%20%24%7Bnew%20Date().toLocaleDateString()%7D%3C%2Ftitle%3E%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%20%20%20%20body%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20font-family%3A%20-apple-system%2C%20BlinkMacSystemFont%2C%20'Segoe%20UI'%2C%20Arial%2C%20sans-serif%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20line-height%3A%201.6%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20max-width%3A%20800px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin%3A%2040px%20auto%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%2020px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3A%20%23333%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20background%3A%20%23f5f5f5%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20h1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin-top%3A%201.5em%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin-bottom%3A%200.5em%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20p%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin%3A%201em%200%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20blockquote%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-left%3A%203px%20solid%20%23ccc%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding-left%3A%201em%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin-left%3A%200%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3A%20%23666%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20pre%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20background%3A%20%23f4f4f4%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%201em%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-radius%3A%204px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20overflow-x%3A%20auto%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20code%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20background%3A%20%23f4f4f4%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%202px%204px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-radius%3A%202px%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20a%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3A%20%230066cc%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%5Bdata-speaker%3D%22user%22%5D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20background%3A%20%23e3f2fd%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-left%3A%204px%20solid%20%232196F3%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%2012px%2016px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin%3A%2016px%200%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-radius%3A%200%208px%208px%200%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20position%3A%20relative%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%5Bdata-speaker%3D%22bot%22%5D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20background%3A%20%23f3e5f5%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-left%3A%204px%20solid%20%239c27b0%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%2012px%2016px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin%3A%2016px%200%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-radius%3A%200%208px%208px%200%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20position%3A%20relative%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%5Bdata-speaker%3D%22user%22%5D%3A%3Abefore%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20content%3A%20%22%F0%9F%91%A4%20USER%22%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20position%3A%20absolute%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20top%3A%20-8px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20left%3A%208px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20background%3A%20%232196F3%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3A%20white%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20font-size%3A%2010px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20font-weight%3A%20bold%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%202px%208px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-radius%3A%204px%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%5Bdata-speaker%3D%22bot%22%5D%3A%3Abefore%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20content%3A%20%22%F0%9F%A4%96%20ASSISTANT%22%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20position%3A%20absolute%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20top%3A%20-8px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20left%3A%208px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20background%3A%20%239c27b0%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3A%20white%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20font-size%3A%2010px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20font-weight%3A%20bold%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%202px%208px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-radius%3A%204px%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%5Bdata-speaker%3D%22user%22%5D%20strong%2C%0A%20%20%20%20%20%20%20%20%5Bdata-speaker%3D%22user%22%5D%20b%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3A%20%231976D2%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%5Bdata-speaker%3D%22bot%22%5D%20strong%2C%0A%20%20%20%20%20%20%20%20%5Bdata-speaker%3D%22bot%22%5D%20b%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3A%20%237B1FA2%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%5Bdata-speaker%5D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20box-shadow%3A%200%201px%203px%20rgba(0%2C0%2C0%2C0.1)%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20body%20%3E%20div%3Anot(%5Bdata-speaker%5D)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20background%3A%20white%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%2020px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-radius%3A%208px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20box-shadow%3A%200%202px%208px%20rgba(0%2C0%2C0%2C0.1)%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%3C%2Fstyle%3E%0A%3C%2Fhead%3E%0A%3Cbody%3E%0A%20%20%20%20%3Ch1%3EChat%20Export%3C%2Fh1%3E%0A%20%20%20%20%3Cp%3E%3Cem%3EExported%20on%20%24%7Bnew%20Date().toLocaleString()%7D%3C%2Fem%3E%3C%2Fp%3E%0A%20%20%20%20%3Chr%3E%0A%20%20%20%20%24%7Bcontent%7D%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E%60%3Bconst%20blob%3Dnew%20Blob(%5Bhtml%5D%2C%7Btype%3A'text%2Fhtml'%7D)%3Bconst%20url%3DURL.createObjectURL(blob)%3Bconst%20a%3Ddocument.createElement('a')%3Ba.href%3Durl%3Ba.download%3D%60chat-export-%24%7Bnew%20Date().toISOString().split('T')%5B0%5D%7D.html%60%3Bdocument.body.appendChild(a)%3Ba.click()%3Bdocument.body.removeChild(a)%3BURL.revokeObjectURL(url)%7D)()">📥 Export Chat</a>
+    </div>
+
+    <div class="instructions">
+        <h3>📋 How to Install:</h3>
+        <ol>
+            <li><strong>Desktop Browser:</strong> Drag the button above to your bookmarks bar</li>
+            <li><strong>Alternative:</strong> Right-click the button and select "Bookmark This Link"</li>
+            <li><strong>Manual:</strong> Copy the code below and create a new bookmark with it as the URL</li>
+        </ol>
+    </div>
+
+    <h2>How It Works</h2>
+    <p>The bookmarklet performs these steps:</p>
+    <ol>
+        <li>Finds the element with <code>id="chat-history"</code></li>
+        <li><strong>Detects user vs bot messages</strong> using a simple rule:
+            <ul style="list-style-type: disc; margin-left: 20px;">
+                <li>User messages: Any element with class starting with <code>user-query</code></li>
+                <li>Bot messages: Everything else</li>
+            </ul>
+        </li>
+        <li>Strips all formatting except basic HTML tags (p, div, span, br, strong, em, etc.)</li>
+        <li>Removes all CSS classes, IDs, and inline styles</li>
+        <li>Applies <strong>visual differentiation</strong> to the topmost container:
+            <ul style="list-style-type: disc; margin-left: 20px;">
+                <li>🔵 <strong>User messages:</strong> Blue background with blue accent border and "USER" label</li>
+                <li>🟣 <strong>Bot messages:</strong> Purple background with purple accent border and "ASSISTANT" label</li>
+            </ul>
+        </li>
+        <li>Generates a clean HTML file with minimal styling</li>
+        <li>Downloads the file with a timestamp</li>
+    </ol>
+
+    <h2>Preserved Elements</h2>
+    <p>The following HTML elements are preserved during export:</p>
+    <ul>
+        <li>Text formatting: <code>&lt;b&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;u&gt;</code></li>
+        <li>Structure: <code>&lt;p&gt;</code>, <code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>, <code>&lt;br&gt;</code></li>
+        <li>Headings: <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code></li>
+        <li>Lists: <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code></li>
+        <li>Quotes & Code: <code>&lt;blockquote&gt;</code>, <code>&lt;pre&gt;</code>, <code>&lt;code&gt;</code></li>
+        <li>Links: <code>&lt;a&gt;</code> (href attribute preserved)</li>
+    </ul>
+
+    <h2>Test Demo</h2>
+    <div class="demo-area">
+        <p>Try the bookmarklet on this sample chat:</p>
+        <div id="chat-history">
+            <div class="user-query-wrapper" style="color: blue; font-size: 14px;">
+                <span class="timestamp" data-time="123456">10:30 AM</span>
+                <p>Hello! Can you help me with <em>JavaScript</em>?</p>
+            </div>
+            <div class="response custom-class" id="msg-2">
+                <p>Of course! I'd be happy to help with JavaScript. Here's a simple example:</p>
+                <pre><code>function greet(name) {
+    return `Hello, ${name}!`;
+}</code></pre>
+                <p>You can also check the <a href="https://developer.mozilla.org">MDN documentation</a> for more details.</p>
+            </div>
+            <div class="user-query-text" style="background: #f0f0f0;">
+                <p>Thanks! What about <b>arrays</b>?</p>
+                <ul style="margin-left: 20px;">
+                    <li class="list-item">How to create them?</li>
+                    <li>How to iterate?</li>
+                </ul>
+            </div>
+        </div>
+        <button onclick="document.querySelector('.bookmarklet-link').click()" style="margin-top: 15px; padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Test Export on This Page
+        </button>
+    </div>
+
+    <h2>Raw Bookmarklet Code</h2>
+    <p>If you need to manually create the bookmark, use this code as the URL:</p>
+    <div class="code-block">
+        <pre>javascript:(function(){
+    const chatDiv = document.getElementById('chat-history');
+    if (!chatDiv) {
+        alert('No element with id="chat-history" found on this page.');
+        return;
+    }
+    
+    const cleanHTML = (html) => {
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        
+        // Simple detection: elements with class starting with "user-query" = user, everything else = bot
+        const userMessages = temp.querySelectorAll('[class^="user-query"], [class*=" user-query"]');
+        userMessages.forEach(msg => {
+            // Only mark if not already inside another marked element
+            if (!msg.closest('[data-speaker]')) {
+                msg.setAttribute('data-speaker', 'user');
+            }
+        });
+        
+        // Mark all other content blocks as bot messages (only top-level containers)
+        const allElements = temp.querySelectorAll('p, div, blockquote, pre, ul, ol');
+        allElements.forEach(elem => {
+            // Skip if empty, already marked, or inside a marked container
+            if (elem.textContent.trim() && 
+                !elem.hasAttribute('data-speaker') && 
+                !elem.closest('[data-speaker]')) {
+                // Check if this element contains user messages
+                const hasUserQuery = elem.querySelector('[class^="user-query"], [class*=" user-query"]');
+                if (!hasUserQuery) {
+                    elem.setAttribute('data-speaker', 'bot');
+                }
+            }
+        });
+        
+        const walker = document.createTreeWalker(temp, NodeFilter.SHOW_ELEMENT, null, false);
+        const nodesToRemove = [];
+        const allowedTags = ['P', 'DIV', 'SPAN', 'BR', 'B', 'STRONG', 'I', 'EM', 'U', 
+                            'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 
+                            'UL', 'OL', 'LI', 'BLOCKQUOTE', 'PRE', 'CODE', 'A'];
+        
+        while (walker.nextNode()) {
+            const node = walker.currentNode;
+            if (!allowedTags.includes(node.tagName)) {
+                nodesToRemove.push(node);
+            } else {
+                // Keep data-speaker attribute for message identification
+                Array.from(node.attributes).forEach(attr => {
+                    if (attr.name !== 'href' && attr.name !== 'data-speaker') {
+                        if (node.tagName !== 'A' || attr.name !== 'href') {
+                            node.removeAttribute(attr.name);
+                        }
+                    }
+                });
+            }
+        }
+        
+        nodesToRemove.forEach(node => {
+            if (node.parentNode) {
+                while (node.firstChild) {
+                    node.parentNode.insertBefore(node.firstChild, node);
+                }
+                node.parentNode.removeChild(node);
+            }
+        });
+        
+        return temp.innerHTML.replace(/\s+/g, ' ').replace(/>\s+</g, '><').trim();
+    };
+    
+    const content = cleanHTML(chatDiv.innerHTML);
+    
+    const html = `&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Chat Export - ${new Date().toLocaleDateString()}&lt;/title>
+    &lt;style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            color: #333;
+            background: #f5f5f5;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        p {
+            margin: 1em 0;
+        }
+        blockquote {
+            border-left: 3px solid #ccc;
+            padding-left: 1em;
+            margin-left: 0;
+            color: #666;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 1em;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+        a {
+            color: #0066cc;
+        }
+        
+        /* Message differentiation styles */
+        [data-speaker="user"] {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+        
+        [data-speaker="bot"] {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+        
+        [data-speaker="user"]::before {
+            content: "👤 USER";
+            position: absolute;
+            top: -8px;
+            left: 8px;
+            background: #2196F3;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        [data-speaker="bot"]::before {
+            content: "🤖 ASSISTANT";
+            position: absolute;
+            top: -8px;
+            left: 8px;
+            background: #9c27b0;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        /* Nested elements within messages */
+        [data-speaker="user"] strong,
+        [data-speaker="user"] b {
+            color: #1976D2;
+        }
+        
+        [data-speaker="bot"] strong,
+        [data-speaker="bot"] b {
+            color: #7B1FA2;
+        }
+        
+        /* Add subtle shadow for depth */
+        [data-speaker] {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        /* Container for entire chat */
+        body > div:not([data-speaker]) {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    &lt;/style>
+&lt;/head>
+&lt;body>
+    &lt;h1>Chat Export&lt;/h1>
+    &lt;p>&lt;em>Exported on ${new Date().toLocaleString()}&lt;/em>&lt;/p>
+    &lt;hr>
+    ${content}
+&lt;/body>
+&lt;/html>`;
+    
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `chat-export-${new Date().toISOString().split('T')[0]}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+})();</pre>
+    </div>
+
+    <h2>Notes</h2>
+    <ul>
+        <li>The bookmarklet only works on pages that have an element with <code>id="chat-history"</code></li>
+        <li><strong>Simple message detection:</strong> 
+            <ul style="list-style-type: disc; margin-left: 20px;">
+                <li>User messages are identified by classes starting with <code>user-query</code></li>
+                <li>All other content is treated as bot/assistant responses</li>
+                <li>Labels are applied only to the topmost containers to avoid duplication</li>
+            </ul>
+        </li>
+        <li>All CSS classes, IDs, and inline styles are removed for a clean export</li>
+        <li>The exported file includes basic styling for readability with <strong>color-coded messages</strong></li>
+        <li>Files are named with the current date for easy organization</li>
+    </ul>
+</body>
+</html>
