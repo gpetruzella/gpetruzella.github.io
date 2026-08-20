@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Syllabus Compiler — Canvas bookmarklet</title>
+<style>
+  :root{
+    --bone:#F7F6F3; --paper:#FFFFFF; --ink:#111111; --body:#2F3437; --muted:#787774;
+    --rule:#EAEAEA; --accentbg:#F0EDF6; --accentink:#4A2F7A;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bone); color:var(--body);
+    font:16px/1.6 "SF Pro Text",-apple-system,"Segoe UI","Helvetica Neue",sans-serif;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:72px 28px 96px}
+  header{border-bottom:1px solid var(--rule); padding-bottom:36px; margin-bottom:56px}
+  .eyebrow{
+    font:12px/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--muted); margin:0 0 20px;
+  }
+  h1{
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    font-size:clamp(34px,5.2vw,52px); line-height:1.08; letter-spacing:-0.025em;
+    color:var(--ink); font-weight:600; margin:0 0 18px;
+  }
+  .lede{font-size:18px; max-width:56ch; margin:0}
+  h2{
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    font-size:24px; letter-spacing:-0.02em; color:var(--ink); font-weight:600;
+    margin:0 0 18px;
+  }
+  section.block{margin-bottom:64px}
+  p{margin:0 0 16px; max-width:64ch}
+  a{color:var(--accentink)}
+
+  /* the drag target */
+  .rail{
+    background:var(--paper); border:1px solid var(--rule); border-radius:12px;
+    padding:40px 32px 32px; text-align:center;
+  }
+  .rail .hint{
+    font:12px/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted); margin:0 0 22px;
+  }
+  .guides{height:26px; position:relative; margin:0 auto 4px; width:220px}
+  .guides::before,.guides::after{
+    content:""; position:absolute; top:0; bottom:0; width:1px; background:var(--rule);
+  }
+  .guides::before{left:0} .guides::after{right:0}
+  .arrow{position:absolute; left:50%; top:0; transform:translateX(-50%)}
+  .bm{
+    display:inline-block; background:var(--ink); color:#fff; text-decoration:none;
+    font:15px/1 "SF Pro Text",-apple-system,"Segoe UI",sans-serif; font-weight:500;
+    padding:13px 26px; border-radius:5px; cursor:grab;
+    transition:transform .2s cubic-bezier(.16,1,.3,1), background .2s;
+  }
+  .bm:hover{background:#333}
+  .bm:active{cursor:grabbing; transform:scale(.98)}
+  .rail .sub{margin:20px auto 0; font-size:14px; color:var(--muted); max-width:46ch}
+  .fallback{margin-top:26px; padding-top:22px; border-top:1px solid var(--rule)}
+  .fallback button{
+    font:13px/1 "SF Pro Text",-apple-system,sans-serif; background:var(--paper);
+    color:var(--ink); border:1px solid var(--rule); border-radius:5px;
+    padding:9px 16px; cursor:pointer;
+  }
+  .fallback button:active{transform:scale(.98)}
+
+  ol.steps{counter-reset:s; list-style:none; padding:0; margin:0}
+  ol.steps li{
+    counter-increment:s; border-bottom:1px solid var(--rule);
+    padding:18px 0 18px 44px; position:relative; max-width:64ch;
+  }
+  ol.steps li:last-child{border-bottom:0}
+  ol.steps li::before{
+    content:counter(s); position:absolute; left:0; top:19px;
+    font:12px/1 ui-monospace,"SF Mono",Menlo,monospace; color:var(--muted);
+  }
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px}
+  .card{
+    background:var(--paper); border:1px solid var(--rule); border-radius:8px;
+    padding:24px; transition:box-shadow .2s;
+  }
+  .card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .card h3{
+    font:13px/1.3 ui-monospace,"SF Mono",Menlo,monospace; letter-spacing:.04em;
+    text-transform:uppercase; color:var(--ink); margin:0 0 10px; font-weight:600;
+  }
+  .card p{font-size:14px; margin:0; color:var(--muted)}
+  .tag{
+    display:inline-block; background:var(--accentbg); color:var(--accentink);
+    font:11px/1 ui-monospace,Menlo,monospace; letter-spacing:.06em; text-transform:uppercase;
+    padding:6px 11px; border-radius:9999px; margin-bottom:14px;
+  }
+  code{
+    font:13px/1.4 ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    background:var(--accentbg); color:var(--accentink); padding:2px 6px; border-radius:4px;
+  }
+  details{border-top:1px solid var(--rule); padding:18px 0}
+  summary{cursor:pointer; color:var(--ink); font-weight:500; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+ "; font-family:ui-monospace,Menlo,monospace; color:var(--muted)}
+  details[open] summary::before{content:"\2212 "}
+  pre{
+    background:var(--paper); border:1px solid var(--rule); border-radius:8px;
+    padding:20px; overflow:auto; margin:18px 0 0;
+    font:12px/1.6 ui-monospace,"SF Mono",Menlo,Consolas,monospace; color:var(--body);
+    max-height:420px;
+  }
+  footer{border-top:1px solid var(--rule); padding-top:28px; color:var(--muted); font-size:13px}
+  .reveal{opacity:0; transform:translateY(12px)}
+  .reveal.in{opacity:1; transform:none; transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1)}
+  @media (prefers-reduced-motion:reduce){
+    .reveal,.reveal.in{opacity:1; transform:none; transition:none}
+    *{transition:none !important}
+  }
+  :focus-visible{outline:2px solid var(--accentink); outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="reveal">
+    <p class="eyebrow">Canvas · faculty workaround</p>
+    <h1>Syllabus Compiler</h1>
+    <p class="lede">A bookmarklet that gathers a Canvas page and every Canvas page it links to, stacks them in link order, and hands the result to your browser's print dialog to save as one PDF.</p>
+  </header>
+
+  <section class="block reveal">
+    <div class="rail">
+      <p class="hint">Drag to your bookmarks bar</p>
+      <div class="guides">
+        <svg class="arrow" width="14" height="26" viewBox="0 0 14 26" fill="none" aria-hidden="true">
+          <path d="M7 26V3M7 1L1 8M7 1l6 7" stroke="#787774" stroke-width="1.25"/>
+        </svg>
+      </div>
+      <a class="bm" id="bm" href="#">Compile syllabus</a>
+      <p class="sub">Dragging is the install. Clicking it here does nothing useful — it only works while you are sitting on a Canvas page.</p>
+      <div class="fallback">
+        <button id="copy" type="button">Copy the code instead</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="block reveal">
+    <h2>Using it</h2>
+    <ol class="steps">
+      <li>Open the top page of the syllabus in Canvas — the one that links out to all the others.</li>
+      <li>Click <strong>Compile syllabus</strong> in your bookmarks bar. A new tab opens and reports its progress as it fetches each linked page.</li>
+      <li>When the compiled document appears, click <strong>Print / Save as PDF</strong> &mdash; or just press <kbd style="font:12px/1 ui-monospace,Menlo,monospace;border:1px solid var(--rule);border-radius:4px;background:var(--bone);padding:3px 6px">Ctrl/Cmd + P</kbd> &mdash; and choose <em>Save as PDF</em> as the destination.</li>
+      <li>In the print dialog, turn on <strong>Background graphics</strong> if any of your pages rely on colored callouts or table shading.</li>
+    </ol>
+  </section>
+
+  <section class="block reveal">
+    <h2>What it does and doesn't gather</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Included</h3>
+        <p>Canvas Pages and Assignments linked from the body of the starting page, in the order they appear, one section per page break.</p>
+      </div>
+      <div class="card">
+        <h3>One level deep</h3>
+        <p>Pages linked from those pages are not followed. Duplicate links are collected once.</p>
+      </div>
+      <div class="card">
+        <h3>Listed, not merged</h3>
+        <p>Uploaded files, quizzes, modules, and outside links land in an appendix at the end as titles and URLs. Attached PDFs still have to be merged separately.</p>
+      </div>
+      <div class="card">
+        <h3>Ignored</h3>
+        <p>Course navigation and sidebar links — it only reads links inside the page content itself. Embedded video and iframes are dropped.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block reveal">
+    <h2>If it doesn't run</h2>
+    <details>
+      <summary>Nothing happened, or a pop-up warning appeared</summary>
+      <p style="margin-top:14px">The compiled document opens in a new tab, so the site needs permission for pop-ups. Allow pop-ups for your Canvas domain and run it again.</p>
+    </details>
+    <details>
+      <summary>It says no page content was found</summary>
+      <p style="margin-top:14px">It looks for the Canvas content region (<code>.show-content</code> or <code>.user_content</code>). Start from a Canvas Page or an Assignment rather than a Module index or the course home page set to a module list.</p>
+    </details>
+    <details>
+      <summary>Sections are missing or empty</summary>
+      <p style="margin-top:14px">Pages restricted by date or unpublished return nothing to the browser. Publish them, or paste those sections in by hand.</p>
+    </details>
+    <details>
+      <summary>Firefox blocks the bookmarklet</summary>
+      <p style="margin-top:14px">Some Canvas instances send a Content-Security-Policy that Firefox applies to bookmarklets. Chrome and Edge are unaffected; use one of those if it comes up.</p>
+    </details>
+  </section>
+
+  <section class="block reveal">
+    <h2>The source</h2>
+    <p>Plain JavaScript, no libraries, no network calls off the Canvas domain. It reads through your existing session — the same pages you can already see, nothing more.</p>
+    <details>
+      <summary>Read the code</summary>
+      <pre id="srcview"></pre>
+    </details>
+  </section>
+
+  <footer class="reveal">
+    <p>Stopgap for the page-tree PDF plugin. Built to be thrown away once that's fixed.</p>
+  </footer>
+
+</div>
+
+<script type="text/plain" id="src">(function () {
+  var W = window.open('', '_blank');
+  if (!W) { alert('Allow pop-ups for this site, then run the bookmarklet again.'); return; }
+  W.document.write('<!doctype html><meta charset="utf-8"><title>Compiling\u2026</title><body style="font:15px/1.5 -apple-system,Segoe UI,sans-serif;padding:2rem;color:#2F3437"><p id="s">Reading the starting page\u2026</p>');
+  var say = function (t) { try { W.document.getElementById('s').textContent = t; } catch (e) {} };
+
+  var ORIGIN = location.origin;
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); };
+
+  /* Canvas prefixes API JSON with while(1); */
+  var api = function (path) {
+    return fetch(path, { credentials: 'same-origin', headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.ok ? r.text() : null; })
+      .then(function (t) { if (!t) return null; try { return JSON.parse(t.replace(/^while\s*\(1\);?/, '')); } catch (e) { return null; } })
+      .catch(function () { return null; });
+  };
+
+  var scrape = function (url) {
+    return fetch(url, { credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.text() : null; })
+      .then(function (t) {
+        if (!t) return null;
+        var d = new DOMParser().parseFromString(t, 'text/html');
+        var body = d.querySelector('.show-content, .user_content, #content .description');
+        if (!body) return null;
+        var h = d.querySelector('h1.page-title, .page-title, h1');
+        return { title: h ? h.textContent.trim() : url, html: body.innerHTML };
+      })
+      .catch(function () { return null; });
+  };
+
+  var grab = function (url) {
+    var p = new URL(url, ORIGIN).pathname, m;
+    if ((m = p.match(/^\/courses\/(\d+)\/pages\/([^\/?#]+)/))) {
+      return api('/api/v1/courses/' + m[1] + '/pages/' + m[2]).then(function (j) {
+        return (j && j.body != null) ? { title: j.title, html: j.body } : scrape(url);
+      });
+    }
+    if ((m = p.match(/^\/courses\/(\d+)\/assignments\/(\d+)/))) {
+      return api('/api/v1/courses/' + m[1] + '/assignments/' + m[2]).then(function (j) {
+        return (j && j.description != null) ? { title: j.name, html: j.description } : scrape(url);
+      });
+    }
+    return scrape(url);
+  };
+
+  var INCLUDE = /^\/courses\/\d+\/(pages|assignments)\//;
+  var here = location.origin + location.pathname;
+
+  var root = document.querySelector('.show-content, .user_content, #content .description') || document.getElementById('content');
+  if (!root) { say('No page content found. Open a Canvas Page and try again.'); return; }
+
+  var seen = {}, queue = [], skipped = [];
+  seen[here] = 1;
+  Array.prototype.forEach.call(root.querySelectorAll('a[href]'), function (a) {
+    var u; try { u = new URL(a.getAttribute('href'), location.href); } catch (e) { return; }
+    var abs = u.origin + u.pathname;
+    if (u.origin !== ORIGIN || !INCLUDE.test(u.pathname)) {
+      if (a.href.indexOf('#') !== 0 && !/^\s*$/.test(a.textContent)) skipped.push({ t: a.textContent.trim(), h: u.href });
+      return;
+    }
+    if (seen[abs]) return;
+    seen[abs] = 1;
+    queue.push({ url: abs, label: a.textContent.trim() });
+  });
+
+  var docs = [];
+  grab(here).then(function (first) {
+    docs.push(first || { title: document.title, html: root.innerHTML });
+    var i = 0;
+    var next = function () {
+      if (i >= queue.length) return Promise.resolve();
+      var item = queue[i++];
+      say('Fetching ' + i + ' of ' + queue.length + ': ' + item.label);
+      return grab(item.url).then(function (d) {
+        docs.push(d || { title: item.label, html: '<p><em>Could not load ' + esc(item.url) + '</em></p>' });
+        return next();
+      });
+    };
+    return next();
+  }).then(function () {
+    var title = (docs[0] && docs[0].title) || document.title;
+    var toc = docs.map(function (d, n) { return '<li><a href="#s' + n + '">' + esc(d.title) + '</a></li>'; }).join('');
+    var body = docs.map(function (d, n) {
+      return '<section id="s' + n + '"><h2>' + esc(d.title) + '</h2>' + d.html + '</section>';
+    }).join('');
+    var appendix = skipped.length
+      ? '<section class="appendix"><h2>Links not included</h2><p>These were linked but are not Canvas Pages or Assignments \u2014 add them by hand if needed.</p><ul>' +
+        skipped.map(function (s) { return '<li>' + esc(s.t) + ' &mdash; <span class="u">' + esc(s.h) + '</span></li>'; }).join('') + '</ul></section>'
+      : '';
+
+    var css = '@page{margin:0.85in}' +
+      'body{font:12pt/1.55 Georgia,"Iowan Old Style",serif;color:#111;margin:0 auto;max-width:7in;padding:1in 0.5in}' +
+      '.bar{position:sticky;top:0;background:#111;color:#fff;padding:10px 14px;margin:-1in -0.5in 2rem;font:14px/1 -apple-system,Segoe UI,sans-serif;display:flex;gap:12px;align-items:center;justify-content:space-between}' +
+      '.bar button{font:inherit;padding:7px 14px;border:0;border-radius:4px;background:#fff;color:#111;cursor:pointer}' +
+      'h1{font-size:24pt;line-height:1.15;margin:0 0 .3em}h2{font-size:16pt;margin:0 0 .6em;padding-bottom:.25em;border-bottom:1px solid #ddd}' +
+      'section{break-before:page;page-break-before:always}section:first-of-type,section.toc{break-before:auto;page-break-before:auto}' +
+      '.toc ol{font-family:-apple-system,Segoe UI,sans-serif;font-size:11pt}.toc a{color:#111}' +
+      'img{max-width:100%;height:auto}table{border-collapse:collapse;max-width:100%}td,th{border:1px solid #ccc;padding:.35em .5em}' +
+      'iframe,video{display:none}a{color:#111}.u{font:10pt ui-monospace,Menlo,Consolas,monospace;color:#666;word-break:break-all}' +
+      '.appendix{font-size:10pt;color:#444}' +
+      '@media print{.bar{display:none}body{padding:0}h2{break-after:avoid}}';
+
+    var out = '<!doctype html><html><head><meta charset="utf-8"><base href="' + ORIGIN + '/"><title>' + esc(title) + '</title><style>' + css + '</style></head><body>' +
+      '<div class="bar"><span>' + docs.length + ' sections compiled</span><button onclick="print()">Print / Save as PDF</button></div>' +
+      '<h1>' + esc(title) + '</h1>' +
+      '<section class="toc"><ol>' + toc + '</ol></section>' +
+      body + appendix + '</body></html>';
+
+    W.document.open();
+    W.document.write(out);
+    W.document.close();
+  }).catch(function (e) { say('Something went wrong: ' + e.message); });
+})();
+void 0;
+</script>
+<script>
+(function(){
+  var src = document.getElementById('src').textContent;
+  document.getElementById('bm').setAttribute('href', 'javascript:' + encodeURIComponent(src));
+  document.getElementById('srcview').textContent = src;
+
+  var btn = document.getElementById('copy');
+  btn.addEventListener('click', function(){
+    var payload = 'javascript:' + encodeURIComponent(src);
+    var done = function(){ btn.textContent = 'Copied — paste it into a new bookmark\u2019s URL field'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(payload).then(done, function(){ fallback(payload, done); });
+    } else { fallback(payload, done); }
+  });
+  function fallback(text, done){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch(e){ btn.textContent = 'Copy failed — use the source below'; }
+    document.body.removeChild(ta);
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e, i){
+      if (e.isIntersecting){
+        setTimeout(function(){ e.target.classList.add('in'); }, i * 80);
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.08});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
