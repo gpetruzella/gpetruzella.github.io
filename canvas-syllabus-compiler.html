@@ -171,7 +171,7 @@
       </div>
       <div class="card">
         <h3>Ignored</h3>
-        <p>Course navigation and sidebar links — it only reads links inside the page content itself. Embedded video and iframes are dropped.</p>
+        <p>Course navigation and sidebar links — it only reads links inside the page content itself. Canvas’s no-JavaScript notice, screenreader-only chrome, embedded video, and iframes are dropped.</p>
       </div>
     </div>
   </section>
@@ -228,16 +228,41 @@
       .catch(function () { return null; });
   };
 
+  /* DOMParser has scripting disabled, so <noscript> contents become real elements.
+     Strip Canvas chrome that only exists for the non-JS case. */
+  var JUNK = 'noscript, script, style, template, link, meta, .screenreader-only, .ic-flash-static, .ic-flash-error, #noscript_warning';
+  var strip = function (node) {
+    if (node) Array.prototype.forEach.call(node.querySelectorAll(JUNK), function (n) {
+      if (n.parentNode) n.parentNode.removeChild(n);
+    });
+    return node;
+  };
+  var clean = function (html) {
+    var d = document.implementation.createHTMLDocument('');
+    d.body.innerHTML = html || '';
+    strip(d.body);
+    return d.body.innerHTML;
+  };
+  var BAD = /javascript\s+enabled|enable\s+javascript/i;
+  var okTitle = function (t) {
+    t = String(t == null ? '' : t).replace(/\s+/g, ' ').trim();
+    return (t && t.length < 200 && !BAD.test(t)) ? t : '';
+  };
+
   var scrape = function (url) {
     return fetch(url, { credentials: 'same-origin' })
       .then(function (r) { return r.ok ? r.text() : null; })
       .then(function (t) {
         if (!t) return null;
         var d = new DOMParser().parseFromString(t, 'text/html');
+        strip(d.documentElement);
         var body = d.querySelector('.show-content, .user_content, #content .description');
         if (!body) return null;
-        var h = d.querySelector('h1.page-title, .page-title, h1');
-        return { title: h ? h.textContent.trim() : url, html: body.innerHTML };
+        var h = d.querySelector('h1.page-title, .page-title, #content h1, h1');
+        return {
+          title: okTitle(h && h.textContent) || okTitle(d.title) || url,
+          html: body.innerHTML
+        };
       })
       .catch(function () { return null; });
   };
@@ -279,7 +304,7 @@
 
   var docs = [];
   grab(here).then(function (first) {
-    docs.push(first || { title: document.title, html: root.innerHTML });
+    docs.push(first || { title: okTitle(document.title) || 'Syllabus', html: root.innerHTML });
     var i = 0;
     var next = function () {
       if (i >= queue.length) return Promise.resolve();
@@ -292,7 +317,14 @@
     };
     return next();
   }).then(function () {
-    var title = (docs[0] && docs[0].title) || document.title;
+    docs = docs.map(function (d, n) {
+      return {
+        title: okTitle(d.title) || (queue[n - 1] && okTitle(queue[n - 1].label)) || 'Section ' + (n + 1),
+        html: clean(d.html)
+      };
+    });
+
+    var title = docs[0].title;
     var toc = docs.map(function (d, n) { return '<li><a href="#s' + n + '">' + esc(d.title) + '</a></li>'; }).join('');
     var body = docs.map(function (d, n) {
       return '<section id="s' + n + '"><h2>' + esc(d.title) + '</h2>' + d.html + '</section>';
