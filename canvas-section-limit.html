@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section Limit — Canvas bookmarklet</title>
+<style>
+  :root{
+    --bone:#F7F6F3; --paper:#FFFFFF; --ink:#111111; --body:#2F3437; --muted:#787774;
+    --rule:#EAEAEA; --accentbg:#F0EDF6; --accentink:#4A2F7A;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bone); color:var(--body);
+    font:16px/1.6 "SF Pro Text",-apple-system,"Segoe UI","Helvetica Neue",sans-serif;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:72px 28px 96px}
+  header{border-bottom:1px solid var(--rule); padding-bottom:36px; margin-bottom:56px}
+  .eyebrow{
+    font:12px/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--muted); margin:0 0 20px;
+  }
+  h1{
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    font-size:clamp(34px,5.2vw,52px); line-height:1.08; letter-spacing:-0.025em;
+    color:var(--ink); font-weight:600; margin:0 0 18px;
+  }
+  .lede{font-size:18px; max-width:56ch; margin:0}
+  h2{
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    font-size:24px; letter-spacing:-0.02em; color:var(--ink); font-weight:600;
+    margin:0 0 18px;
+  }
+  section.block{margin-bottom:64px}
+  p{margin:0 0 16px; max-width:64ch}
+  a{color:var(--accentink)}
+
+  /* the drag target */
+  .rail{
+    background:var(--paper); border:1px solid var(--rule); border-radius:12px;
+    padding:40px 32px 32px; text-align:center;
+  }
+  .rail .hint{
+    font:12px/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted); margin:0 0 22px;
+  }
+  .guides{height:26px; position:relative; margin:0 auto 4px; width:220px}
+  .guides::before,.guides::after{
+    content:""; position:absolute; top:0; bottom:0; width:1px; background:var(--rule);
+  }
+  .guides::before{left:0} .guides::after{right:0}
+  .arrow{position:absolute; left:50%; top:0; transform:translateX(-50%)}
+  .bm{
+    display:inline-block; background:var(--ink); color:#fff; text-decoration:none;
+    font:15px/1 "SF Pro Text",-apple-system,"Segoe UI",sans-serif; font-weight:500;
+    padding:13px 26px; border-radius:5px; cursor:grab;
+    transition:transform .2s cubic-bezier(.16,1,.3,1), background .2s;
+  }
+  .bm:hover{background:#333}
+  .bm:active{cursor:grabbing; transform:scale(.98)}
+  .rail .sub{margin:20px auto 0; font-size:14px; color:var(--muted); max-width:46ch}
+  .fallback{margin-top:26px; padding-top:22px; border-top:1px solid var(--rule)}
+  .fallback button{
+    font:13px/1 "SF Pro Text",-apple-system,sans-serif; background:var(--paper);
+    color:var(--ink); border:1px solid var(--rule); border-radius:5px;
+    padding:9px 16px; cursor:pointer;
+  }
+  .fallback button:active{transform:scale(.98)}
+
+  ol.steps{counter-reset:s; list-style:none; padding:0; margin:0}
+  ol.steps li{
+    counter-increment:s; border-bottom:1px solid var(--rule);
+    padding:18px 0 18px 44px; position:relative; max-width:64ch;
+  }
+  ol.steps li:last-child{border-bottom:0}
+  ol.steps li::before{
+    content:counter(s); position:absolute; left:0; top:19px;
+    font:12px/1 ui-monospace,"SF Mono",Menlo,monospace; color:var(--muted);
+  }
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px}
+  .card{
+    background:var(--paper); border:1px solid var(--rule); border-radius:8px;
+    padding:24px; transition:box-shadow .2s;
+  }
+  .card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .card h3{
+    font:13px/1.3 ui-monospace,"SF Mono",Menlo,monospace; letter-spacing:.04em;
+    text-transform:uppercase; color:var(--ink); margin:0 0 10px; font-weight:600;
+  }
+  .card p{font-size:14px; margin:0; color:var(--muted)}
+  .tag{
+    display:inline-block; background:var(--accentbg); color:var(--accentink);
+    font:11px/1 ui-monospace,Menlo,monospace; letter-spacing:.06em; text-transform:uppercase;
+    padding:6px 11px; border-radius:9999px; margin-bottom:14px;
+  }
+  code{
+    font:13px/1.4 ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    background:var(--accentbg); color:var(--accentink); padding:2px 6px; border-radius:4px;
+  }
+  details{border-top:1px solid var(--rule); padding:18px 0}
+  summary{cursor:pointer; color:var(--ink); font-weight:500; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+ "; font-family:ui-monospace,Menlo,monospace; color:var(--muted)}
+  details[open] summary::before{content:"\2212 "}
+  pre{
+    background:var(--paper); border:1px solid var(--rule); border-radius:8px;
+    padding:20px; overflow:auto; margin:18px 0 0;
+    font:12px/1.6 ui-monospace,"SF Mono",Menlo,Consolas,monospace; color:var(--body);
+    max-height:420px;
+  }
+  footer{border-top:1px solid var(--rule); padding-top:28px; color:var(--muted); font-size:13px}
+  .reveal{opacity:0; transform:translateY(12px)}
+  .reveal.in{opacity:1; transform:none; transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1)}
+  @media (prefers-reduced-motion:reduce){
+    .reveal,.reveal.in{opacity:1; transform:none; transition:none}
+    *{transition:none !important}
+  }
+  :focus-visible{outline:2px solid var(--accentink); outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="reveal">
+    <p class="eyebrow">Canvas · faculty workaround</p>
+    <h1>Section Limit</h1>
+    <p class="lede">A bookmarklet that switches every student in a Canvas course to <em>“can interact with users in their section only”</em> in one pass, instead of clicking through the People page student by student.</p>
+  </header>
+
+  <section class="block reveal">
+    <div class="rail">
+      <p class="hint">Drag to your bookmarks bar</p>
+      <div class="guides">
+        <svg class="arrow" width="14" height="26" viewBox="0 0 14 26" fill="none" aria-hidden="true">
+          <path d="M7 26V3M7 1L1 8M7 1l6 7" stroke="#787774" stroke-width="1.25"/>
+        </svg>
+      </div>
+      <a class="bm" id="bm" href="#">Limit to section</a>
+      <p class="sub">Dragging is the install. Clicking it here does nothing useful — it only works while you are inside a Canvas course.</p>
+      <div class="fallback">
+        <button id="copy" type="button">Copy the code instead</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="block reveal">
+    <h2>Using it</h2>
+    <ol class="steps">
+      <li>Open any page inside the course — the course home, People, Modules, anything whose address contains <code>/courses/&lt;number&gt;</code>.</li>
+      <li>Click <strong>Limit to section</strong> in your bookmarks bar. It looks up every active or invited student who isn’t already limited.</li>
+      <li>A confirmation asks <em>“Limit N student(s) to their own section(s)?”</em> Click <strong>OK</strong> to go ahead, or <strong>Cancel</strong> to leave everything as it is.</li>
+      <li>Leave the tab open until a <strong>Done</strong> message appears, with a count of students updated, any failures, and how many unlimited enrollments remain (normally 0). Large courses take a few seconds per hundred students.</li>
+    </ol>
+  </section>
+
+  <section class="block reveal">
+    <h2>What it changes and what it doesn't</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Changes</h3>
+        <p>Sets the section-only flag on each student enrollment — the same switch as the per-student link on their People page. Limited students only see and interact with people in their own section.</p>
+      </div>
+      <div class="card">
+        <h3>Students only</h3>
+        <p>Teachers, TAs, designers, and observers are left alone. Students who are already limited are skipped, so running it twice is harmless.</p>
+      </div>
+      <div class="card">
+        <h3>Checks itself</h3>
+        <p>It updates one student first and re-reads that enrollment. If the flag didn't actually change, it stops before touching anyone else.</p>
+      </div>
+      <div class="card">
+        <h3>Not ongoing</h3>
+        <p>Students who join later arrive unlimited — run it again after late adds. In a single-section course the flag is set but has no visible effect.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block reveal">
+    <h2>If it doesn't run</h2>
+    <details>
+      <summary>“Not on a Canvas course page”</summary>
+      <p style="margin-top:14px">It reads the course number from the address bar. The Dashboard, Inbox, and account pages don't have one — open a page inside the course and click it again.</p>
+    </details>
+    <details>
+      <summary>“No _csrf_token cookie found”</summary>
+      <p style="margin-top:14px">Your Canvas session has probably expired. Reload the page (signing in again if asked), then run it.</p>
+    </details>
+    <details>
+      <summary>“403 … permission denied”</summary>
+      <p style="margin-top:14px">Your role in this course isn't allowed to change enrollments. Ask a Canvas admin to run it, or to grant the permission.</p>
+    </details>
+    <details>
+      <summary>“Aborted. The request succeeded but … flag did not change”</summary>
+      <p style="margin-top:14px">Canvas has probably changed the address this relies on. Nothing beyond that first student was touched. Let me know and I'll update the bookmarklet.</p>
+    </details>
+    <details>
+      <summary>I want to see the details, or undo one student</summary>
+      <p style="margin-top:14px">Open your browser's developer console (<kbd style="font:12px/1 ui-monospace,Menlo,monospace;border:1px solid var(--rule);border-radius:4px;background:var(--bone);padding:3px 6px">F12</kbd>) before running it: it prints a table of the students it will change and a line for each one. To reverse a single student, open them from People and use the link on their page that lets them see all course users.</p>
+    </details>
+    <details>
+      <summary>Firefox blocks the bookmarklet</summary>
+      <p style="margin-top:14px">Some Canvas instances send a Content-Security-Policy that Firefox applies to bookmarklets. Chrome and Edge are unaffected; use one of those if it comes up.</p>
+    </details>
+  </section>
+
+  <section class="block reveal">
+    <h2>The source</h2>
+    <p>Plain JavaScript, no libraries, no network calls off the Canvas domain. It acts through your existing session — it can only change what you could already change by hand.</p>
+    <details>
+      <summary>Read the code</summary>
+      <pre id="srcview"></pre>
+    </details>
+  </section>
+
+  <footer class="reveal">
+    <p>Saves a few hundred clicks at the start of term.</p>
+  </footer>
+
+</div>
+
+<script type="text/plain" id="src">(async () => {
+  const DRY_RUN = false;
+  const DELAY_MS = 200;
+  const ENDPOINT = (courseId, userId) => `/courses/${courseId}/limit_user_grading/${userId}`;
+  const log = (...a) => console.log('[section-limit]', ...a);
+
+  const courseId = (location.pathname.match(/^\/courses\/(\d+)/) || [])[1];
+  if (!courseId) { alert('Not on a Canvas course page.'); return; }
+
+  const csrf = decodeURIComponent((document.cookie.match(/(?:^|;\s*)_csrf_token=([^;]+)/) || [])[1] || '');
+  if (!csrf) { alert('No _csrf_token cookie found. Are you logged in?'); return; }
+
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  /* Canvas prefixes API JSON with while(1); */
+  const parse = (t) => JSON.parse(t.replace(/^while\(1\);?/, ''));
+
+  const getPage = async (url) => {
+    const r = await fetch(url, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+    if (!r.ok) throw new Error(`GET ${url} -> ${r.status}`);
+    const link = r.headers.get('Link') || '';
+    const next = (link.match(/<([^>]+)>;\s*rel="next"/) || [])[1] || null;
+    return { data: parse(await r.text()), next };
+  };
+  const getAll = async (url) => {
+    const out = [];
+    while (url) { const { data, next } = await getPage(url); out.push(...data); url = next; }
+    return out;
+  };
+  const enrollmentsUrl = (extra = '') =>
+    `/api/v1/courses/${courseId}/enrollments` +
+    `?type[]=StudentEnrollment&state[]=active&state[]=invited&per_page=100${extra}`;
+
+  const setLimited = async (userId) => {
+    const r = await fetch(ENDPOINT(courseId, userId), {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'X-CSRF-Token': csrf, 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+      body: 'limit=1'
+    });
+    if (r.status === 403) {
+      const body = await r.text();
+      if (/rate limit/i.test(body)) { await sleep(4000); return setLimited(userId); }
+      throw new Error(`403 on user ${userId} — permission denied`);
+    }
+    if (!r.ok) throw new Error(`POST for user ${userId} -> ${r.status}`);
+    const out = parse(await r.text());
+    if (out.limited !== true) throw new Error(`user ${userId}: server returned ${JSON.stringify(out)}`);
+    return true;
+  };
+  const stillOpen = async (userId) => {
+    const e = await getAll(enrollmentsUrl(`&user_id=${userId}`));
+    return e.some((x) => x.limit_privileges_to_course_section === false);
+  };
+
+  const enrollments = await getAll(enrollmentsUrl());
+  const targets = [
+    ...new Map(
+      enrollments
+        .filter((e) => e.limit_privileges_to_course_section === false)
+        .map((e) => [e.user_id, e.user?.sortable_name || `user ${e.user_id}`])
+    ).entries()
+  ];
+  const sections = new Set(enrollments.map((e) => e.course_section_id));
+  log(`${enrollments.length} student enrollments across ${sections.size} section(s)`);
+  console.table(targets.map(([id, name]) => ({ user_id: id, name })));
+
+  if (!targets.length) { alert('All students are already section-limited.'); return; }
+  if (sections.size < 2) log('NOTE: single-section course — the flag will be set but has no visible effect.');
+  if (DRY_RUN) {
+    alert(`DRY RUN — ${targets.length} student(s) would be limited. See console. Set DRY_RUN = false to apply.`);
+    return;
+  }
+  if (!confirm(`Limit ${targets.length} student(s) to their own section(s) in course ${courseId}?`)) return;
+
+  /* canary: change one student and confirm it stuck before doing the rest */
+  const [firstId, firstName] = targets[0];
+  await setLimited(firstId);
+  await sleep(500);
+  if (await stillOpen(firstId)) {
+    alert(`Aborted. The request succeeded but ${firstName}'s flag did not change.\n\n` +
+      `The endpoint has likely moved. Toggle one student manually with DevTools > ` +
+      `Network open and update ENDPOINT to match.`);
+    return;
+  }
+  log(`canary OK — ${firstName} is now section-limited`);
+
+  const failed = [];
+  for (const [id, name] of targets.slice(1)) {
+    await sleep(DELAY_MS);
+    try { await setLimited(id); log(`ok: ${name}`); }
+    catch (err) { failed.push(name); console.error(`[section-limit] ${name}:`, err); }
+  }
+
+  await sleep(1000);
+  const after = await getAll(enrollmentsUrl());
+  const remaining = after.filter((e) => e.limit_privileges_to_course_section === false).length;
+  alert(`Done. ${targets.length - failed.length}/${targets.length} updated.` +
+    (failed.length ? `\nFailed: ${failed.join(', ')}` : '') +
+    `\nUnlimited student enrollments remaining: ${remaining}`);
+})();
+void 0;
+</script>
+<script>
+(function(){
+  var src = document.getElementById('src').textContent;
+  document.getElementById('bm').setAttribute('href', 'javascript:' + encodeURIComponent(src));
+  document.getElementById('srcview').textContent = src;
+
+  var btn = document.getElementById('copy');
+  btn.addEventListener('click', function(){
+    var payload = 'javascript:' + encodeURIComponent(src);
+    var done = function(){ btn.textContent = 'Copied — paste it into a new bookmark\u2019s URL field'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(payload).then(done, function(){ fallback(payload, done); });
+    } else { fallback(payload, done); }
+  });
+  function fallback(text, done){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch(e){ btn.textContent = 'Copy failed — use the source below'; }
+    document.body.removeChild(ta);
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e, i){
+      if (e.isIntersecting){
+        setTimeout(function(){ e.target.classList.add('in'); }, i * 80);
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.08});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>

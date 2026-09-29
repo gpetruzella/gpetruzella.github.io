@@ -12,7 +12,7 @@ Personal GitHub Pages site for Gerol Petruzella, served at <https://gpetruzella.
 ### Canvas & teaching tools
 - [Syllabus Compiler](https://gpetruzella.github.io/canvas-syllabus-compiler.html) — Canvas bookmarklet.
 - [Printable-Syllabus Bookmarklet](https://gpetruzella.github.io/printable-syllabus-bookmarklet.html)
-- `sectionuserlimit` — Canvas bookmarklet that limits users to grading within their own section.
+- [Section Limit](https://gpetruzella.github.io/canvas-section-limit.html) — Canvas bookmarklet that limits every student to their own section in one pass.
 - [PDF Submission Validator](https://gpetruzella.github.io/academicpostervalidator.html)
 - [Williams Academic Resources](https://gpetruzella.github.io/academic-resources-reboot-01.html)
 
